@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta name="google-site-verification" content="3ySbSO-c9gUSWE9giSnOP0BncpgaxaJGqEn1dd4X06E"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W7SYSB2468"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-W7SYSB2468');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoltrogame - Le site de mini-jeux en ligne de Clément</title>
+	<link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="Bienvenue sur Zoltrogame, le site de Clément regroupant les meilleurs mini-jeux gratuits en ligne : action, course, simulation, sandbox, horreur et émulateurs !">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #070a10;
+            --bg2: #0d1117;
+            --accent: #00d4ff;
+            --accent2: #ff3c6e;
+            --accent3: #a855f7;
+            --card-bg: #111620;
+            --border: rgba(0, 212, 255, 0.15);
+            --text: #e2e8f0;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body.modal-open #siteContent {
+            filter: blur(8px);
+            pointer-events: none;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 10, 16, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            background: linear-gradient(90deg, var(--accent), var(--accent3), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(0,212,255,0.3));
+        }
+
+        .site-intro {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-align: center;
+            letter-spacing: 1px;
+            margin-top: -5px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-wrapper svg {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            width: 18px;
+            height: 18px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px 12px 48px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #searchInput::placeholder { color: var(--text-muted); }
+
+        #searchInput:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0,212,255,0.1), 0 0 20px rgba(0,212,255,0.15);
+        }
+
+        /* NOUVEAUX BOUTONS ACTIONS (Plein écran & Aléatoire) */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .action-btn:hover {
+            background: var(--accent);
+            color: #070a10;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            padding: 20px 40px 0;
+        }
+
+        .tab-btn {
+            padding: 6px 16px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-muted);
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #070a10;
+        }
+
+        main {
+            padding: 30px 40px 60px;
+        }
+
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .category-icon {
+            font-size: 1.4rem;
+        }
+
+        .category-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .category-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+
+        .category-count {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            background: var(--card-bg);
+            padding: 3px 8px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .game-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            display: block;
+            background: var(--card-bg);
+            aspect-ratio: 16/12;
+        }
+
+        /* NOUVEAU SYSTEME DE GIF AU SURVOL */
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.3s ease, opacity 0.3s ease;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .game-card .static-img {
+            z-index: 2;
+            opacity: 1;
+        }
+
+        .game-card .gif-img {
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 20px rgba(0,212,255,0.2);
+            border-color: rgba(0,212,255,0.4);
+        }
+
+        .game-card:hover .static-img {
+            opacity: 0; /* Cache l'image fixe au survol */
+        }
+
+        .game-card:hover .gif-img {
+            opacity: 1; /* Affiche le GIF au survol */
+            transform: scale(1.05);
+            filter: brightness(0.7);
+        }
+        /* FIN NOUVEAU SYSTEME */
+
+        .game-info {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+            padding: 20px 12px 10px;
+            transition: padding 0.3s;
+            z-index: 3;
+        }
+
+        .game-info span {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .game-tag {
+            position: absolute;
+            top: 9px;
+            left: 9px;
+            right: auto;
+            background: rgba(7,10,16,0.82);
+            border: 1px solid rgba(0,212,255,0.38);
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.52rem;
+            padding: 4px 7px;
+            border-radius: 5px;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            opacity: 1;
+            transition: transform .2s, background .2s;
+            z-index: 4;
+            max-width: calc(100% - 58px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            backdrop-filter: blur(5px);
+        }
+
+        .game-card:hover .game-tag { opacity: 1; transform: translateY(-1px); }
+
+        .youtube-search-box {
+            display: none; margin: 0 0 8px; gap: 8px; align-items: center;
+        }
+        .youtube-search-box.active { display: flex; }
+        .youtube-search-box input {
+            flex: 1; min-width: 0; padding: 10px 13px; border-radius: 9px;
+            border: 1px solid rgba(168,85,247,.28); background: rgba(17,22,32,.9);
+            color: #fff; outline: none; font-family: inherit;
+        }
+        .youtube-search-box button {
+            border: 0; border-radius: 9px; padding: 10px 14px; cursor: pointer;
+            background: rgba(168,85,247,.2); color: #fff; font-weight: 700;
+        }
+        .youtube-search-status { color: var(--text-muted); font-size: .82rem; margin: 0 0 14px; }
+
+        /* Styles pour la musique (inchangés) */
+        .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; }
+        .music-card { background: linear-gradient(145deg, rgba(17, 22, 32, 0.9), rgba(13, 17, 23, 0.95)); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 16px; padding: 16px; width: 100%; text-align: center; position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(10px); }
+        .music-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent3); box-shadow: 0 12px 30px rgba(168, 85, 247, 0.3), 0 0 15px rgba(0, 212, 255, 0.2); }
+        .cover-wrapper { width: 100%; aspect-ratio: 1/1; margin: 0 auto 14px; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; }
+        .cover-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .music-card:hover .cover-wrapper img { transform: scale(1.08); }
+        .play-overlay-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); width: 48px; height: 48px; background: rgba(7, 10, 16, 0.75); border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.2rem; opacity: 0; transition: all 0.3s ease; box-shadow: 0 0 15px var(--accent); }
+        .music-card:hover .play-overlay-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .music-card.playing { border-color: var(--accent2); box-shadow: 0 0 25px rgba(255, 60, 110, 0.4); }
+        .music-card.playing .play-overlay-icon { opacity: 1; background: var(--accent2); color: #fff; border-color: #fff; animation: pulseGlow 1.5s infinite alternate; }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px var(--accent2); } 100% { box-shadow: 0 0 25px var(--accent2); } }
+        .music-title { font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .music-artist { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Likes jeux + musique */
+        .like-btn { position:absolute; bottom:10px; right:10px; z-index:8; border:1px solid rgba(255,255,255,.16); background:rgba(7,10,16,.82); color:#aeb8c8; border-radius:999px; padding:6px 9px; cursor:pointer; font-size:.72rem; display:flex; align-items:center; gap:5px; transition:.2s; backdrop-filter:blur(8px); }
+        .like-btn:hover { transform:scale(1.08); border-color:var(--accent2); color:#fff; }
+        .like-btn.liked { color:#ff3c6e; border-color:#ff3c6e; box-shadow:0 0 12px rgba(255,60,110,.3); }
+        .music-card .like-btn { bottom:14px; right:14px; }
+
+        /* Lecteur musique façon Spotify */
+        .music-player { position:fixed; left:10px; right:10px; bottom:7px; z-index:9998; height:50px; border:1px solid rgba(255,255,255,.10); border-radius:10px; background:rgba(18,18,18,.96); backdrop-filter:blur(14px); box-shadow:0 4px 22px rgba(0,0,0,.38); display:grid; grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr); align-items:center; gap:18px; padding:5px 10px; transition:height .22s ease, opacity .22s ease, box-shadow .22s ease; }
+        .music-player.compact { height:50px; opacity:.96; }
+        .music-player:hover, .music-player:focus-within { height:62px; opacity:1; box-shadow:0 8px 28px rgba(0,0,0,.48); }
+        .music-player.compact .progress-row { opacity:0; pointer-events:none; height:0; overflow:hidden; }
+        .music-player:hover .progress-row, .music-player:focus-within .progress-row { opacity:1; pointer-events:auto; height:auto; }
+        .music-player.compact .player-cover { width:34px; height:34px; }
+        .music-player:hover .player-cover, .music-player:focus-within .player-cover { width:38px; height:38px; }
+        .music-player.compact .player-right { opacity:.72; }
+        .music-player:hover .player-right, .music-player:focus-within .player-right { opacity:1; }
+        .player-track { min-width:0; display:flex; align-items:center; gap:10px; }
+        .player-cover { width:38px; height:38px; border-radius:9px; object-fit:cover; box-shadow:0 4px 15px rgba(0,0,0,.4); }
+        .player-text { min-width:0; }
+        .player-title { color:#fff; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .player-artist { color:var(--text-muted); font-size:.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .player-center { display:flex; flex-direction:column; align-items:center; gap:2px; min-width:210px; }
+        .player-controls { display:flex; align-items:center; gap:6px; }
+        .player-controls button { width:26px; height:26px; border:0; background:transparent; color:#dce6f5; cursor:pointer; border-radius:50%; font-size:1rem; }
+        .player-controls button:hover { color:var(--accent); background:rgba(0,212,255,.08); }
+        .player-controls .main-play { width:30px; height:30px; background:#fff; color:#070a10; font-size:.9rem; }
+        .player-controls .main-play:hover { background:var(--accent); color:#070a10; }
+        .progress-row { width:min(460px,100%); display:flex; align-items:center; gap:7px; font-size:.62rem; color:var(--text-muted); }
+        .progress-row input { flex:1; accent-color:var(--accent); }
+        .player-right { display:flex; align-items:center; justify-content:flex-end; gap:8px; }
+        .player-right input { width:70px; accent-color:var(--accent); }
+        .player-right button { background:transparent; border:0; color:#b9c5d6; cursor:pointer; font-size:1rem; }
+        #yt-player { width:1px; height:1px; position:absolute; left:-9999px; top:-9999px; }
+        body { padding-bottom:95px; }
+        @media (max-width:700px) { .music-player { left:5px; right:5px; bottom:5px; grid-template-columns:1fr auto; height:48px; padding:4px 7px; } .music-player:hover,.music-player:focus-within { height:58px; } .player-center { min-width:0; } .player-right { display:none; } .player-track { max-width:55vw; } .player-cover { width:34px;height:34px; } body{padding-bottom:76px;} }
+
+        #noResults { display: none; text-align: center; padding: 80px 20px; color: var(--text-muted); font-family: 'Orbitron', monospace; font-size: 0.9rem; letter-spacing: 2px; }
+        #noResults::before { content: '404'; display: block; font-size: 4rem; color: var(--border); margin-bottom: 16px; }
+
+        .game-card.hidden { display: none; }
+        .music-card.hidden { display: none; }
+        .category-section.hidden { display: none; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        .music-mini-control { position: fixed; bottom: 20px; right: 20px; z-index: 99; background: rgba(17, 22, 32, 0.9); border: 1px solid var(--border); padding: 10px 18px; border-radius: 30px; font-family: 'Orbitron', monospace; font-size: 0.75rem; color: var(--accent); cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .music-mini-control:hover { box-shadow: 0 0 15px var(--accent); transform: scale(1.05); }
+
+        .welcome-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(7, 10, 16, 0.85); backdrop-filter: blur(10px); z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .welcome-box { background: var(--card-bg); border: 2px solid var(--accent); border-radius: 16px; padding: 40px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 0 40px rgba(0, 212, 255, 0.25); position: relative; }
+        .welcome-title { font-family: 'Orbitron', monospace; font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 15px; color: #fff; text-transform: uppercase; }
+        .welcome-text { font-size: 1.05rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 30px; }
+        .enjoy-launch-btn { background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%); color: #070a10; border: none; padding: 16px 32px; border-radius: 8px; font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; letter-spacing: 2px; cursor: pointer; box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); transition: all 0.3s ease; text-transform: uppercase; width: 100%; }
+        .enjoy-launch-btn:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(168, 85, 247, 0.6); background: linear-gradient(135deg, var(--accent3) 0%, var(--accent2) 100%); color: #fff; }
+
+        #audio-container { position: fixed; top: -500px; left: -500px; width: 1px; height: 1px; pointer-events: none; }
+
+        @media (max-width: 600px) {
+            header { padding: 14px 16px; }
+            main { padding: 20px 16px 40px; }
+            h1 { font-size: 1.1rem; letter-spacing: 3px; }
+            .category-tabs { padding: 14px 16px 0; }
+            .cards-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+            .music-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .welcome-box { padding: 25px 20px; }
+            .welcome-title { font-size: 1.3rem; }
+            .action-buttons { flex-direction: column; width: 100%; max-width: 600px; }
+        }
+    
+    /* Favoris : simple bouton pour retrouver ses jeux/musiques */
+    .like-btn{position:absolute;top:10px;right:10px;z-index:20;width:38px;height:38px;border:0;border-radius:50%;background:rgba(10,10,18,.82);color:#fff;font-size:24px;line-height:38px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35);transition:.18s;backdrop-filter:blur(6px)}
+    .like-btn:hover{transform:scale(1.12)}
+    .like-btn.liked{color:#ff4f8b;background:rgba(255,79,139,.16)}
+    .game-card,.music-card{position:relative}
+        .music-player button{cursor:pointer}
+</style>
+</head>
+<body class="modal-open">
+
+<div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-box">
+        <h2 class="welcome-title">Prêt pour l'aventure ?</h2>
+        <p class="welcome-text">Bienvenue sur Zoltrogame ! Appuie sur le bouton pour accéder aux mini-jeux de Zoltrogame.</p>
+        <button class="enjoy-launch-btn" onclick="initSiteAndMusic()">🔊 ENJOY YOUR PLAY</button>
+    </div>
+</div>
+
+<div id="siteContent">
+
+    <header>
+        <h1>Bienvenue sur Zoltrogame !</h1>
+        <div class="search-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Rechercher un jeu..." autocomplete="off">
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn" onclick="toggleFullScreen()">🖥️ Plein Écran</button>
+            <button class="action-btn" onclick="playRandomGame()">🎲 Jeu Aléatoire</button>
+        </div>
+    </header>
+
+    <div class="category-tabs" id="categoryTabs">
+        <button class="tab-btn active" data-cat="all">🎮 Tous</button>
+        <!-- Nouvel onglet .io -->
+        <button class="tab-btn" data-cat="action">💥 Action / FPS</button>
+        <button class="tab-btn" data-cat="course">🏎️ Course / Conduite</button>
+        <button class="tab-btn" data-cat="simulation">✈️ Simulation</button>
+        <button class="tab-btn" data-cat="sandbox">🧱 Sandbox</button>
+        <button class="tab-btn" data-cat="imagination">🎨 Imagination</button>
+        <button class="tab-btn" data-cat="exploration">🌌 Exploration / Horreur</button>
+        <button class="tab-btn" data-cat="emulateur">🖥️ Émulateur</button>
+        <button class="tab-btn" data-cat="strategie">♟️ Stratégie</button>
+        <button class="tab-btn" data-cat="combat">🥊 Combat</button>
+        <button class="tab-btn" data-cat="io-survie">🧬 .IO / Survie</button>
+        <button class="tab-btn" data-cat="party">🎉 Party Games</button>
+        <button class="tab-btn" data-cat="puzzle">🧠 Radio / Reparation / Utile</button>
+        <button class="tab-btn" data-cat="rpg">🧙 RPG / Aventure</button>
+        <button class="tab-btn" data-cat="gestion">💰 Gestion / Économie</button>
+        <button class="tab-btn" data-cat="favoris">❤️ Mes favoris</button>
+        <button class="tab-btn" data-cat="musique">🎵 Musique</button>
+    </div>
+
+    <main id="mainContent">
+
+        <div class="category-section" data-category="action">
+            <div class="category-header">
+                <span class="category-icon">💥</span>
+                <span class="category-title">Action / FPS</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-action">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="vicecity.html" target="_blank" class="game-card" data-name="GTA Vice City" data-cat="action">
+                    <img class="static-img" src="https://upload.wikimedia.org/wikipedia/en/c/ce/Vice-city-cover.jpg" alt="GTA Vice City" loading="lazy">
+                    <img src="https://i.makeagif.com/media/2-02-2016/9fdG8w.gif" alt="Animation MakeAGif" width="400">
+                    <span class="game-tag">Action</span>
+                    <div class="game-info">
+                        <span>GTA Vice City</span>
+                    </div>
+                </a>
+                <a href="https://ev.io" target="_blank" class="game-card" data-name="ev.io" data-cat="action">
+                    <img class="static-img" src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2021/01/EVIO-1.jpg" alt="ev.io" loading="lazy">
+                    <img src="https://miro.medium.com/v2/resize:fit:1200/0*q-YUr6_ZnkaD56kF.gif" alt="Animation MakeAGif" width="400">
+					<span class="game-tag">FPS</span>
+                    <div class="game-info">
+                        <span>ev.io</span>
+                    </div>
+                </a>
+                <a href="https://shellshock.io/" target="_blank" class="game-card" data-name="Shellshock.io" data-cat="action">
+                    <img class="static-img" src="https://cowboysafari.io/data/image/ShellShockers.jpeg" alt="shellshock.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/q08fq4hja0wAAAAd/shell-shockers-game.gif" alt="Animation MakeAGif" width="400">
+                    <span class="game-tag">FPS</span>
+                    <div class="game-info">
+                        <span>Shellshock.io</span>
+                    </div>
+                </a>
+                <a href="https://deadshot.io/" target="_blank" class="game-card" data-name="Deadshot.io" data-cat="action">
+                    <img class="game-poster" src="https://deadshot.io/promo/thumbnail.png" alt="deadshot.io" loading="lazy">
+                    <span class="game-tag">FPS</span>
+                    <div class="game-info">
+                        <span>Deadshot.io</span>
+                    </div>
+                </a>
+                <a href="https://smashkarts.io/" target="_blank" class="game-card" data-name="Smashkart" data-cat="action">
+                    <img class="static-img" src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co2rc1.jpg" alt="smashkart" loading="lazy">
+                    <img src="https://media1.tenor.com/m/Xpyjb42Zd4kAAAAd/smash-karts-smash.gif" alt="Animation MakeAGif" width="400">
+                    <span class="game-tag">Action</span>
+                    <div class="game-info">
+                        <span>Smashkart</span>
+                    </div>
+                </a>
+                <a href="https://hordes.io/" target="_blank" class="game-card" data-name="Hordes.io" data-cat="action">
+                    <img class="static-img" src="https://cdn.webgamer.io/games/hordes-io/hordes-io-1.480x.85pc.webp" alt="hordes.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/kyTHkPMqH4kAAAAd/hordes-io-asian-express.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">RPG</span>
+                    <div class="game-info">
+                        <span>Hordes.io</span>
+                    </div>
+                </a>
+				<a href="https://yurkagon.github.io/Doom-Nukem-CSS/" target="_blank" class="game-card" data-name="Doom Nukem" data-cat="action">
+                    <img class="static-img" src="https://1gr.cz/fotky/idnes/15/103/org/ANB5edf29_83687474703a2f2f706c6179736d6172742e.png" alt="Doom Nukem" loading="lazy">
+                    <img src="https://media1.tenor.com/m/dp4wyZ0yRUcAAAAC/duke-nukem-gaming.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">RPG</span>
+                    <div class="game-info">
+                        <span>Doom Nukem</span>
+                    </div>
+                </a>
+				<a href="https://krunker.io" target="_blank" class="game-card" data-name="krunker" data-cat="action">
+                    <img class="static-img" src="https://ozogames.com/uploads/2025/09/Krunker-image-1.webp" alt="krunker" loading="lazy">
+                    <img src="https://media1.tenor.com/m/YsNe2pt7ql0AAAAd/krunker-aim.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">RPG</span>
+                    <div class="game-info">
+                        <span>Krunker</span>
+                    </div>
+                </a>
+				<a href="https://hl2.slqnt.dev/" target="_blank" class="game-card" data-name="half life 2" data-cat="action">
+                    <img class="static-img" src="https://cdn.neowin.com/news/images/uploaded/2024/11/1731709897_hl2wallpaper02_16x9.jpg" alt="half life 2" loading="lazy">
+                    <img src="https://media.giphy.com/media/jj7cAZppCaUhd06AcM/giphy.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Action</span>
+                    <div class="game-info">
+                        <span>half life 2</span>
+                    </div>
+                </a>
+				<a href="https://evowars.io/?v=2.18.14" target="_blank" class="game-card" data-name="evowars" data-cat="action">
+                    <img class="game-poster" src="https://play-lh.googleusercontent.com/Ygyskc4OqVQJQmOeMEcl6eDDKaVMXJOdS_oUCCuLWHNf5sDhZdn-rc20SBrdZ467U3KRAcpdnP7a4zFBsyuI" alt="evowars" loading="lazy">
+                    <span class="game-tag">Action</span>
+                    <div class="game-info">
+                        <span>evowars</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="course">
+            <div class="category-header">
+                <span class="category-icon">🏎️</span>
+                <span class="category-title">Course / Conduite</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-course">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://drift.io/?room=S3Xe3q" target="_blank" class="game-card" data-name="Drift.io" data-cat="course">
+                    <img class="game-poster" src="https://drift.io/571ab7e39e787232ba46.png" alt="Drift.io" loading="lazy">
+                    <span class="game-tag">Course</span>
+                    <div class="game-info">
+                        <span>Drift.io</span>
+                    </div>
+                </a>
+                <a href="https://slowroads.io/" target="_blank" class="game-card" data-name="Slowroads.io" data-cat="course">
+                    <img class="static-img" src="https://i.ytimg.com/vi/lCkZbdVmLHA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLASqZfOBsoeO_HDxfxbHhgzv6O51g" alt="slowroads.io" loading="lazy">
+                    <img src="https://images.steamusercontent.com/ugc/2059880067064343799/EAF7745E7883D53CC0D4D8394047002DF0BEAF66/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Conduite</span>
+                    <div class="game-info">
+                        <span>Slowroads.io</span>
+                    </div>
+                </a>
+                <a href="https://www.freeriderhd.com/" target="_blank" class="game-card" data-name="FreeRiderHD" data-cat="course">
+                    <img class="static-img" src="https://play-lh.googleusercontent.com/gx7loPEVIWuaWP3vAGW2DHtTnbN9zWFIaUeLGV4Mhp7mWoi1dCWc3P9eZJIpgLpIrOE" alt="FreeRiderHD" loading="lazy">
+                    <img src="https://media.tenor.com/G6CXOZeZxXgAAAAM/frhd-freeriderhd.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Course</span>
+                    <div class="game-info">
+                        <span>FreeRiderHD</span>
+                    </div>
+                </a>
+				 <a href="https://www.michaelbromley.co.uk/experiments/css-space-shooter/" target="_blank" class="game-card" data-name="Space shooter" data-cat="course">
+                    <img class="game-poster" src="https://lh5.ggpht.com/2EjBiMIS0EHU6cBYpjwOJjhK2Bs4DLQChCR1vqMmlB2RamlIQD1Kufp5N1oUvhdI7M5P9RB0P_-7ApPtSn1IRWMNZZmqXc80u2U" alt="Space shooter" loading="lazy">
+                    <span class="game-tag">Course</span>
+                    <div class="game-info">
+                        <span>Space shooter</span>
+                    </div>
+                </a>
+				  <a href="https://lolbeans.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="LOLBeans.io" data-cat="party">
+                    <img class="static-img" src="https://cdn-1.webcatalog.io/catalog/lolbeans-io/lolbeans-io-icon-filled-256.webp?v=1714775009854" alt="LOLBeans.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/uV5ECaHYNEsAAAAC/stern-stern%27d.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">course</span>
+                    <div class="game-info"><span>LOLBeans.io</span></div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Les autres catégories originales conservent la même structure mais avec target="_blank" et class="static-img"/"gif-img" -->
+        <div class="category-section" data-category="simulation">
+            <div class="category-header">
+                <span class="category-icon">✈️</span>
+                <span class="category-title">Simulation</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-simulation">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://www.geo-fs.com/" target="_blank" class="game-card" data-name="Geo-fs" data-cat="simulation">
+                    <img class="static-img" src="https://www.geo-fs.com/images/squareposter.jpg" alt="geo-fs" loading="lazy">
+                    <img src="https://media1.tenor.com/m/qu8urrkih48AAAAd/geo-fs-su35.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Vol</span>
+                    <div class="game-info"><span>Geo-fs</span></div>
+                </a>
+                <a href="https://flight.tarmizi.id/" target="_blank" class="game-card" data-name="Flight.tarmizi.id" data-cat="simulation">
+                    <img class="game-poster" src="https://flight.tarmizi.id/assets/images/screenshot.jpg" alt="flight.tarmizi.id" loading="lazy">
+                    <span class="game-tag">Vol</span>
+                    <div class="game-info"><span>Flight.tarmizi.id</span></div>
+                </a>
+                <a href="https://worldflightsim.com/" target="_blank" class="game-card" data-name="Worldflightsim" data-cat="simulation">
+                    <img class="static-img" src="https://worldflightsim.com/city-rio.jpg" alt="worldflightsim" loading="lazy">
+                    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjRmc2VwZzBiYjZucGl5NmcyZGRrYmh6c3hlOGJ0ang0NnY0eDg4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8HQ8QxycjHwSIcy3Ac/giphy.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Vol</span>
+                    <div class="game-info"><span>Worldflightsim</span></div>
+                </a>
+                <a href="https://framesynthesis.com/drivingsimulator/maps/" target="_blank" class="game-card" data-name="Framesynthesis" data-cat="simulation">
+                    <img class="game-poster" src="https://framesynthesis.com/assets/images/thumbnails/drivingsimulatorgm.jpg" alt="framesynthesis" loading="lazy">
+                    <span class="game-tag">Conduite</span>
+                    <div class="game-info"><span>Framesynthesis</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="sandbox">
+            <div class="category-header">
+                <span class="category-icon">🧱</span>
+                <span class="category-title">Sandbox</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-sandbox">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://bloxd.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Bloxd.io" data-cat="sandbox">
+                    <img class="static-img" src="https://www.google.com/s2/favicons?domain=bloxd.io&sz=256" alt="Bloxd.io" loading="lazy">
+					<img src="https://i.makeagif.com/media/10-27-2023/YHzRdQ.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Sandbox</span>
+                    <div class="game-info"><span>Bloxd.io</span></div>
+                </a>
+                <a href="https://classic.minecraft.net/" target="_blank" class="game-card" data-name="Minecraft 1.12.2" data-cat="sandbox">
+                    <img class="static-img" src="https://store-images.s-microsoft.com/image/apps.17382.13510798885735219.9735d495-578c-4a4c-b892-3eb3a780b3a0.d3792486-cf98-40c0-a2c1-d6443f0e2b70" alt="Minecraft" loading="lazy">
+                    <img src="https://i.gifer.com/embedded/download/78hG.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Sandbox</span>
+                    <div class="game-info"><span>Minecraft</span></div>
+                </a>
+                <a href="https://voxiom.io/" target="_blank" class="game-card" data-name="Voxiom.io" data-cat="sandbox">
+                    <img class="game-poster" src="https://nemoplay.com/wp-content/uploads/2025/12/voxiom.webp" alt="voxiom.io" loading="lazy">
+                    <span class="game-tag">Sandbox</span>
+                    <div class="game-info"><span>Voxiom.io</span></div>
+                </a>
+                <a href="https://littlealchemy2.com/" target="_blank" class="game-card" data-name="Little Alchemy 2" data-cat="sandbox">
+                    <img class="game-poster" src="https://play-lh.googleusercontent.com/h7XmDr5kfDyolWNR1nJVjOJmZeWNo661z_LCMlJEhFiJcoI5eWya-U5sUSfrQ4Bz5ac=w526-h296-rw" alt="littlealchemy2" loading="lazy">
+                    <span class="game-tag">Puzzle</span>
+                    <div class="game-info"><span>Little Alchemy 2</span></div>
+                </a>
+                <a href="https://orb.farm" target="_blank" class="game-card" data-name="Orb Farm" data-cat="sandbox">
+                    <img class="game-poster" src="https://recurse-uploads-production.s3.amazonaws.com/2fd5a80e-4a25-4f7b-ab8c-3c7076455d4e/image.png" alt="orbfarm" loading="lazy">
+                    <span class="game-tag">Sandbox</span>
+                    <div class="game-info"><span>Orb Farm</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="exploration">
+            <div class="category-header">
+                <span class="category-icon">🌌</span>
+                <span class="category-title">Exploration / Horreur</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-exploration">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="http://clement.deb.taur.free.fr/Backrooms.html" target="_blank" class="game-card" data-name="The Backrooms" data-cat="exploration">
+                    <img class="static-img" src="https://static.wikia.nocookie.net/kane-pixels-backrooms/images/1/1b/Backrooms_1.png/revision/latest?cb=20241101031754" alt="Backrooms" loading="lazy">
+                    <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUyajE2YzJxYTdnYmxhM2ZtbXQ1bmNnMnA4Z2o1Zm5yOHdnYzdsNDYxMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/POqXbP8350CeKzzGGQ/200w.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">exploration</span>
+                    <div class="game-info"><span>The Backrooms</span></div>
+                </a>
+                <a href="https://irv77.github.io/hd_fnaf/1/" target="_blank" class="game-card" data-name="FNAF" data-cat="horreur">
+                    <img class="static-img" src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA18362_00/1/i_cd6a177c374f229f9cd8e1164a78d49f78af97820747d480daf8cdd3e965c248/i/icon0.png" alt="FNAF" loading="lazy">
+                    <img src="https://i.pinimg.com/originals/11/be/70/11be70930b1800fc7c790afb8e04a0f1.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF</span></div>
+                </a>
+                <a href="https://irv77.github.io/hd_fnaf/2/" target="_blank" class="game-card" data-name="FNAF 2" data-cat="horreur">
+                    <img class="static-img" src="https://m.media-amazon.com/images/I/81HBpJd2h8L.png" alt="FNAF 2" loading="lazy">
+                    <img src="https://i.makeagif.com/media/4-02-2020/-kSJtT.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF 2</span></div>
+                </a>
+                <a href="https://irv77.github.io/hd_fnaf/3/" target="_blank" class="game-card" data-name="FNAF 3" data-cat="horeur">
+                    <img class="static-img" src="https://m.media-amazon.com/images/I/81paxGYlcqL.png" alt="FNAF 3" loading="lazy">
+                    <img src="https://i.makeagif.com/media/3-24-2015/6LLqFK.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF 3</span></div>
+                </a>
+                <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNMTwNhS4WEdkQ-hBg8f_y4ZoHGrwjbr51iA&s" target="_blank" class="game-card" data-name="FNAF 4" data-cat="horreur">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNMTwNhS4WEdkQ-hBg8f_y4ZoHGrwjbr51iA&s" alt="FNAF 4" loading="lazy">
+                    <img src="https://i.makeagif.com/media/8-13-2015/glpchT.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF 4</span></div>
+                </a>
+                <a href="https://irv77.github.io/hd_fnaf/w/" target="_blank" class="game-card" data-name="FNAF World" data-cat="horreur">
+                    <img class="static-img" src="https://fnaffree.io/data/image/game/fnaf-world/fnaf-world.jpg" alt="FNAF World" loading="lazy">
+                    <img src="https://static.wikia.nocookie.net/fnaf-w/images/7/7c/Bash_Jam.gif/revision/latest?cb=20160223001755" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF World</span></div>
+                </a>
+                <a href="https://irv77.github.io/hd_fnaf/sl/" target="_blank" class="game-card" data-name="FNAF Sister Location" data-cat="horreur">
+                    <img class="static-img" src="https://static.wikia.nocookie.net/fnaf-sister-location/images/c/c4/SLIcon.jpg/revision/latest/thumbnail/width/360/height/360?cb=20160801195954" alt="FNAF Sister Location" loading="lazy">
+                    <img src="https://i.makeagif.com/media/12-04-2016/hC5_vf.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF Sister Location</span></div>
+                </a>
+                <a href="https://irv77.github.io/hd_fnaf/ps/" target="_blank" class="game-card" data-name="FNAF Pizzeria Simulator" data-cat="horeur">
+                    <img class="static-img" src="https://static.wikia.nocookie.net/freddy-fazbears-pizzeria-simulator/images/d/d3/Fnaf6icon.png/revision/latest/thumbnail/width/360/height/450?cb=20190824045400" alt="FNAF Pizzeria Simulator" loading="lazy">
+                    <img src="https://i.makeagif.com/media/3-12-2018/VwmYvI.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF Pizzeria Simulator</span></div>
+                </a>
+                <a href="https://irv77.github.io/hd_fnaf/ucn/" target="_blank" class="game-card" data-name="FNAF UCN" data-cat="horeur">
+                    <img class="static-img" src="https://play-lh.googleusercontent.com/pB7dsLLcRgADtFpEPeKc5mSyAn1E1JzrdQ1V7-Y5hizgub3G8e9UJIc5opC9mYXKSBw" alt="FNAF UCN" loading="lazy">
+                    <img src="https://i.makeagif.com/media/6-27-2018/Ev3_77.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>FNAF UCN</span></div>
+                </a>
+				<a href="https://g.deev.is/fnaw/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="fnaw" data-cat="horreur">
+                    <img class="game-poster" src="https://g.deev.is/fnaw.jpg" alt="fnaw" loading="lazy">
+                    <span class="game-tag">horreur</span>
+                    <div class="game-info"><span>fnaw</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="imagination">
+            <div class="category-header">
+                <span class="category-icon">🤯</span>
+                <span class="category-title">Imagination</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-imagination">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://lostgamer.io/" target="_blank" class="game-card" data-name="Lostgamer" data-cat="imagination">
+                    <img class="game-poster" src="https://cdn-1.webcatalog.io/catalog/lostgamer-io/lostgamer-io-icon-filled-256.png?v=1714780801899" alt="lostagamer" loading="lazy">
+                    <span class="game-tag">Geo</span>
+                    <div class="game-info"><span>Lostgamer</span></div>
+                </a>
+				<a href="https://hollowguessr.pages.dev" target="_blank" class="game-card" data-name="hollowguessr" data-cat="imagination">
+                    <img class="game-poster" src="https://preview.redd.it/i-made-a-geoguessr-style-game-for-hollow-knight-v0-0jqp0svthzhe1.png?width=1636&format=png&auto=webp&s=f289f544ad7545897a91b408ac2637daea149228" alt="hollowguessr" loading="lazy">
+                    <span class="game-tag">Geo</span>
+                    <div class="game-info"><span>Hollowguessr</span></div>
+                </a>
+                <a href="http://weavesilk.com/" target="_blank" class="game-card" data-name="Weavesilk" data-cat="imagination">
+                    <img class="static-img" src="https://weavesilk.s3.amazonaws.com/v4/uploads/thumb/gnk4rqhc4k.png" alt="weavesilk" loading="lazy">
+                    <img src="https://i.makeagif.com/media/7-11-2014/LhVg6u.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Draw</span>
+                    <div class="game-info"><span>Weavesilk</span></div>
+                </a>
+                <a href="https://lines.chromeexperiments.com/" target="_blank" class="game-card" data-name="Land Lines" data-cat="imagination">
+                    <img class="game-poster" src="https://images.sftcdn.net/images/t_app-cover-s,f_auto/p/a37ac445-0ce7-43c6-ad71-bd371a1e8641/2202378759/land-lines-landlines-s1.jpg" alt="land lines" loading="lazy">
+                    <span class="game-tag">Draw</span>
+                    <div class="game-info"><span>Land Lines</span></div>
+                </a>
+                <a href="https://skribbl.io/" target="_blank" class="game-card" data-name="skribbl" data-cat="imagination">
+                    <img class="static-img" src="https://imgmediagumlet.lbb.in/media/2020/05/5eb9149cdda0dc33a2fde6bc_1589187740390.jpg" alt="skribbl" loading="lazy">
+                    <img src="https://i.makeagif.com/media/4-08-2019/CGsHbu.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Draw</span>
+                    <div class="game-info"><span>Skribbl</span></div>
+                </a>
+				<a href="https://oskarstalberg.com/Townscaper/" target="_blank" class="game-card" data-name="Townscaper" data-cat="imagination">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVl8vx6Vk8g49avoKVfP1nsT0_qkOgTeBOeDTV2YnOVA&s" alt="Townscaper" loading="lazy">
+                    <img src="https://s3.ezgif.com/tmp/ezgif-386714366eb2eacc.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Create</span>
+                    <div class="game-info"><span>Townscaper</span></div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category-section" data-category="emulateur">
+            <div class="category-header">
+                <span class="category-icon">🖥️</span>
+                <span class="category-title">Émulateur</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-emulateur">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://emupedia.net/beta/emuos/" target="_blank" class="game-card" data-name="emupedia.net" data-cat="emulateur">
+                    <img class="game-poster" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcjZEacPbAGY81Cb6O7k1D68OgBAIRQ8d3uw&s" alt="emupedia" loading="lazy">
+                    <span class="game-tag">old game</span>
+                    <div class="game-info"><span>emupedia</span></div>
+                </a>
+                <a href="https://arcadespot.com/" target="_blank" class="game-card" data-name="arcade spot" data-cat="emulateur">
+                    <img class="game-poster" src="https://www.kidssearch.com/images/arcade-spot.png" alt="arcadespot" loading="lazy">
+                    <span class="game-tag">old game</span>
+                    <div class="game-info"><span>arcade spot</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="strategie">
+            <div class="category-header">
+                <span class="category-icon">♟️</span>
+                <span class="category-title">Stratégie</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-strategie">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://openfront.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="OpenFront" data-cat="strategie">
+                    <img class="static-img" src="https://igre.games/wp-content/uploads/thumbs/custom/O/Openfront.webp" alt="OpenFront" loading="lazy">
+					<img src="https://media.tenor.com/JaVjl1pkm6gAAAAM/openfront-of.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Stratégie</span>
+                    <div class="game-info"><span>OpenFront</span></div>
+                </a>
+                <a href="https://territorial.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Territorial.io" data-cat="strategie">
+                    <img class="game-poster" src="https://play-lh.googleusercontent.com/jzLRWQ4M6iLr6OpUGNWrmlZ3hvdeNI90UAjNL6J66mOeFCrle_iSi1WFXQDS9hKHnYrx6KQI80Zpxq0yeNwLRg" alt="Territorial.io" loading="lazy">
+                    <span class="game-tag">Stratégie</span>
+                    <div class="game-info"><span>Territorial.io</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="combat">
+            <div class="category-header">
+                <span class="category-icon">🥊</span>
+                <span class="category-title">Combat</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-combat">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://kirka.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Kirka.io" data-cat="combat">
+                    <img class="static-img" src="https://images.gamevgames.com/cdn-cgi/image/width=240,quality=75,format=auto/games/file_69f270e186703.webp" alt="Kirka.io" loading="lazy">
+					<img src="https://media1.tenor.com/m/c__2_pcwPrUAAAAC/kirka-kirkaio.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">FPS</span>
+                    <div class="game-info"><span>Kirka.io</span></div>
+                </a>
+                <a href="https://survev.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Survev.io" data-cat="combat">
+                    <img class="static-img" src="https://cdn-1.webcatalog.io/catalog/surviv-io/surviv-io-icon-filled-256.png?v=1714776036221" alt="Survev.io" loading="lazy">
+					<img src="https://media1.tenor.com/m/GEqxEfr259AAAAAd/survivio-surviv-io-win.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Battle Royale</span>
+                    <div class="game-info"><span>Survev.io</span></div>
+                </a>
+                <a href="https://venge.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Venge.io" data-cat="combat">
+                    <img class="game-poster" src="https://venge.io/thumbnail.jpg" alt="Venge.io" loading="lazy">
+                    <span class="game-tag">FPS</span>
+                    <div class="game-info"><span>Venge.io</span></div>
+                </a>
+                <a href="https://diep.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Diep.io" data-cat="combat">
+                    <img class="static-img" src="https://monjeux.fr/wp-content/uploads/2025/11/diepio.webp" alt="Diep.io" loading="lazy">
+					<img src="https://media.tenor.com/jhabu9mXfhMAAAAM/bela-diep.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Combat</span>
+                    <div class="game-info"><span>Diep.io</span></div>
+                </a>
+                <a href="https://bonk.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Bonk.io" data-cat="combat">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtzNr_KOmzmZ-nsCn8O1eaTLcenjrAywBrt1mPSDxHlw&s" alt="Bonk.io" loading="lazy">
+					<img src="https://media.tenor.com/MI88fi2xKwYAAAAM/bonkio-bonk-io.gif" alt="Animation MakeGif" width="400">
+                    <span class="game-tag">Combat</span>
+                    <div class="game-info"><span>Bonk.io</span></div>
+                </a>
+                <a href="https://2v2.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="2v2.io" data-cat="combat">
+                    <img class="game-poster" src="https://www.google.com/s2/favicons?domain=2v2.io&sz=256" alt="2v2.io" loading="lazy">
+                    <span class="game-tag">Combat</span>
+                    <div class="game-info"><span>2v2.io</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="io-survie">
+            <div class="category-header">
+                <span class="category-icon">🧬</span>
+                <span class="category-title">.IO / Survie</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-io-survie">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://florr.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Florr.io" data-cat="io-survie">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZPabpMLenubt_EZDIFwFKBQ3DB_eyBBF-ZvrwZIZEsA&s=10" alt="Florr.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/xe3xHwOhldUAAAAd/florrio-games.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Florr.io</span></div>
+                </a>
+                <a href="https://wormate.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Wormate.io" data-cat="io-survie">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFoQ59Locz5pyPxIwHsiLC4sA3RsEYim0FFlPAEYpZiA&s" alt="Wormate.io" loading="lazy">
+                    <img src="https://i.makeagif.com/media/9-19-2022/03Q_36.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Wormate.io</span></div>
+                </a>
+                <a href="https://hexanaut.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Hexanaut.io" data-cat="io-survie">
+                    <img class="game-poster" src="https://www.google.com/s2/favicons?domain=hexanaut.io&sz=256" alt="Hexanaut.io" loading="lazy">
+                    <span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Hexanaut.io</span></div>
+                </a>
+                <a href="https://evoworld.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="EvoWorld.io" data-cat="io-survie">
+                    <img class="static-img" src="https://www.google.com/s2/favicons?domain=evoworld.io&sz=256" alt="EvoWorld.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/KQJTnb5SLJ0AAAAC/evoworld.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>EvoWorld.io</span></div>
+                </a>
+                <a href="https://taming.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Taming.io" data-cat="io-survie">
+                    <img class="game-poster" src="https://img.itch.zone/aW1nLzQ1NDU3MzUucG5n/original/FbhQYb.png" alt="Taming.io" loading="lazy">
+                    <span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Taming.io</span></div>
+                </a>
+                <a href="https://mope.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Mope.io" data-cat="io-survie">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrmeKFZKE-q3oeBa9jvfJotpMBU7YfGORA1eJDpBo8Q68udnkUlb-py50&s=10" alt="Mope.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/fNlOF_yCdcgAAAAd/mope-mopeio.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Mope.io</span></div>
+                </a>
+                <a href="https://deeeep.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Deeeep.io" data-cat="io-survie">
+                    <img class="static-img" src="https://mir-s3-cdn-cf.behance.net/projects/404/55922350709407.Y3JvcCwyMDg5LDE2MzUsMCwyMjY.png" alt="Deeeep.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/AYP561CrEaMAAAAd/deeeepio-deepio.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Deeeep.io</span></div>
+                </a>
+                <a href="https://arras.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Arras.io" data-cat="io-survie">
+                    <img class="static-img" src="https://i.imgur.com/rWzU5J1g.jpg" alt="Arras.io" loading="lazy">
+					<img src="https://media.tenor.com/PMVVXreTobEAAAAM/diep-io-death.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Arras.io</span></div>
+                </a>
+                <a href="https://gulper.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Gulper.io" data-cat="io-survie">
+                    <img class="game-poster" src="https://sgames.org/image/game/88e57894-4050-4a3d-abd8-653db2109bca.jpg" alt="Gulper.io" loading="lazy">
+                    <span class="game-tag">.IO / Survie</span>
+                    <div class="game-info"><span>Gulper.io</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="party">
+            <div class="category-header">
+                <span class="category-icon">🎉</span>
+                <span class="category-title">Party Games</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-party">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://clicktheredbutton.com/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Click The Red Button" data-cat="party">
+                    <img class="game-poster" src="https://www.shutterstock.com/image-vector/red-button-start-stop-icon-260nw-514660246.jpg" alt="Click The Red Button" loading="lazy">
+                    <span class="game-tag">Party Game</span>
+                    <div class="game-info"><span>Click The Red Button</span></div>
+                </a>
+                <a href="https://gartic.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Gartic.io" data-cat="party">
+                    <img class="static-img" src="https://play-lh.googleusercontent.com/-xOyPSYnFL6goAfo5v7JwPzD1i2P6CIRu0BTTGHQJI_ExaFlf0F1vBlwBKoVIFJS2mOdrS_W9oK1gXaJxe9REA" alt="Gartic.io" loading="lazy">
+                    <img src="https://media1.tenor.com/m/Dl0Ecoy2sIoAAAAC/gartic-garticio.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">Party Game</span>
+                    <div class="game-info"><span>Gartic.io</span></div>
+                </a>
+                <a href="https://garticphone.com/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Gartic Phone" data-cat="party">
+                    <img class="static-img" src="https://play-lh.googleusercontent.com/UhSFhVYU54nkkCPbaepNxN6Q4OP_N60aMvsHEe2gk1XD8KyCWQo4BX4Dpkh-LKL7m8G08oINrSXDANmFGGKb" alt="Gartic Phone" loading="lazy">
+                    <img src="https://media1.tenor.com/m/45vsRstyPeUAAAAC/gartic-phone-gartic-phone-among-us.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">Party Game</span>
+                    <div class="game-info"><span>Gartic Phone</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="puzzle">
+            <div class="category-header">
+                <span class="category-icon">🧠</span>
+                <span class="category-title">Radio / Réparation / Utile</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-puzzle">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://fr.ifixit.com/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="iFixit" data-cat="puzzle">
+                    <img class="static-img" src="https://images.seeklogo.com/logo-png/25/1/ifixit-logo-png_seeklogo-257675.png" alt="iFixit" loading="lazy">
+                    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnRtdWRwdnFpdDU1b2t0Z3diNzN5bHQzeXVyaWN2YjhyNGFxNnM2ciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/St3GH6GEpEnBiehPK6/200.webp" alt="Animation MakeGif" width="400">
+					<span class="game-tag">Réflexion</span>
+                    <div class="game-info"><span>iFixit</span></div>
+                </a>
+                <a href="https://radiocast.co/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Radiocast" data-cat="puzzle">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiG8QKhkDjqFdoj7c-YDR8j9rhApoMJIASTjVAvplNvbtjrC8kZXqK6lp6&s=10" alt="Radiocast" loading="lazy">
+                    <img src="https://media1.tenor.com/m/Dv_KxCXHtI8AAAAC/ham-radio-amateur-radio.gif" alt="Animation MakeGif" width="400">
+					<span class="game-tag">Réflexion</span>
+                    <div class="game-info"><span>Radiocast</span></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="category-section" data-category="gestion">
+            <div class="category-header">
+                <span class="category-icon">💰</span>
+                <span class="category-title">Gestion / Économie</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-gestion">0 jeux</span>
+            </div>
+            <div class="cards-grid">
+                <a href="https://richup.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Richup.io" data-cat="gestion">
+                    <img class="static-img" src="https://richup.io/og_image.png" alt="Richup.io" loading="lazy">
+                    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHZ0ZGsybjZ6azQ2bnlzMXdnMTlha21yMHlnMDdkN2o3OXNpczR2ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/NYBVJUGdiJdG8/giphy.webp" alt="Animation MakeGif" width="400">
+					<span class="game-tag">Économie</span>
+                    <div class="game-info"><span>Richup.io</span></div>
+                </a>
+            </div>
+        </div>
+        <div class="category-section hidden" data-category="musique">
+            <div class="category-header">
+                <span class="category-icon">🎵</span>
+                <span class="category-title">Bibliothèque Musicale YouTube</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-musique">0 titres</span>
+            </div>
+            <div class="youtube-search-box" id="youtubeSearchBox">
+                <input id="youtubeSearchInput" type="search" placeholder="Rechercher une musique sur YouTube..." autocomplete="off">
+                <button type="button" id="youtubeSearchButton">🔎 Rechercher</button>
+            </div>
+            <div class="youtube-search-status" id="youtubeSearchStatus"></div>
+            <div class="music-grid" id="youtubeMusicGrid">
+                <!-- Gardé tel quel -->
+                <div class="music-card" id="track-D5d5xinZI3E" data-name="Calling (Spider-Man: Across the Spider-Verse)" data-cat="musique">
+                    <div class="cover-wrapper" onclick="toggleTrack('D5d5xinZI3E')">
+                        <img src="https://i.ytimg.com/vi/D5d5xinZI3E/hqdefault.jpg" alt="Spider Man">
+                        <div class="play-overlay-icon">▶</div>
+                    </div>
+                    <div class="music-title">Calling (Spider-Man: Across the Spider-Verse)</div>
+                    <div class="music-artist">Metro Boomin</div>
+                </div>
+                <!-- Reste des musiques... j'ai gardé le premier pour la brièveté du snippet, n'oublie pas de laisser tes autres musiques si tu fais un copier/coller -->
+            </div>
+        </div>
+
+        <div id="noResults">Aucun résultat ne correspond à votre recherche.</div>
+
+    </main>
+
+    <div class="music-player compact" id="musicPlayer" onmouseenter="expandMusicPlayer()" onmouseleave="collapseMusicPlayer()">
+        <div class="player-track">
+            <img id="playerCover" class="player-cover" src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Pochette">
+            <div class="player-text"><div id="playerTitle" class="player-title">Bohemian Rhapsody</div><div id="playerArtist" class="player-artist">Queen</div></div>
+        </div>
+        <div class="player-center">
+            <div class="player-controls">
+                <button onclick="previousTrack()" title="Précédent">⏮</button>
+                <button class="main-play" id="playerPlay" onclick="toggleMusic()">▶</button>
+                <button onclick="nextTrack()" title="Suivant">⏭</button>
+            </div>
+            <div class="progress-row"><span id="currentTime">0:00</span><input id="progressBar" type="range" min="0" max="100" value="0" step="0.1" oninput="seekMusic(this.value)"><span id="duration">0:00</span></div>
+        </div>
+        <div class="player-right"><button onclick="toggleMute()" id="volumeIcon">🔊</button><input id="volumeBar" type="range" min="0" max="100" value="80" oninput="setVolume(this.value)"></div>
+    </div>
+</div>
+
+<div id="audio-container"></div>
+
+<script>
+    const catLabels = {
+        'action': 'Action / FPS',
+        'course': 'Course / Conduite',
+        'simulation': 'Simulation',
+        'sandbox': 'Sandbox',
+        'imagination': 'Imagination',
+        'exploration': 'Exploration / Horreur',
+        'emulateur': 'Émulateur',
+        'io': 'Jeux .io / Multijoueur',
+        'strategie': 'Stratégie',
+        'combat': 'Combat',
+        'io-survie': '.IO / Survie',
+        'party': 'Party Games',
+        'puzzle': 'Réflexion / Puzzle',
+        'rpg': 'RPG / Aventure',
+        'gestion': 'Gestion / Économie',
+        'musique': 'Musique'
+    };
+
+    function updateCounts() {
+        const categories = ['action', 'course', 'simulation', 'sandbox', 'imagination', 'exploration', 'emulateur', 'io', 'strategie', 'combat', 'io-survie', 'party', 'puzzle', 'rpg', 'gestion', 'musique'];
+        
+        categories.forEach(cat => {
+            const section = document.querySelector(`.category-section[data-category="${cat}"]`);
+            if (section) {
+                const totalVisibleCards = section.querySelectorAll('.game-card:not(.hidden), .music-card:not(.hidden)').length;
+                const countElem = document.getElementById(`count-${cat}`);
+                if (countElem) {
+                    if (cat === 'musique') {
+                        countElem.textContent = `${totalVisibleCards} titre${totalVisibleCards > 1 ? 's' : ''}`;
+                    } else {
+                        countElem.textContent = `${totalVisibleCards} jeu${totalVisibleCards > 1 ? 's' : ''}`;
+                    }
+                }
+            }
+        });
+    }
+
+    let activeCat = 'all';
+    let youtubeSearchTimeout = null;
+    const YOUTUBE_API_KEY = 'AIzaSyCAU4XUD4LyOoFeW3WI1FEYcJ3uytPPAuk';
+
+    function applyFilter(q) {
+        q = q.toLowerCase().trim();
+        const sections = document.querySelectorAll('.category-section');
+        let totalVisible = 0;
+
+        sections.forEach(section => {
+            const sectionCat = section.dataset.category.toLowerCase();
+            const isMusicSection = (sectionCat === 'musique');
+            
+            if (activeCat === 'musique' && !isMusicSection) {
+                section.classList.add('hidden');
+                return;
+            }
+            if (activeCat !== 'musique' && activeCat !== 'favoris' && isMusicSection) {
+                section.classList.add('hidden');
+                return;
+            }
+
+            const catMatch = (activeCat === 'all' || activeCat.toLowerCase() === sectionCat);
+
+            const cards = section.querySelectorAll('.game-card, .music-card');
+            let sectionVisible = 0;
+
+            cards.forEach(card => {
+                const name = card.dataset.name ? card.dataset.name.toLowerCase() : '';
+                const cardCat = card.dataset.cat;
+                const cardCatLabel = catLabels[cardCat] || '';
+                const matchFavorite = isFavorite(card);
+
+                const matchSearch = !q || name.includes(q) || cardCatLabel.toLowerCase().includes(q);
+                const matchCat = activeCat === 'favoris' ? matchFavorite : catMatch;
+
+                if (matchSearch && matchCat) {
+                    card.classList.remove('hidden');
+                    sectionVisible++;
+                    totalVisible++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            section.classList.toggle('hidden', sectionVisible === 0);
+        });
+
+        document.getElementById('noResults').style.display = (totalVisible === 0) ? 'block' : 'none';
+        updateCounts();
+    }
+
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value;
+        applyFilter(query);
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCat = btn.dataset.cat;
+
+            const ytBox = document.getElementById('youtubeSearchBox');
+            if (ytBox) ytBox.classList.toggle('active', activeCat === 'musique');
+            if (activeCat === 'musique') {
+                searchInput.placeholder = "Filtrer les musiques...";
+            } else if (activeCat === 'favoris') {
+                searchInput.placeholder = "Rechercher dans mes favoris...";
+            } else {
+                searchInput.placeholder = "Rechercher un jeu...";
+            }
+
+            applyFilter(searchInput.value);
+        });
+    });
+
+    injectCategoryLabels();
+    injectLikes();
+    setupYouTubeMusicSearch();
+    applyFilter('');
+
+    /* FONCTIONNALITES PLEIN ECRAN ET JEU ALEATOIRE */
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error(`Erreur lors du passage en plein écran: ${err.message}`);
+            });
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    }
+
+    function playRandomGame() {
+        const visibleGames = document.querySelectorAll('.game-card:not(.hidden)');
+        if (visibleGames.length > 0) {
+            const randomIndex = Math.floor(Math.random() * visibleGames.length);
+            const randomGameUrl = visibleGames[randomIndex].href;
+            window.open(randomGameUrl, '_blank');
+        } else {
+            alert("Aucun jeu n'est actuellement visible !");
+        }
+    }
+    /* FIN NOUVELLES FONCTIONNALITES */
+
+    let isPlaying = false;
+    let currentVideoId = 'fJ9rUzIMcZQ';
+    let ytPlayer = null;
+    let playerReady = false;
+    let progressTimer = null;
+    let currentTrackIndex = 0;
+    let shouldAutoPlay = false;
+    let collapseTimer = null;
+
+    let musicTracks = Array.from(document.querySelectorAll('.music-card')).map(card => ({
+        id: card.id.replace('track-',''),
+        title: card.querySelector('.music-title')?.textContent.trim() || 'Musique',
+        artist: card.querySelector('.music-artist')?.textContent.trim() || '',
+        cover: card.querySelector('.cover-wrapper img')?.src || ''
+    }));
+
+    function formatTime(sec) {
+        sec = Math.max(0, Math.floor(sec || 0));
+        return Math.floor(sec/60) + ':' + String(sec%60).padStart(2,'0');
+    }
+
+    function injectCategoryLabels() {
+        document.querySelectorAll('.game-card').forEach(card => {
+            const tag = card.querySelector('.game-tag');
+            if (!tag) return;
+            const cat = card.dataset.cat || '';
+            if (catLabels[cat]) tag.textContent = catLabels[cat];
+        });
+    }
+
+    function refreshMusicTracks() {
+        musicTracks = Array.from(document.querySelectorAll('.music-card')).map(card => ({
+            id: card.id.replace('track-',''),
+            title: card.querySelector('.music-title')?.textContent.trim() || 'Musique',
+            artist: card.querySelector('.music-artist')?.textContent.trim() || '',
+            cover: card.querySelector('.cover-wrapper img')?.src || ''
+        }));
+        if (currentTrackIndex >= musicTracks.length) currentTrackIndex = Math.max(0, musicTracks.length - 1);
+    }
+
+    function createYouTubeMusicCard(item) {
+        const id = item.id?.videoId;
+        if (!id || document.getElementById('track-' + id)) return;
+        const title = item.snippet?.title || 'Musique';
+        const channel = item.snippet?.channelTitle || '';
+        const thumb = item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+        const card = document.createElement('div');
+        card.className = 'music-card';
+        card.id = 'track-' + id;
+        card.dataset.name = title;
+        card.dataset.cat = 'musique';
+        card.innerHTML = `
+            <div class="cover-wrapper" onclick="toggleTrack('${id}')">
+                <img src="${thumb.replace(/\"/g,'&quot;')}" alt="${title.replace(/\"/g,'&quot;')}">
+                <div class="play-overlay-icon">▶</div>
+            </div>
+            <div class="music-title"></div>
+            <div class="music-artist"></div>`;
+        card.querySelector('.music-title').textContent = title;
+        card.querySelector('.music-artist').textContent = channel;
+        document.getElementById('youtubeMusicGrid').prepend(card);
+    }
+
+    async function searchYouTubeMusic(query) {
+        query = query.trim();
+        if (!query) return;
+        const status = document.getElementById('youtubeSearchStatus');
+        status.textContent = '🔎 Recherche sur YouTube...';
+        try {
+            const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&maxResults=12&q=${encodeURIComponent(query)}&key=${encodeURIComponent(YOUTUBE_API_KEY)}`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (!res.ok || data.error) throw new Error(data.error?.message || 'Erreur YouTube');
+            (data.items || []).forEach(createYouTubeMusicCard);
+            refreshMusicTracks();
+            injectLikes();
+            status.textContent = `${(data.items || []).length} résultat(s) ajouté(s).`;
+            if (activeCat !== 'musique') {
+                document.querySelector('[data-cat="musique"]')?.click();
+            } else {
+                applyFilter('');
+            }
+        } catch (err) {
+            console.error(err);
+            status.textContent = '❌ Impossible de rechercher sur YouTube. Vérifie la clé API et les restrictions de l’API.';
+        }
+    }
+
+    function setupYouTubeMusicSearch() {
+        const box = document.getElementById('youtubeSearchBox');
+        const input = document.getElementById('youtubeSearchInput');
+        const button = document.getElementById('youtubeSearchButton');
+        if (!box || !input || !button) return;
+        const run = () => searchYouTubeMusic(input.value);
+        button.addEventListener('click', run);
+        input.addEventListener('keydown', e => { if (e.key === 'Enter') run(); });
+        input.addEventListener('input', () => {
+            clearTimeout(youtubeSearchTimeout);
+            if (input.value.trim().length < 2) return;
+            youtubeSearchTimeout = setTimeout(run, 700);
+        });
+    }
+
+    function injectLikes() {
+        document.querySelectorAll('.game-card, .music-card').forEach(card => {
+            if (card.querySelector('.like-btn')) return;
+            const key = 'zoltro-favorite-' + (card.dataset.name || card.id);
+            const liked = localStorage.getItem(key) === '1';
+            const btn = document.createElement('button');
+            btn.type='button'; btn.className='like-btn' + (liked ? ' liked':'');
+            btn.innerHTML = liked ? '♥' : '♡';
+            btn.title = liked ? 'Retirer des favoris' : 'Ajouter aux favoris';
+            btn.setAttribute('aria-label', btn.title);
+            btn.addEventListener('click', e => {
+                e.preventDefault(); e.stopPropagation();
+                const nowLiked = localStorage.getItem(key) !== '1';
+                if (nowLiked) localStorage.setItem(key,'1'); else localStorage.removeItem(key);
+                btn.classList.toggle('liked', nowLiked);
+                btn.textContent = nowLiked ? '♥' : '♡';
+                btn.title = nowLiked ? 'Retirer des favoris' : 'Ajouter aux favoris';
+                btn.setAttribute('aria-label', btn.title);
+                if (activeCat === 'favoris') applyFilter(searchInput.value);
+            });
+            card.appendChild(btn);
+        });
+    }
+
+    function isFavorite(card) {
+        return localStorage.getItem('zoltro-favorite-' + (card.dataset.name || card.id)) === '1';
+    }
+
+    function updatePlayerInfo() {
+        const t = musicTracks[currentTrackIndex];
+        if (!t) return;
+        document.getElementById('playerTitle').textContent=t.title;
+        document.getElementById('playerArtist').textContent=t.artist;
+        document.getElementById('playerCover').src=t.cover;
+        currentVideoId=t.id;
+        document.querySelectorAll('.music-card').forEach(c=>c.classList.toggle('playing', c.id==='track-'+t.id && isPlaying));
+    }
+
+    function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player('yt-player', { height:'1', width:'1', videoId:currentVideoId, playerVars:{autoplay:0, controls:0, rel:0, modestbranding:1, playsinline:1}, events:{ onReady:onPlayerReady, onStateChange:onPlayerStateChange } });
+    }
+    function onPlayerReady() { playerReady=true; ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); if(shouldAutoPlay){ shouldAutoPlay=false; ytPlayer.playVideo(); } }
+    function onPlayerStateChange(e) {
+        if (e.data === YT.PlayerState.PLAYING) { isPlaying=true; startProgress(); }
+        if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) { isPlaying=false; stopProgress(); }
+        updateMusicUI();
+    }
+    function loadYouTubeIframe(targetId) {
+        currentVideoId=targetId;
+        if (ytPlayer && playerReady) { ytPlayer.loadVideoById(targetId); ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); }
+    }
+    function playCurrent() {
+        if (!ytPlayer || !playerReady) return;
+        ytPlayer.playVideo(); isPlaying=true; updateMusicUI(); startProgress();
+    }
+    function stopMusic() { if (ytPlayer && playerReady) ytPlayer.pauseVideo(); isPlaying=false; stopProgress(); updateMusicUI(); }
+    function toggleTrack(targetId) {
+        const idx=musicTracks.findIndex(t=>t.id===targetId); if(idx>=0) currentTrackIndex=idx;
+        updatePlayerInfo();
+        if (ytPlayer && playerReady) { ytPlayer.loadVideoById(targetId); ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); isPlaying=true; startProgress(); }
+        updateMusicUI();
+    }
+    function toggleMusic() {
+        if (!ytPlayer || !playerReady) return;
+        if (isPlaying) stopMusic(); else playCurrent();
+        collapseAfterAction();
+    }
+    function nextTrack(){ if(!musicTracks.length)return; currentTrackIndex=(currentTrackIndex+1)%musicTracks.length; updatePlayerInfo(); toggleTrack(currentVideoId); collapseAfterAction(); }
+    function previousTrack(){ if(!musicTracks.length)return; currentTrackIndex=(currentTrackIndex-1+musicTracks.length)%musicTracks.length; updatePlayerInfo(); toggleTrack(currentVideoId); collapseAfterAction(); }
+    function seekMusic(v){ if(ytPlayer&&playerReady){ const d=ytPlayer.getDuration(); ytPlayer.seekTo(d*(parseFloat(v)/100),true); } }
+    function setVolume(v){ if(ytPlayer&&playerReady) ytPlayer.setVolume(parseInt(v,10)); document.getElementById('volumeIcon').textContent=parseInt(v,10)===0?'🔇':'🔊'; }
+    function toggleMute(){ if(!ytPlayer||!playerReady)return; if(ytPlayer.isMuted()){ytPlayer.unMute(); document.getElementById('volumeIcon').textContent='🔊';}else{ytPlayer.mute(); document.getElementById('volumeIcon').textContent='🔇';} }
+    function startProgress(){ stopProgress(); progressTimer=setInterval(()=>{ if(!ytPlayer||!playerReady)return; const d=ytPlayer.getDuration()||0, c=ytPlayer.getCurrentTime()||0; document.getElementById('progressBar').value=d?(c/d*100):0; document.getElementById('currentTime').textContent=formatTime(c); document.getElementById('duration').textContent=formatTime(d); },500); }
+    function stopProgress(){ if(progressTimer){clearInterval(progressTimer);progressTimer=null;} }
+    function updateMusicUI(){ const b=document.getElementById('playerPlay'); if(b)b.textContent=isPlaying?'⏸':'▶'; document.querySelectorAll('.music-card').forEach(c=>c.classList.toggle('playing',c.id==='track-'+currentVideoId&&isPlaying)); }
+    function expandMusicPlayer(){ if(collapseTimer) clearTimeout(collapseTimer); document.getElementById('musicPlayer')?.classList.remove('compact'); }
+    function collapseMusicPlayer(){document.getElementById('musicPlayer')?.classList.add('compact');}
+    function collapseAfterAction(){ if(collapseTimer) clearTimeout(collapseTimer); collapseTimer=setTimeout(()=>collapseMusicPlayer(),900); }
+
+    function initSiteAndMusic() {
+        document.body.classList.remove('modal-open');
+        const overlay=document.getElementById('welcomeOverlay');
+        if(overlay){overlay.style.opacity='0';setTimeout(()=>overlay.remove(),500);}
+        updatePlayerInfo();
+        shouldAutoPlay = true;
+        if(!document.getElementById('yt-player')) { const d=document.createElement('div'); d.id='yt-player'; document.getElementById('audio-container').appendChild(d); }
+        if(!window.YT){ const tag=document.createElement('script'); tag.src='https://www.youtube.com/iframe_api'; document.head.appendChild(tag); }
+        if(ytPlayer&&playerReady) playCurrent();
+    }
+
+    updatePlayerInfo();
+</script>
+
+</body>
+</html>
