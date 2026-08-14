@@ -30,22 +30,17 @@
     top: 15px;
     right: 15px;
     z-index: 9999;
-
     padding: 7px 11px;
     border-radius: 8px;
-
     background: rgba(25, 25, 35, 0.85);
     color: #fff;
     border: 1px solid rgba(255,255,255,0.12);
-
     font-family: inherit;
     font-size: 12px;
     font-weight: 600;
     text-decoration: none;
-
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-
     box-shadow: 0 3px 12px rgba(0,0,0,0.2);
     transition: all 0.2s ease;
 }
@@ -78,9 +73,16 @@
             overflow-x: hidden;
         }
 
-        body.modal-open #siteContent {
+        body.modal-open #siteContent > *:not(.playlist-picker-overlay):not(.welcome-overlay) {
             filter: blur(8px);
             pointer-events: none;
+        }
+
+        /* Les fenêtres modales restent toujours nettes */
+        body.modal-open .playlist-picker-overlay,
+        body.modal-open .welcome-overlay {
+            filter: none;
+            pointer-events: auto;
         }
 
         header {
@@ -156,7 +158,6 @@
             box-shadow: 0 0 0 3px rgba(0,212,255,0.1), 0 0 20px rgba(0,212,255,0.15);
         }
 
-        /* NOUVEAUX BOUTONS ACTIONS (Plein écran & Aléatoire) */
         .action-buttons {
             display: flex;
             gap: 15px;
@@ -281,7 +282,6 @@
             aspect-ratio: 16/12;
         }
 
-        /* NOUVEAU SYSTEME DE GIF AU SURVOL */
         .game-card img {
             width: 100%;
             height: 100%;
@@ -310,15 +310,14 @@
         }
 
         .game-card:hover .static-img {
-            opacity: 0; /* Cache l'image fixe au survol */
+            opacity: 0;
         }
 
         .game-card:hover .gif-img {
-            opacity: 1; /* Affiche le GIF au survol */
+            opacity: 1;
             transform: scale(1.05);
             filter: brightness(0.7);
         }
-        /* FIN NOUVEAU SYSTEME */
 
         .game-info {
             position: absolute;
@@ -366,7 +365,7 @@
         .game-card:hover .game-tag { opacity: 1; transform: translateY(-1px); }
 
         .youtube-search-box {
-            display: none; margin: 0 0 8px; gap: 8px; align-items: center;
+            display: none; margin: 0 0 15px; gap: 8px; align-items: center;
         }
         .youtube-search-box.active { display: flex; }
         .youtube-search-box input {
@@ -380,7 +379,14 @@
         }
         .youtube-search-status { color: var(--text-muted); font-size: .82rem; margin: 0 0 14px; }
 
-        /* Styles pour la musique (inchangés) */
+        .music-nav-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0 25px;
+            align-items: center;
+        }
+
         .music-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; }
         .music-card { background: linear-gradient(145deg, rgba(17, 22, 32, 0.9), rgba(13, 17, 23, 0.95)); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 16px; padding: 16px; width: 100%; text-align: center; position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(10px); }
         .music-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent3); box-shadow: 0 12px 30px rgba(168, 85, 247, 0.3), 0 0 15px rgba(0, 212, 255, 0.2); }
@@ -395,13 +401,164 @@
         .music-title { font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .music-artist { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Likes jeux + musique */
+        /* BOUTON + SUR L'IMAGE EN HAUT A GAUCHE */
+        .add-playlist-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 12;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, 0.85);
+            color: #070a10;
+            border: none;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+        .add-playlist-btn:hover {
+            transform: scale(1.15);
+            background: var(--accent);
+        }
+
+        .remove-track-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: auto;
+            z-index: 12;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255, 60, 110, 0.85);
+            color: #fff;
+            border: none;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .remove-track-btn:hover {
+            transform: scale(1.15);
+            background: #ff1c53;
+        }
+
+        /* Fenêtre de sélection de playlist */
+        .playlist-picker-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(4, 7, 12, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .playlist-picker-overlay.active { display: flex; }
+        .playlist-picker {
+            position: relative;
+            width: min(430px, 100%);
+            max-height: min(80vh, 620px);
+            overflow: auto;
+            padding: 22px;
+            border: 1px solid rgba(168,85,247,.35);
+            border-radius: 18px;
+            background: linear-gradient(145deg, rgba(17,22,32,.98), rgba(9,13,20,.98));
+            box-shadow: 0 25px 70px rgba(0,0,0,.65), 0 0 35px rgba(0,212,255,.12);
+        }
+        .playlist-picker-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 50%;
+            background: rgba(255,255,255,.06);
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .playlist-picker-title {
+            margin: 0 42px 6px 0;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+        .playlist-picker-subtitle {
+            margin-bottom: 18px;
+            color: var(--text-muted);
+            font-size: .84rem;
+        }
+        .playlist-picker-list {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .playlist-picker-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 14px;
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 11px;
+            background: rgba(255,255,255,.04);
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .playlist-picker-item:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent);
+            background: rgba(0,212,255,.10);
+            box-shadow: 0 0 16px rgba(0,212,255,.12);
+        }
+        .playlist-picker-icon {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: rgba(168,85,247,.15);
+            font-size: 16px;
+        }
+        .playlist-picker-name {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+        .playlist-picker-empty {
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.04);
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+
         .like-btn { position:absolute; bottom:10px; right:10px; z-index:8; border:1px solid rgba(255,255,255,.16); background:rgba(7,10,16,.82); color:#aeb8c8; border-radius:999px; padding:6px 9px; cursor:pointer; font-size:.72rem; display:flex; align-items:center; gap:5px; transition:.2s; backdrop-filter:blur(8px); }
         .like-btn:hover { transform:scale(1.08); border-color:var(--accent2); color:#fff; }
         .like-btn.liked { color:#ff3c6e; border-color:#ff3c6e; box-shadow:0 0 12px rgba(255,60,110,.3); }
         .music-card .like-btn { bottom:14px; right:14px; }
 
-        /* Lecteur musique façon Spotify */
         .music-player { position:fixed; left:10px; right:10px; bottom:7px; z-index:9998; height:50px; border:1px solid rgba(255,255,255,.10); border-radius:10px; background:rgba(18,18,18,.96); backdrop-filter:blur(14px); box-shadow:0 4px 22px rgba(0,0,0,.38); display:grid; grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr); align-items:center; gap:18px; padding:5px 10px; transition:height .22s ease, opacity .22s ease, box-shadow .22s ease; }
         .music-player.compact { height:50px; opacity:.96; }
         .music-player:hover, .music-player:focus-within { height:62px; opacity:1; box-shadow:0 8px 28px rgba(0,0,0,.48); }
@@ -467,12 +624,11 @@
             .action-buttons { flex-direction: column; width: 100%; max-width: 600px; }
         }
     
-    /* Favoris : simple bouton pour retrouver ses jeux/musiques */
     .like-btn{position:absolute;top:10px;right:10px;z-index:20;width:38px;height:38px;border:0;border-radius:50%;background:rgba(10,10,18,.82);color:#fff;font-size:24px;line-height:38px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35);transition:.18s;backdrop-filter:blur(6px)}
     .like-btn:hover{transform:scale(1.12)}
     .like-btn.liked{color:#ff4f8b;background:rgba(255,79,139,.16)}
     .game-card,.music-card{position:relative}
-        .music-player button{cursor:pointer}
+    .music-player button{cursor:pointer}
 </style>
 </head>
 <body class="modal-open">
@@ -503,7 +659,6 @@
 
     <div class="category-tabs" id="categoryTabs">
         <button class="tab-btn active" data-cat="all">🎮 Tous</button>
-        <!-- Nouvel onglet .io -->
         <button class="tab-btn" data-cat="action">💥 Action / FPS</button>
         <button class="tab-btn" data-cat="course">🏎️ Course / Conduite</button>
         <button class="tab-btn" data-cat="simulation">✈️ Simulation</button>
@@ -522,7 +677,6 @@
     </div>
 
     <main id="mainContent">
-
         <div class="category-section" data-category="action">
             <div class="category-header">
                 <span class="category-icon">💥</span>
@@ -534,70 +688,50 @@
                 <a href="vicecity.html" target="_blank" class="game-card" data-name="GTA Vice City" data-cat="action">
                     <img class="static-img" src="https://upload.wikimedia.org/wikipedia/en/c/ce/Vice-city-cover.jpg" alt="GTA Vice City" loading="lazy">
                     <img src="https://i.makeagif.com/media/2-02-2016/9fdG8w.gif" alt="Animation MakeAGif" width="400">
-                    <div class="game-info">
-                        <span>GTA Vice City</span>
-                    </div>
+                    <div class="game-info"><span>GTA Vice City</span></div>
                 </a>
                 <a href="https://ev.io" target="_blank" class="game-card" data-name="ev.io" data-cat="action">
                     <img class="static-img" src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2021/01/EVIO-1.jpg" alt="ev.io" loading="lazy">
                     <img src="https://miro.medium.com/v2/resize:fit:1200/0*q-YUr6_ZnkaD56kF.gif" alt="Animation MakeAGif" width="400">
-                    <div class="game-info">
-                        <span>ev.io</span>
-                    </div>
+                    <div class="game-info"><span>ev.io</span></div>
                 </a>
                 <a href="https://shellshock.io/" target="_blank" class="game-card" data-name="Shellshock.io" data-cat="action">
                     <img class="static-img" src="https://cowboysafari.io/data/image/ShellShockers.jpeg" alt="shellshock.io" loading="lazy">
                     <img src="https://media1.tenor.com/m/q08fq4hja0wAAAAd/shell-shockers-game.gif" alt="Animation MakeAGif" width="400">
-                    <div class="game-info">
-                        <span>Shellshock.io</span>
-                    </div>
+                    <div class="game-info"><span>Shellshock.io</span></div>
                 </a>
                 <a href="https://deadshot.io/" target="_blank" class="game-card" data-name="Deadshot.io" data-cat="action">
                     <img class="game-poster" src="https://deadshot.io/promo/thumbnail.png" alt="deadshot.io" loading="lazy">
-                    <div class="game-info">
-                        <span>Deadshot.io</span>
-                    </div>
+                    <div class="game-info"><span>Deadshot.io</span></div>
                 </a>
                 <a href="https://smashkarts.io/" target="_blank" class="game-card" data-name="Smashkart" data-cat="action">
                     <img class="static-img" src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co2rc1.jpg" alt="smashkart" loading="lazy">
                     <img src="https://media1.tenor.com/m/Xpyjb42Zd4kAAAAd/smash-karts-smash.gif" alt="Animation MakeAGif" width="400">
-                    <div class="game-info">
-                        <span>Smashkart</span>
-                    </div>
+                    <div class="game-info"><span>Smashkart</span></div>
                 </a>
                 <a href="https://hordes.io/" target="_blank" class="game-card" data-name="Hordes.io" data-cat="action">
                     <img class="static-img" src="https://cdn.webgamer.io/games/hordes-io/hordes-io-1.480x.85pc.webp" alt="hordes.io" loading="lazy">
                     <img src="https://media1.tenor.com/m/kyTHkPMqH4kAAAAd/hordes-io-asian-express.gif" alt="Animation MakeGif" width="400">
-                    <div class="game-info">
-                        <span>Hordes.io</span>
-                    </div>
+                    <div class="game-info"><span>Hordes.io</span></div>
                 </a>
 				<a href="https://yurkagon.github.io/Doom-Nukem-CSS/" target="_blank" class="game-card" data-name="Doom Nukem" data-cat="action">
                     <img class="static-img" src="https://1gr.cz/fotky/idnes/15/103/org/ANB5edf29_83687474703a2f2f706c6179736d6172742e.png" alt="Doom Nukem" loading="lazy">
                     <img src="https://media1.tenor.com/m/dp4wyZ0yRUcAAAAC/duke-nukem-gaming.gif" alt="Animation MakeGif" width="400">
-                    <div class="game-info">
-                        <span>Doom Nukem</span>
-                    </div>
+                    <div class="game-info"><span>Doom Nukem</span></div>
                 </a>
 				<a href="https://krunker.io" target="_blank" class="game-card" data-name="krunker" data-cat="action">
                     <img class="static-img" src="https://ozogames.com/uploads/2025/09/Krunker-image-1.webp" alt="krunker" loading="lazy">
                     <img src="https://media1.tenor.com/m/YsNe2pt7ql0AAAAd/krunker-aim.gif" alt="Animation MakeGif" width="400">
-                    <div class="game-info">
-                        <span>Krunker</span>
-                    </div>
+                    <div class="game-info"><span>Krunker</span></div>
                 </a>
 				<a href="https://hl2.slqnt.dev/" target="_blank" class="game-card" data-name="half life 2" data-cat="action">
                     <img class="static-img" src="https://cdn.neowin.com/news/images/uploaded/2024/11/1731709897_hl2wallpaper02_16x9.jpg" alt="half life 2" loading="lazy">
                     <img src="https://media.giphy.com/media/jj7cAZppCaUhd06AcM/giphy.gif" alt="Animation MakeGif" width="400">
-                    <div class="game-info">
-                        <span>half life 2</span>
-                    </div>
+                    <div class="game-info"><span>half life 2</span></div>
                 </a>
 				<a href="https://evowars.io/?v=2.18.14" target="_blank" class="game-card" data-name="evowars" data-cat="action">
                     <img class="game-poster" src="https://play-lh.googleusercontent.com/Ygyskc4OqVQJQmOeMEcl6eDDKaVMXJOdS_oUCCuLWHNf5sDhZdn-rc20SBrdZ467U3KRAcpdnP7a4zFBsyuI" alt="evowars" loading="lazy">
-                    <div class="game-info">
-                        <span>evowars</span>
-                    </div>
+                    <div class="game-info"><span>evowars</span></div>
                 </a>
             </div>
         </div>
@@ -612,29 +746,21 @@
             <div class="cards-grid">
                 <a href="https://drift.io/?room=S3Xe3q" target="_blank" class="game-card" data-name="Drift.io" data-cat="course">
                     <img class="game-poster" src="https://drift.io/571ab7e39e787232ba46.png" alt="Drift.io" loading="lazy">
-                    <div class="game-info">
-                        <span>Drift.io</span>
-                    </div>
+                    <div class="game-info"><span>Drift.io</span></div>
                 </a>
                 <a href="https://slowroads.io/" target="_blank" class="game-card" data-name="Slowroads.io" data-cat="course">
                     <img class="static-img" src="https://i.ytimg.com/vi/lCkZbdVmLHA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLASqZfOBsoeO_HDxfxbHhgzv6O51g" alt="slowroads.io" loading="lazy">
                     <img src="https://images.steamusercontent.com/ugc/2059880067064343799/EAF7745E7883D53CC0D4D8394047002DF0BEAF66/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" alt="Animation MakeGif" width="400">
-                    <div class="game-info">
-                        <span>Slowroads.io</span>
-                    </div>
+                    <div class="game-info"><span>Slowroads.io</span></div>
                 </a>
                 <a href="https://www.freeriderhd.com/" target="_blank" class="game-card" data-name="FreeRiderHD" data-cat="course">
                     <img class="static-img" src="https://play-lh.googleusercontent.com/gx7loPEVIWuaWP3vAGW2DHtTnbN9zWFIaUeLGV4Mhp7mWoi1dCWc3P9eZJIpgLpIrOE" alt="FreeRiderHD" loading="lazy">
                     <img src="https://media.tenor.com/G6CXOZeZxXgAAAAM/frhd-freeriderhd.gif" alt="Animation MakeGif" width="400">
-                    <div class="game-info">
-                        <span>FreeRiderHD</span>
-                    </div>
+                    <div class="game-info"><span>FreeRiderHD</span></div>
                 </a>
 				 <a href="https://www.michaelbromley.co.uk/experiments/css-space-shooter/" target="_blank" class="game-card" data-name="Space shooter" data-cat="course">
                     <img class="game-poster" src="https://lh5.ggpht.com/2EjBiMIS0EHU6cBYpjwOJjhK2Bs4DLQChCR1vqMmlB2RamlIQD1Kufp5N1oUvhdI7M5P9RB0P_-7ApPtSn1IRWMNZZmqXc80u2U" alt="Space shooter" loading="lazy">
-                    <div class="game-info">
-                        <span>Space shooter</span>
-                    </div>
+                    <div class="game-info"><span>Space shooter</span></div>
                 </a>
 				  <a href="https://lolbeans.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="LOLBeans.io" data-cat="party">
                     <img class="static-img" src="https://cdn-1.webcatalog.io/catalog/lolbeans-io/lolbeans-io-icon-filled-256.webp?v=1714775009854" alt="LOLBeans.io" loading="lazy">
@@ -644,7 +770,6 @@
             </div>
         </div>
 
-        <!-- Les autres catégories originales conservent la même structure mais avec target="_blank" et class="static-img"/"gif-img" -->
         <div class="category-section" data-category="simulation">
             <div class="category-header">
                 <span class="category-icon">✈️</span>
@@ -664,7 +789,7 @@
                 </a>
                 <a href="https://worldflightsim.com/" target="_blank" class="game-card" data-name="Worldflightsim" data-cat="simulation">
                     <img class="static-img" src="https://worldflightsim.com/city-rio.jpg" alt="worldflightsim" loading="lazy">
-                    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjRmc2VwZzBiYjZucGl5NmcyZGRrYmh6c3hlOGJ0ang0NnY0eDg4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8HQ8QxycjHwSIcy3Ac/giphy.gif" alt="Animation MakeGif" width="400">
+                    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjRmc2VwZzBiYjZucGl5NmcyZGRrYmh6c3hlOGJ0ang0NnY0eDg4OCZlcD12MV_naWZzX3NlYXJjaCZjdD1n/8HQ8QxycjHwSIcy3Ac/giphy.gif" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>Worldflightsim</span></div>
                 </a>
                 <a href="https://framesynthesis.com/drivingsimulator/maps/" target="_blank" class="game-card" data-name="Framesynthesis" data-cat="simulation">
@@ -717,7 +842,7 @@
             <div class="cards-grid">
                 <a href="http://clement.deb.taur.free.fr/Backrooms.html" target="_blank" class="game-card" data-name="The Backrooms" data-cat="exploration">
                     <img class="static-img" src="https://static.wikia.nocookie.net/kane-pixels-backrooms/images/1/1b/Backrooms_1.png/revision/latest?cb=20241101031754" alt="Backrooms" loading="lazy">
-                    <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUyajE2YzJxYTdnYmxhM2ZtbXQ1bmNnMnA4Z2o1Zm5yOHdnYzdsNDYxMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/POqXbP8350CeKzzGGQ/200w.gif" alt="Animation MakeGif" width="400">
+                    <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUyajE2YzJxYTdnYmxhM2ZtbXQ1bmNnMnA4Z2o1Zm5yOHdnYzdsNDYxMiZlcD12MV_naWZzX3NlYXJjaCZjdD1n/POqXbP8350CeKzzGGQ/200w.gif" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>The Backrooms</span></div>
                 </a>
                 <a href="https://irv77.github.io/hd_fnaf/1/" target="_blank" class="game-card" data-name="FNAF" data-cat="horreur">
@@ -824,6 +949,11 @@
                     <img class="game-poster" src="https://www.kidssearch.com/images/arcade-spot.png" alt="arcadespot" loading="lazy">
                     <div class="game-info"><span>arcade spot</span></div>
                 </a>
+				<a href="https://jellymar.io/" target="_blank" class="game-card" data-name="jelly mario" data-cat="emulateur">
+                    <img class="static-img" src="https://images.igdb.com/igdb/image/upload/t_cover_big/co4uzi.webp" alt="jelly mario" loading="lazy">
+					<img src="https://64.media.tumblr.com/20005c38089bc33a65b86aae7df38a17/tumblr_p4rv3lFGMf1qav3uso3_r1_540.gif" alt="Animation MakeGif" width="400">
+                    <div class="game-info"><span>jelly mario</span></div>
+                </a>
             </div>
         </div>
 
@@ -887,7 +1017,6 @@
                     <img class="game-poster" src="https://poxel.io/favicon/android-chrome-512x512.png" alt="poxel.io" loading="lazy">
                     <div class="game-info"><span>poxel.io</span></div>
                 </a>
-				</a>
 				<a href="https://buildroyale.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="buildroyale.io" data-cat="combat">
                     <img class="game-poster" src="https://buildroyale.io/buildart/thumbnail.png" alt="buildroyale.io" loading="lazy">
                     <div class="game-info"><span>buildroyale.io</span></div>
@@ -987,7 +1116,7 @@
             <div class="cards-grid">
                 <a href="https://richup.io/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Richup.io" data-cat="gestion">
                     <img class="static-img" src="https://richup.io/og_image.png" alt="Richup.io" loading="lazy">
-                    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHZ0ZGsybjZ6azQ2bnlzMXdnMTlha21yMHlnMDdkN2o3OXNpczR2ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/NYBVJUGdiJdG8/giphy.webp" alt="Animation MakeGif" width="400">
+                    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHZ0ZGsybjZ6azQ2bnlzMXdnMTlha21yMHlnMDdkN2o3OXNpczR2ZiZlcD12MV_naWZzX3NlYXJjaCZjdD1n/NYBVJUGdiJdG8/giphy.webp" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>Richup.io</span></div>
                 </a>
             </div>
@@ -1003,7 +1132,7 @@
             <div class="cards-grid">
                 <a href="https://fr.ifixit.com/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="iFixit" data-cat="puzzle">
                     <img class="static-img" src="https://images.seeklogo.com/logo-png/25/1/ifixit-logo-png_seeklogo-257675.png" alt="iFixit" loading="lazy">
-                    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnRtdWRwdnFpdDU1b2t0Z3diNzN5bHQzeXVyaWN2YjhyNGFxNnM2ciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/St3GH6GEpEnBiehPK6/200.webp" alt="Animation MakeGif" width="400">
+                    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnRtdWRwdnFpdDU1b2t0Z3diNzN5bHQzeXVyaWN2YjhyNGFxNnM2ciZlcD12MV_naWZzX3NlYXJjaCZjdD1n/St3GH6GEpEnBiehPK6/200.webp" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>iFixit</span></div>
                 </a>
                 <a href="https://radiocast.co/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Radiocast" data-cat="puzzle">
@@ -1014,29 +1143,130 @@
             </div>
         </div>
 		
+        <!-- SECTION MUSIQUE AVEC YOUTUBE & PLAYLISTS PERSONALISÉES -->
         <div class="category-section hidden" data-category="musique">
             <div class="category-header">
                 <span class="category-icon">🎵</span>
-                <span class="category-title">Bibliothèque Musicale YouTube</span>
+                <span class="category-title">Bibliothèque Musicale Zoltrogame</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-musique">0 titres</span>
             </div>
+            
             <div class="youtube-search-box" id="youtubeSearchBox">
                 <input id="youtubeSearchInput" type="search" placeholder="Rechercher une musique sur YouTube..." autocomplete="off">
                 <button type="button" id="youtubeSearchButton">🔎 Rechercher</button>
             </div>
             <div class="youtube-search-status" id="youtubeSearchStatus"></div>
-            <div class="music-grid" id="youtubeMusicGrid">
-                <!-- Gardé tel quel -->
-                <div class="music-card" id="track-D5d5xinZI3E" data-name="Calling (Spider-Man: Across the Spider-Verse)" data-cat="musique">
-                    <div class="cover-wrapper" onclick="toggleTrack('D5d5xinZI3E')">
-                        <img src="https://i.ytimg.com/vi/D5d5xinZI3E/hqdefault.jpg" alt="Spider Man">
-                        <div class="play-overlay-icon">▶</div>
+
+            <!-- ONGLES ET BOUTON DE CRÉATION DE PLAYLIST -->
+            <div class="music-nav-tabs" id="musicNavTabs">
+                <button class="tab-btn active" onclick="filterMusicSubTab('all', this)">🎵 Tous</button>
+                <button class="tab-btn" onclick="filterMusicSubTab('hits-chill', this)">💿 Hits & Chill</button>
+                <button class="tab-btn" onclick="filterMusicSubTab('gaming', this)">🎮 Gaming & Tryhard</button>
+                <div id="customPlaylistTabs" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+                <button class="tab-btn" style="border-color: var(--accent3); color: var(--accent3);" onclick="createNewPlaylist()">➕ Nouvelle Playlist</button>
+            </div>
+
+            <!-- RÉSULTATS DE RECHERCHE YOUTUBE -->
+            <div id="youtubeSearchResultsSection" style="display: none; margin-bottom: 30px;">
+                <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 15px 0; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;">
+                    🔍 Tes recherches YouTube <span style="flex:1; height:1px; background:linear-gradient(90deg, var(--border), transparent);"></span>
+                </h3>
+                <div class="music-grid" id="youtubeMusicGrid"></div>
+            </div>
+
+            <!-- CONTENEUR DES PLAYLISTS PAR DÉFAUT & PERSONNALISÉES -->
+            <div id="defaultPlaylistsContainer">
+                
+                <!-- PLAYLIST HITS & CHILL -->
+                <div class="playlist-block" data-playlist-id="hits-chill">
+                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 20px 0 15px; letter-spacing: 2px;">💿 Playlist : Hits & Chill</h3>
+                    <div class="music-grid">
+                        <div class="music-card" id="track-D5d5xinZI3E" data-name="Calling" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'D5d5xinZI3E', 'Calling (Spider-Verse)', 'Metro Boomin', 'https://i.ytimg.com/vi/D5d5xinZI3E/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('D5d5xinZI3E')">
+                                <img src="https://i.ytimg.com/vi/D5d5xinZI3E/hqdefault.jpg" alt="Spider Man">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">Calling (Spider-Verse)</div>
+                            <div class="music-artist">Metro Boomin</div>
+                        </div>
+                        <div class="music-card" id="track-D9G1VOjN_84" data-name="Enemy" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'D9G1VOjN_84', 'Enemy', 'Imagine Dragons', 'https://i.ytimg.com/vi/D9G1VOjN_84/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('D9G1VOjN_84')">
+                                <img src="https://i.ytimg.com/vi/D9G1VOjN_84/hqdefault.jpg" alt="Enemy">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">Enemy</div>
+                            <div class="music-artist">Imagine Dragons</div>
+                        </div>
+                        <div class="music-card" id="track-60ItHLz5WEA" data-name="Faded" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, '60ItHLz5WEA', 'Faded', 'Alan Walker', 'https://i.ytimg.com/vi/60ItHLz5WEA/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('60ItHLz5WEA')">
+                                <img src="https://i.ytimg.com/vi/60ItHLz5WEA/hqdefault.jpg" alt="Faded">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">Faded</div>
+                            <div class="music-artist">Alan Walker</div>
+                        </div>
+                        <div class="music-card" id="track-1fueZCTYkpA" data-name="Lofi Beats" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, '1fueZCTYkpA', 'Chill Lofi Beats', 'Lofi Girl', 'https://i.ytimg.com/vi/1fueZCTYkpA/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('1fueZCTYkpA')">
+                                <img src="https://i.ytimg.com/vi/1fueZCTYkpA/hqdefault.jpg" alt="Lofi">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">Chill Lofi Beats</div>
+                            <div class="music-artist">Lofi Girl</div>
+                        </div>
                     </div>
-                    <div class="music-title">Calling (Spider-Man: Across the Spider-Verse)</div>
-                    <div class="music-artist">Metro Boomin</div>
                 </div>
-                <!-- Reste des musiques... j'ai gardé le premier pour la brièveté du snippet, n'oublie pas de laisser tes autres musiques si tu fais un copier/coller -->
+
+                <!-- PLAYLIST GAMING -->
+                <div class="playlist-block" data-playlist-id="gaming">
+                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 30px 0 15px; letter-spacing: 2px;">🎮 Playlist : Gaming & Tryhard</h3>
+                    <div class="music-grid">
+                        <div class="music-card" id="track-n8X9_MgEdCg" data-name="Unity" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'n8X9_MgEdCg', 'Unity', 'TheFatRat', 'https://i.ytimg.com/vi/n8X9_MgEdCg/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('n8X9_MgEdCg')">
+                                <img src="https://i.ytimg.com/vi/n8X9_MgEdCg/hqdefault.jpg" alt="Unity">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">Unity</div>
+                            <div class="music-artist">TheFatRat</div>
+                        </div>
+                        <div class="music-card" id="track-c5daGZ96QGU" data-name="Megalovania" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'c5daGZ96QGU', 'Megalovania', 'Toby Fox', 'https://i.ytimg.com/vi/c5daGZ96QGU/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('c5daGZ96QGU')">
+                                <img src="https://i.ytimg.com/vi/c5daGZ96QGU/hqdefault.jpg" alt="Megalovania">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">Megalovania</div>
+                            <div class="music-artist">Toby Fox</div>
+                        </div>
+                        <div class="music-card" id="track-L_jWHffIx5E" data-name="All Star" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'L_jWHffIx5E', 'All Star', 'Smash Mouth', 'https://i.ytimg.com/vi/L_jWHffIx5E/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('L_jWHffIx5E')">
+                                <img src="https://i.ytimg.com/vi/L_jWHffIx5E/hqdefault.jpg" alt="All Star">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">All Star</div>
+                            <div class="music-artist">Smash Mouth</div>
+                        </div>
+                        <div class="music-card" id="track-dQw4w9WgXcQ" data-name="Never Gonna Give You Up" data-cat="musique">
+                            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'dQw4w9WgXcQ', 'Never Gonna Give You Up', 'Rick Astley', 'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
+                            <div class="cover-wrapper" onclick="toggleTrack('dQw4w9WgXcQ')">
+                                <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Rickroll">
+                                <div class="play-overlay-icon">▶</div>
+                            </div>
+                            <div class="music-title">Never Gonna Give You Up</div>
+                            <div class="music-artist">Rick Astley</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ZONE DES PLAYLISTS CRÉÉES PAR L'UTILISATEUR -->
+                <div id="userCustomPlaylistsGrid"></div>
+
             </div>
         </div>
 
@@ -1044,10 +1274,19 @@
 
     </main>
 
+    <div class="playlist-picker-overlay" id="playlistPickerOverlay" onclick="if(event.target === this) closeAddToPlaylistModal()">
+        <div class="playlist-picker" role="dialog" aria-modal="true" aria-labelledby="playlistPickerTitle">
+            <button type="button" class="playlist-picker-close" onclick="closeAddToPlaylistModal()" aria-label="Fermer">✕</button>
+            <h2 class="playlist-picker-title" id="playlistPickerTitle">Ajouter à une playlist</h2>
+            <p class="playlist-picker-subtitle">Clique sur la playlist dans laquelle tu veux mettre cette musique.</p>
+            <div class="playlist-picker-list" id="playlistPickerList"></div>
+        </div>
+    </div>
+
     <div class="music-player compact" id="musicPlayer" onmouseenter="expandMusicPlayer()" onmouseleave="collapseMusicPlayer()">
         <div class="player-track">
-            <img id="playerCover" class="player-cover" src="https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg" alt="Pochette">
-            <div class="player-text"><div id="playerTitle" class="player-title">Bohemian Rhapsody</div><div id="playerArtist" class="player-artist">Queen</div></div>
+            <img id="playerCover" class="player-cover" src="https://i.ytimg.com/vi/D5d5xinZI3E/hqdefault.jpg" alt="Pochette">
+            <div class="player-text"><div id="playerTitle" class="player-title">Sélectionne une musique</div><div id="playerArtist" class="player-artist">Zoltrogame</div></div>
         </div>
         <div class="player-center">
             <div class="player-controls">
@@ -1061,7 +1300,7 @@
     </div>
 </div>
 
-<div id="audio-container"></div>
+<div id="audio-container"><div id="yt-player"></div></div>
 
 <script>
     const catLabels = {
@@ -1105,6 +1344,171 @@
     let activeCat = 'all';
     let youtubeSearchTimeout = null;
     const YOUTUBE_API_KEY = 'AIzaSyCAU4XUD4LyOoFeW3WI1FEYcJ3uytPPAuk';
+
+    let customPlaylists = JSON.parse(localStorage.getItem('zoltro_user_playlists')) || {};
+
+    function saveCustomPlaylists() {
+        localStorage.setItem('zoltro_user_playlists', JSON.stringify(customPlaylists));
+        renderUserPlaylists();
+        refreshMusicTracks();
+    }
+
+    function createNewPlaylist() {
+        const name = prompt("Nom de ta nouvelle playlist :");
+        if (!name || !name.trim()) return;
+        const cleanName = name.trim();
+        if (customPlaylists[cleanName]) {
+            alert("Une playlist avec ce nom existe déjà !");
+            return;
+        }
+        customPlaylists[cleanName] = [];
+        saveCustomPlaylists();
+    }
+
+    function deletePlaylist(name) {
+        if (confirm(`Veux-tu vraiment supprimer la playlist "${name}" ?`)) {
+            delete customPlaylists[name];
+            saveCustomPlaylists();
+        }
+    }
+
+    function removeTrackFromPlaylist(playlistName, trackId) {
+        if (!customPlaylists[playlistName]) return;
+        customPlaylists[playlistName] = customPlaylists[playlistName].filter(t => t.id !== trackId);
+        saveCustomPlaylists();
+    }
+
+    function openAddToPlaylistModal(e, id, title, artist, cover) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const overlay = document.getElementById('playlistPickerOverlay');
+        const list = document.getElementById('playlistPickerList');
+        if (!overlay || !list) return;
+
+        const playlistKeys = Object.keys(customPlaylists);
+        list.innerHTML = '';
+
+        if (playlistKeys.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'playlist-picker-empty';
+            empty.textContent = "Tu n'as encore aucune playlist. Crée-en une avec « Nouvelle Playlist ».";
+            list.appendChild(empty);
+        } else {
+            playlistKeys.forEach(pName => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'playlist-picker-item';
+                button.innerHTML = `
+                    <span class="playlist-picker-icon">💿</span>
+                    <span class="playlist-picker-name"></span>
+                `;
+                button.querySelector('.playlist-picker-name').textContent = pName;
+                button.addEventListener('click', () => addTrackToPlaylist(pName, id, title, artist, cover));
+                list.appendChild(button);
+            });
+        }
+
+        overlay.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeAddToPlaylistModal() {
+        const overlay = document.getElementById('playlistPickerOverlay');
+        if (overlay) overlay.classList.remove('active');
+        if (!document.getElementById('welcomeOverlay')?.style.display || document.getElementById('welcomeOverlay')?.style.display === 'none') {
+            document.body.classList.remove('modal-open');
+        }
+    }
+
+    function addTrackToPlaylist(playlistName, id, title, artist, cover) {
+        if (!customPlaylists[playlistName]) return;
+
+        const exists = customPlaylists[playlistName].some(t => t.id === id);
+        if (exists) {
+            closeAddToPlaylistModal();
+            alert(`« ${title} » est déjà dans « ${playlistName} » !`);
+            return;
+        }
+
+        customPlaylists[playlistName].push({ id, title, artist, cover });
+        saveCustomPlaylists();
+        closeAddToPlaylistModal();
+        alert(`« ${title} » a été ajouté à « ${playlistName} » !`);
+    }
+
+    function renderUserPlaylists() {
+        const container = document.getElementById('userCustomPlaylistsGrid');
+        const tabsContainer = document.getElementById('customPlaylistTabs');
+        if (!container || !tabsContainer) return;
+
+        container.innerHTML = '';
+        tabsContainer.innerHTML = '';
+
+        Object.keys(customPlaylists).forEach(pName => {
+            const safeId = 'user-pl-' + pName.replace(/\s+/g, '-').toLowerCase();
+
+            const tabBtn = document.createElement('button');
+            tabBtn.className = 'tab-btn';
+            tabBtn.innerHTML = `💿 ${pName}`;
+            tabBtn.onclick = () => filterMusicSubTab(safeId, tabBtn);
+            tabsContainer.appendChild(tabBtn);
+
+            const block = document.createElement('div');
+            block.className = 'playlist-block';
+            block.dataset.playlistId = safeId;
+            block.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: space-between; margin: 30px 0 15px;">
+                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; letter-spacing: 2px;">💿 Playlist : ${pName}</h3>
+                    <button onclick="deletePlaylist(${JSON.stringify(pName)})" style="background: rgba(255,60,110,0.15); border: 1px solid var(--accent2); color: var(--accent2); padding: 5px 10px; border-radius: 6px; font-family:'Orbitron'; font-size: 0.7rem; cursor: pointer;">🗑️ Supprimer Playlist</button>
+                </div>
+                <div class="music-grid" id="grid-${safeId}"></div>
+            `;
+
+            const grid = block.querySelector('.music-grid');
+            const tracks = customPlaylists[pName];
+
+            if (tracks.length === 0) {
+                grid.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1/-1;">Aucune musique dans cette playlist. Clique sur le '+' d'une musique pour l'ajouter ici !</p>`;
+            } else {
+                tracks.forEach(track => {
+                    const card = document.createElement('div');
+                    card.className = 'music-card';
+                    card.id = `track-${track.id}`;
+                    card.dataset.name = track.title;
+                    card.dataset.cat = 'musique';
+                    card.innerHTML = `
+                        <button class="remove-track-btn" onclick="removeTrackFromPlaylist(${JSON.stringify(pName)}, ${JSON.stringify(track.id)})" title="Supprimer de la playlist">✕</button>
+                        <div class="cover-wrapper" onclick="toggleTrack('${track.id}')">
+                            <img src="${track.cover}" alt="${track.title}">
+                            <div class="play-overlay-icon">▶</div>
+                        </div>
+                        <div class="music-title">${track.title}</div>
+                        <div class="music-artist">${track.artist}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            container.appendChild(block);
+        });
+
+        injectLikes();
+    }
+
+    function filterMusicSubTab(playlistId, btnElement) {
+        document.querySelectorAll('#musicNavTabs .tab-btn').forEach(b => b.classList.remove('active'));
+        if (btnElement) btnElement.classList.add('active');
+
+        const blocks = document.querySelectorAll('.playlist-block');
+        blocks.forEach(block => {
+            if (playlistId === 'all' || block.dataset.playlistId === playlistId) {
+                block.style.display = 'block';
+            } else {
+                block.style.display = 'none';
+            }
+        });
+    }
 
     function applyFilter(q) {
         q = q.toLowerCase().trim();
@@ -1161,9 +1565,9 @@
         applyFilter(query);
     });
 
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('#categoryTabs .tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#categoryTabs .tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             activeCat = btn.dataset.cat;
 
@@ -1184,9 +1588,9 @@
     injectCategoryLabels();
     injectLikes();
     setupYouTubeMusicSearch();
+    renderUserPlaylists();
     applyFilter('');
 
-    /* FONCTIONNALITES PLEIN ECRAN ET JEU ALEATOIRE */
     function toggleFullScreen() {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen().catch(err => {
@@ -1209,10 +1613,9 @@
             alert("Aucun jeu n'est actuellement visible !");
         }
     }
-    /* FIN NOUVELLES FONCTIONNALITES */
 
     let isPlaying = false;
-    let currentVideoId = 'fJ9rUzIMcZQ';
+    let currentVideoId = 'D5d5xinZI3E';
     let ytPlayer = null;
     let playerReady = false;
     let progressTimer = null;
@@ -1220,12 +1623,7 @@
     let shouldAutoPlay = false;
     let collapseTimer = null;
 
-    let musicTracks = Array.from(document.querySelectorAll('.music-card')).map(card => ({
-        id: card.id.replace('track-',''),
-        title: card.querySelector('.music-title')?.textContent.trim() || 'Musique',
-        artist: card.querySelector('.music-artist')?.textContent.trim() || '',
-        cover: card.querySelector('.cover-wrapper img')?.src || ''
-    }));
+    let musicTracks = [];
 
     function formatTime(sec) {
         sec = Math.max(0, Math.floor(sec || 0));
@@ -1243,7 +1641,7 @@
 
     function refreshMusicTracks() {
         musicTracks = Array.from(document.querySelectorAll('.music-card')).map(card => ({
-            id: card.id.replace('track-',''),
+            id: card.id.replace('track-','').replace('yt-search-track-', ''),
             title: card.querySelector('.music-title')?.textContent.trim() || 'Musique',
             artist: card.querySelector('.music-artist')?.textContent.trim() || '',
             cover: card.querySelector('.cover-wrapper img')?.src || ''
@@ -1253,18 +1651,19 @@
 
     function createYouTubeMusicCard(item) {
         const id = item.id?.videoId;
-        if (!id || document.getElementById('track-' + id)) return;
+        if (!id || document.getElementById('yt-search-track-' + id)) return;
         const title = item.snippet?.title || 'Musique';
         const channel = item.snippet?.channelTitle || '';
         const thumb = item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
         const card = document.createElement('div');
         card.className = 'music-card';
-        card.id = 'track-' + id;
+        card.id = 'yt-search-track-' + id;
         card.dataset.name = title;
         card.dataset.cat = 'musique';
         card.innerHTML = `
+            <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, '${id}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}', '${thumb.replace(/'/g, "\\'")}')" title="Ajouter à une playlist">+</button>
             <div class="cover-wrapper" onclick="toggleTrack('${id}')">
-                <img src="${thumb.replace(/\"/g,'&quot;')}" alt="${title.replace(/\"/g,'&quot;')}">
+                <img src="${thumb.replace(/"/g,'&quot;')}" alt="${title.replace(/"/g,'&quot;')}">
                 <div class="play-overlay-icon">▶</div>
             </div>
             <div class="music-title"></div>
@@ -1276,41 +1675,56 @@
 
     async function searchYouTubeMusic(query) {
         query = query.trim();
-        if (!query) return;
+        const searchSection = document.getElementById('youtubeSearchResultsSection');
+        const defaultPlaylists = document.getElementById('defaultPlaylistsContainer');
         const status = document.getElementById('youtubeSearchStatus');
+        const grid = document.getElementById('youtubeMusicGrid');
+
+        if (!query) {
+            searchSection.style.display = 'none';
+            grid.innerHTML = '';
+            defaultPlaylists.style.display = 'block';
+            status.textContent = '';
+            return;
+        }
+
+        searchSection.style.display = 'block';
+        defaultPlaylists.style.display = 'none';
         status.textContent = '🔎 Recherche sur YouTube...';
+        grid.innerHTML = '';
+
         try {
             const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&maxResults=12&q=${encodeURIComponent(query)}&key=${encodeURIComponent(YOUTUBE_API_KEY)}`;
             const res = await fetch(url);
             const data = await res.json();
             if (!res.ok || data.error) throw new Error(data.error?.message || 'Erreur YouTube');
+            
             (data.items || []).forEach(createYouTubeMusicCard);
             refreshMusicTracks();
             injectLikes();
-            status.textContent = `${(data.items || []).length} résultat(s) ajouté(s).`;
-            if (activeCat !== 'musique') {
-                document.querySelector('[data-cat="musique"]')?.click();
-            } else {
-                applyFilter('');
-            }
+            status.textContent = `${(data.items || []).length} résultat(s) pour "${query}".`;
         } catch (err) {
             console.error(err);
-            status.textContent = '❌ Impossible de rechercher sur YouTube. Vérifie la clé API et les restrictions de l’API.';
+            status.textContent = '❌ Erreur de recherche YouTube.';
         }
     }
 
     function setupYouTubeMusicSearch() {
-        const box = document.getElementById('youtubeSearchBox');
         const input = document.getElementById('youtubeSearchInput');
         const button = document.getElementById('youtubeSearchButton');
-        if (!box || !input || !button) return;
+        if (!input || !button) return;
+
         const run = () => searchYouTubeMusic(input.value);
         button.addEventListener('click', run);
-        input.addEventListener('keydown', e => { if (e.key === 'Enter') run(); });
+
         input.addEventListener('input', () => {
             clearTimeout(youtubeSearchTimeout);
-            if (input.value.trim().length < 2) return;
-            youtubeSearchTimeout = setTimeout(run, 700);
+            const val = input.value.trim();
+            if (val === '') {
+                searchYouTubeMusic('');
+            } else {
+                youtubeSearchTimeout = setTimeout(run, 400);
+            }
         });
     }
 
@@ -1349,62 +1763,190 @@
         document.getElementById('playerArtist').textContent=t.artist;
         document.getElementById('playerCover').src=t.cover;
         currentVideoId=t.id;
-        document.querySelectorAll('.music-card').forEach(c=>c.classList.toggle('playing', c.id==='track-'+t.id && isPlaying));
+        document.querySelectorAll('.music-card').forEach(c=>c.classList.toggle('playing', (c.id==='track-'+t.id || c.id==='yt-search-track-'+t.id) && isPlaying));
     }
 
     function onYouTubeIframeAPIReady() {
-        ytPlayer = new YT.Player('yt-player', { height:'1', width:'1', videoId:currentVideoId, playerVars:{autoplay:0, controls:0, rel:0, modestbranding:1, playsinline:1}, events:{ onReady:onPlayerReady, onStateChange:onPlayerStateChange } });
+        ytPlayer = new YT.Player('yt-player', { 
+            height:'1', 
+            width:'1', 
+            videoId:currentVideoId, 
+            playerVars:{autoplay:0, controls:0, rel:0, modestbranding:1, playsinline:1}, 
+            events:{ onReady:onPlayerReady, onStateChange:onPlayerStateChange } 
+        });
     }
-    function onPlayerReady() { playerReady=true; ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); if(shouldAutoPlay){ shouldAutoPlay=false; ytPlayer.playVideo(); } }
+
+    function onPlayerReady() { 
+        playerReady=true; 
+        ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); 
+        if(shouldAutoPlay){ 
+            shouldAutoPlay=false; 
+            ytPlayer.playVideo(); 
+        } 
+    }
+
     function onPlayerStateChange(e) {
         if (e.data === YT.PlayerState.PLAYING) { isPlaying=true; startProgress(); }
         if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) { isPlaying=false; stopProgress(); }
         updateMusicUI();
     }
+
     function loadYouTubeIframe(targetId) {
         currentVideoId=targetId;
-        if (ytPlayer && playerReady) { ytPlayer.loadVideoById(targetId); ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); }
+        if (ytPlayer && playerReady) { 
+            ytPlayer.loadVideoById(targetId); 
+            ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); 
+        }
     }
+
     function playCurrent() {
         if (!ytPlayer || !playerReady) return;
         ytPlayer.playVideo(); isPlaying=true; updateMusicUI(); startProgress();
     }
-    function stopMusic() { if (ytPlayer && playerReady) ytPlayer.pauseVideo(); isPlaying=false; stopProgress(); updateMusicUI(); }
+
+    function stopMusic() { 
+        if (ytPlayer && playerReady) ytPlayer.pauseVideo(); 
+        isPlaying=false; 
+        stopProgress(); 
+        updateMusicUI(); 
+    }
+
     function toggleTrack(targetId) {
-        const idx=musicTracks.findIndex(t=>t.id===targetId); if(idx>=0) currentTrackIndex=idx;
+        refreshMusicTracks();
+        const idx=musicTracks.findIndex(t=>t.id===targetId); 
+        if(idx>=0) currentTrackIndex=idx;
         updatePlayerInfo();
-        if (ytPlayer && playerReady) { ytPlayer.loadVideoById(targetId); ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); isPlaying=true; startProgress(); }
+        if (ytPlayer && playerReady) { 
+            ytPlayer.loadVideoById(targetId); 
+            ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); 
+            isPlaying=true; 
+            startProgress(); 
+        }
         updateMusicUI();
     }
+
     function toggleMusic() {
         if (!ytPlayer || !playerReady) return;
         if (isPlaying) stopMusic(); else playCurrent();
         collapseAfterAction();
     }
-    function nextTrack(){ if(!musicTracks.length)return; currentTrackIndex=(currentTrackIndex+1)%musicTracks.length; updatePlayerInfo(); toggleTrack(currentVideoId); collapseAfterAction(); }
-    function previousTrack(){ if(!musicTracks.length)return; currentTrackIndex=(currentTrackIndex-1+musicTracks.length)%musicTracks.length; updatePlayerInfo(); toggleTrack(currentVideoId); collapseAfterAction(); }
-    function seekMusic(v){ if(ytPlayer&&playerReady){ const d=ytPlayer.getDuration(); ytPlayer.seekTo(d*(parseFloat(v)/100),true); } }
-    function setVolume(v){ if(ytPlayer&&playerReady) ytPlayer.setVolume(parseInt(v,10)); document.getElementById('volumeIcon').textContent=parseInt(v,10)===0?'🔇':'🔊'; }
-    function toggleMute(){ if(!ytPlayer||!playerReady)return; if(ytPlayer.isMuted()){ytPlayer.unMute(); document.getElementById('volumeIcon').textContent='🔊';}else{ytPlayer.mute(); document.getElementById('volumeIcon').textContent='🔇';} }
-    function startProgress(){ stopProgress(); progressTimer=setInterval(()=>{ if(!ytPlayer||!playerReady)return; const d=ytPlayer.getDuration()||0, c=ytPlayer.getCurrentTime()||0; document.getElementById('progressBar').value=d?(c/d*100):0; document.getElementById('currentTime').textContent=formatTime(c); document.getElementById('duration').textContent=formatTime(d); },500); }
-    function stopProgress(){ if(progressTimer){clearInterval(progressTimer);progressTimer=null;} }
-    function updateMusicUI(){ const b=document.getElementById('playerPlay'); if(b)b.textContent=isPlaying?'⏸':'▶'; document.querySelectorAll('.music-card').forEach(c=>c.classList.toggle('playing',c.id==='track-'+currentVideoId&&isPlaying)); }
-    function expandMusicPlayer(){ if(collapseTimer) clearTimeout(collapseTimer); document.getElementById('musicPlayer')?.classList.remove('compact'); }
-    function collapseMusicPlayer(){document.getElementById('musicPlayer')?.classList.add('compact');}
-    function collapseAfterAction(){ if(collapseTimer) clearTimeout(collapseTimer); collapseTimer=setTimeout(()=>collapseMusicPlayer(),900); }
 
-    function initSiteAndMusic() {
-        document.body.classList.remove('modal-open');
-        const overlay=document.getElementById('welcomeOverlay');
-        if(overlay){overlay.style.opacity='0';setTimeout(()=>overlay.remove(),500);}
-        updatePlayerInfo();
-        shouldAutoPlay = true;
-        if(!document.getElementById('yt-player')) { const d=document.createElement('div'); d.id='yt-player'; document.getElementById('audio-container').appendChild(d); }
-        if(!window.YT){ const tag=document.createElement('script'); tag.src='https://www.youtube.com/iframe_api'; document.head.appendChild(tag); }
-        if(ytPlayer&&playerReady) playCurrent();
+    function nextTrack(){ 
+        refreshMusicTracks();
+        if(!musicTracks.length)return; 
+        currentTrackIndex=(currentTrackIndex+1)%musicTracks.length; 
+        updatePlayerInfo(); 
+        toggleTrack(currentVideoId); 
+        collapseAfterAction(); 
     }
 
-    updatePlayerInfo();
+    function previousTrack(){ 
+        refreshMusicTracks();
+        if(!musicTracks.length)return; 
+        currentTrackIndex=(currentTrackIndex-1+musicTracks.length)%musicTracks.length; 
+        updatePlayerInfo(); 
+        toggleTrack(currentVideoId); 
+        collapseAfterAction(); 
+    }
+
+    function seekMusic(v){ 
+        if(ytPlayer&&playerReady){ 
+            const d=ytPlayer.getDuration(); 
+            ytPlayer.seekTo(d*(parseFloat(v)/100),true); 
+        } 
+    }
+
+    function setVolume(v){ 
+        if(ytPlayer&&playerReady) ytPlayer.setVolume(parseInt(v,10)); 
+        const volIcon = document.getElementById('volumeIcon');
+        if(volIcon) volIcon.textContent = parseInt(v, 10) === 0 ? '🔇' : '🔊';
+    }
+
+    function toggleMute() {
+        if (!ytPlayer || !playerReady) return;
+        const volBar = document.getElementById('volumeBar');
+        if (ytPlayer.isMuted()) {
+            ytPlayer.unMute();
+            if (volBar) volBar.value = ytPlayer.getVolume() || 80;
+            setVolume(volBar ? volBar.value : 80);
+        } else {
+            ytPlayer.mute();
+            if (volBar) volBar.value = 0;
+            setVolume(0);
+        }
+    }
+
+    function startProgress() {
+        stopProgress();
+        progressTimer = setInterval(() => {
+            if (ytPlayer && playerReady && isPlaying) {
+                const cur = ytPlayer.getCurrentTime() || 0;
+                const dur = ytPlayer.getDuration() || 0;
+                document.getElementById('currentTime').textContent = formatTime(cur);
+                document.getElementById('duration').textContent = formatTime(dur);
+                if (dur > 0) {
+                    document.getElementById('progressBar').value = (cur / dur) * 100;
+                }
+            }
+        }, 500);
+    }
+
+    function stopProgress() {
+        if (progressTimer) clearInterval(progressTimer);
+    }
+
+    function updateMusicUI() {
+        const playBtn = document.getElementById('playerPlay');
+        if (playBtn) playBtn.textContent = isPlaying ? '⏸' : '▶';
+        const player = document.getElementById('musicPlayer');
+        if (player) {
+            if (isPlaying) player.classList.add('playing');
+            else player.classList.remove('playing');
+        }
+        document.querySelectorAll('.music-card').forEach(c => {
+            const trackId = c.id.replace('track-', '').replace('yt-search-track-', '');
+            c.classList.toggle('playing', trackId === currentVideoId && isPlaying);
+        });
+    }
+
+    function expandMusicPlayer() {
+        clearTimeout(collapseTimer);
+        const player = document.getElementById('musicPlayer');
+        if (player) player.classList.remove('compact');
+    }
+
+    function collapseMusicPlayer() {
+        clearTimeout(collapseTimer);
+        collapseTimer = setTimeout(() => {
+            const player = document.getElementById('musicPlayer');
+            if (player) player.classList.add('compact');
+        }, 3000);
+    }
+
+    function collapseAfterAction() {
+        collapseMusicPlayer();
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeAddToPlaylistModal();
+    });
+
+    function initSiteAndMusic() {
+        const overlay = document.getElementById('welcomeOverlay');
+        if (overlay) overlay.style.display = 'none';
+        document.body.classList.remove('modal-open');
+
+        if (!window.YT) {
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+        shouldAutoPlay = true;
+        if (playerReady) {
+            playCurrent();
+        }
+    }
 </script>
 </body>
 </html>
