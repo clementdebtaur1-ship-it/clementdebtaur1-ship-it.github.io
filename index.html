@@ -23,8 +23,128 @@
    class="leetchi-button">
     💜 Soutenir Zoltrogame 💰
 </a>
+<!-- Bouton Espace Retour en haut à gauche -->
+<button class="feedback-button" onclick="openFeedbackModal()">
+    💬 Proposer un jeu / Bug / Plainte
+</button>
 
 <style>
+/* Bouton Haut Gauche */
+.feedback-button {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 9999;
+    padding: 7px 11px;
+    border-radius: 8px;
+    background: rgba(25, 25, 35, 0.85);
+    color: #fff;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.feedback-button:hover {
+    transform: translateY(-1px);
+    background: rgba(0, 212, 255, 0.2);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+/* Modal Formulaire */
+.feedback-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(4, 7, 12, 0.82);
+    backdrop-filter: blur(10px);
+}
+
+.feedback-modal-overlay.active { display: flex; }
+
+.feedback-modal {
+    position: relative;
+    width: min(480px, 100%);
+    padding: 25px;
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    background: var(--card-bg);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.25);
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.feedback-modal h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.feedback-form-group {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.feedback-form-group label {
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.feedback-form-group input, 
+.feedback-form-group select, 
+.feedback-form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: rgba(7, 10, 16, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.feedback-form-group input:focus, 
+.feedback-form-group select:focus, 
+.feedback-form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.feedback-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
+    color: #070a10;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 5px;
+}
+
+.feedback-submit-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+}
+
 .leetchi-button {
     position: fixed;
     top: 15px;
@@ -1302,7 +1422,73 @@
 
 <div id="audio-container"><div id="yt-player"></div></div>
 
+<!-- Fenêtre Modale de Contact / Signalement -->
+<div class="feedback-modal-overlay" id="feedbackModalOverlay" onclick="if(event.target === this) closeFeedbackModal()">
+    <div class="feedback-modal">
+        <button type="button" class="playlist-picker-close" onclick="closeFeedbackModal()" aria-label="Fermer">✕</button>
+        <h2>💬 Espace Communauté</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem;">
+            Dépose une plainte, propose un nouveau jeu ou signale un bug d'animation Three.js.
+        </p>
+<form action="https://formsubmit.co/clement.deb.taur.1@gmail.com" method="POST">
+    <!-- Empêche le spam via Captcha si tu le souhaites -->
+    <input type="hidden" name="_captcha" value="false">
+    
+    <!-- Redirige l'utilisateur sur ton site après l'envoi -->
+    <input type="hidden" name="_next" value="https://zoltrogame.com/thanks_you/">
+
+    <div class="feedback-form-group">
+        <label for="feedbackType">Catégorie :</label>
+        <select id="feedbackType" name="Categorie" required>
+            <option value="jeu">🎮 Proposer un nouveau jeu</option>
+            <option value="bug">🕹️ Bug avec une animation Three.js</option>
+            <option value="plainte">⚠️ Plainte / Réclamation</option>
+            <option value="autre">💡 Autre idée / Suggestion</option>
+        </select>
+    </div>
+
+    <div class="feedback-form-group">
+        <label for="feedbackContact">Ton pseudo ou Email (optionnel) :</label>
+        <input type="text" id="feedbackContact" name="Contact" placeholder="Ex: ton prénom ou ton email">
+    </div>
+
+    <div class="feedback-form-group">
+        <label for="feedbackMessage">Détails de ta demande :</label>
+        <textarea id="feedbackMessage" name="Message" rows="4" placeholder="Décris ta demande..." required></textarea>
+    </div>
+
+    <button type="submit" class="feedback-submit-btn">🚀 Envoyer le message</button>
+</form>
+    </div>
+</div>
+
 <script>
+function openFeedbackModal() {
+    document.getElementById('feedbackModalOverlay').classList.add('active');
+    document.body.classList.add('modal-open');
+}
+
+function closeFeedbackModal() {
+    document.getElementById('feedbackModalOverlay').classList.remove('active');
+    if (!document.getElementById('welcomeOverlay') || document.getElementById('welcomeOverlay').style.display === 'none') {
+        document.body.classList.remove('modal-open');
+    }
+}
+
+function handleFeedbackSubmit(e) {
+    e.preventDefault();
+    const type = document.getElementById('feedbackType').value;
+    const contact = document.getElementById('feedbackContact').value || 'Anonyme';
+    const message = document.getElementById('feedbackMessage').value;
+
+    // Affiche une confirmation à l'utilisateur
+    alert(`Merci ${contact} ! Ton retour (${type.toUpperCase()}) a bien été envoyé.`);
+
+    // Réinitialise et ferme la fenêtre
+    document.getElementById('feedbackForm').reset();
+    closeFeedbackModal();
+}
+
     const catLabels = {
         'action': 'Action / FPS',
         'course': 'Course / Conduite',
