@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Mots-clés ciblés pour les moteurs de recherche -->
-<meta name="keywords" content="jeux cdi, jeux non bloques, mini jeux en ligne college lycee, jeux unblocked fr, jeux navigateur sans telechargement, jeux pc lent">
-
 <meta name="google-site-verification" content="TQZCSboq1Phz7Imbj-_FyqDFaGLERCMVlYQDUdMTjvY"/>
        <!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XF26TME93G"></script>
@@ -17,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zoltrogame - Le site de mini-jeux en ligne de Clément</title>
 	<link rel="icon" type="image/png" href="favicon.png">
-    <meta name="description" content="Bienvenue sur Zoltrogame, tu t'ennuie au CDI, ton pc n'est pas assez puissant pour installer Fortnite ou Call Of Dutty ? Ce site est fait pour toi, il regroupe les meilleurs mini-jeux gratuits en ligne : action, course, simulation, sandbox, horreur, émulateurs, ... !">
+    <meta name="description" content="Bienvenue sur Zoltrogame, le site de Clément regroupant les meilleurs mini-jeux gratuits en ligne : action, course, simulation, sandbox, horreur et émulateurs !">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
 <!-- Bouton cagnotte -->
 <a href="https://www.leetchi.com/fr/c/soutenir-zoltrogame-1555040?u=b2b0dabe-45c7-489f-a663-019ff11f47b5&utm_source=copylink&utm_medium=social_sharing"
@@ -32,49 +29,6 @@
 </button>
 
 <style>
-/* Style du texte discret (presque invisible) */
-.stealth-hint {
-    position: fixed;
-    bottom: 10px;
-    right: 15px;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.2); /* Très transparent pour ne pas attirer l'œil */
-    pointer-events: none; /* Permet de cliquer à travers si besoin */
-    font-family: Arial, sans-serif;
-    z-index: 1000;
-}
-
-/* Style de la page de l'exposé (fond blanc basique, style document Word) */
-#cloak-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffffff; /* Fond blanc */
-    color: #000000; /* Texte noir */
-    z-index: 999999; /* S'affiche TOUT en haut, par-dessus tes jeux */
-    overflow-y: auto; /* Permet de scroller si on veut faire semblant de lire */
-    font-family: 'Times New Roman', Times, serif;
-    padding: 40px;
-    box-sizing: border-box;
-}
-
-/* Formatage du texte de l'exposé */
-.cloak-content {
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.6;
-    font-size: 16px;
-}
-
-.cloak-content h1 {
-    text-align: center;
-    border-bottom: 2px solid #333;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-}
-
 /* Bouton Haut Gauche */
 .feedback-button {
     position: fixed;
@@ -795,9 +749,79 @@
     .like-btn.liked{color:#ff4f8b;background:rgba(255,79,139,.16)}
     .game-card,.music-card{position:relative}
     .music-player button{cursor:pointer}
+	
+/* --- CSS DU MODE FURTIF --- */
+.stealth-hint {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.2); /* Très transparent pour être discret */
+    font-size: 11px;
+    z-index: 9999;
+    pointer-events: none;
+    font-family: Arial, sans-serif;
+}
+
+#cloak-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff; /* Fond parfaitement blanc */
+    color: #000000; /* Texte noir */
+    z-index: 999999999; /* Z-index géant pour passer par-dessus TOUT le site */
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+    font-family: 'Times New Roman', Times, serif; /* Police d'exposé classique */
+    overflow-y: auto;
+}
+
+.cloak-content {
+    max-width: 800px;
+    width: 100%;
+    text-align: left;
+    line-height: 1.6;
+}
+
+/* On écrase le style néon du h1 principal du site pour l'exposé */
+.cloak-content h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2.2rem;
+    color: #000;
+    background: none;
+    -webkit-text-fill-color: initial;
+    letter-spacing: normal;
+    text-transform: none;
+    filter: none;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.cloak-content h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.cloak-content p, .cloak-content ul {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.cloak-content ul {
+    padding-left: 30px;
+}
+
 </style>
 </head>
 <body class="modal-open">
+
+<div id="intro-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999999; background: #04070c; transition: opacity 1s ease;"></div>
 
 <div id="google_translate_element"></div>
 
@@ -817,7 +841,7 @@
     <div class="welcome-box">
         <h2 class="welcome-title">Prêt pour l'aventure ?</h2>
         <p class="welcome-text">Bienvenue sur Zoltrogame ! Appuie sur le bouton pour accéder aux mini-jeux de Zoltrogame.</p>
-        <button class="enjoy-launch-btn" onclick="document.getElementById('welcomeOverlay').style.display='none'; document.body.classList.remove('modal-open');">🔊 ENJOY YOUR PLAY</button>
+        <button class="enjoy-launch-btn" onclick="initSiteAndMusic()">🔊 ENJOY YOUR PLAY</button>
     </div>
 </div>
 
@@ -834,7 +858,6 @@
         <div class="action-buttons">
             <button class="action-btn" onclick="toggleFullScreen()">🖥️ Plein Écran</button>
             <button class="action-btn" onclick="playRandomGame()">🎲 Jeu Aléatoire</button>
-			<button class="action-btn" onclick="shareSite()">🔗 Partager à un pote</button>
         </div>
     </header>
 
@@ -866,7 +889,7 @@
                 <span class="category-count" id="count-action">0 jeux</span>
             </div>
             <div class="cards-grid">
-                <a href="vicecity.html" target="_blank" class="game-card" data-name="GTA Vice City" data-cat="action">
+                <a href="https://zoltrogame.com/vice-city-info/" target="_blank" class="game-card" data-name="GTA Vice City" data-cat="action">
                     <img class="static-img" src="https://upload.wikimedia.org/wikipedia/en/c/ce/Vice-city-cover.jpg" alt="GTA Vice City" loading="lazy">
                     <img src="https://i.makeagif.com/media/2-02-2016/9fdG8w.gif" alt="Animation MakeAGif" width="400">
                     <div class="game-info"><span>GTA Vice City</span></div>
@@ -886,7 +909,7 @@
                     <div class="game-info"><span>Deadshot.io</span></div>
                 </a>
                 <a href="https://smashkarts.io/" target="_blank" class="game-card" data-name="Smashkart" data-cat="action">
-                    <img class="static-img" src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co2rc1.jpg" alt="smashkart" loading="lazy">
+                    <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL2VrH_Bn5bRFgIUlAgD7g81uJr-ts9f-TD4H8bkp_dw&s" alt="smashkart" loading="lazy">
                     <img src="https://media1.tenor.com/m/Xpyjb42Zd4kAAAAd/smash-karts-smash.gif" alt="Animation MakeAGif" width="400">
                     <div class="game-info"><span>Smashkart</span></div>
                 </a>
@@ -1527,6 +1550,7 @@
 </form>
     </div>
 </div>
+<!-- --- DÉBUT DU MODE FURTIF --- -->
 <!-- Le petit texte discret pour le raccourci -->
 <div class="stealth-hint">🤫 Astuce : Appuie sur [Échap] pour cacher l'écran</div>
 
@@ -1548,59 +1572,164 @@
         <p><em>Source : Manuel de Physique-Chimie, Chapitre 4.</em></p>
     </div>
 </div>
+<!-- --- FIN DU MODE FURTIF --- -->
 
 <script>
-window.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
-        // 1. Masquer l'overlay immédiatement
-        const overlay = document.getElementById('welcomeOverlay');
-        if (overlay) {
-            overlay.style.setProperty('display', 'none', 'important');
-        }
+// --- SCRIPT DU MODE FURTIF ---
+document.addEventListener('keydown', function(event) {
+    // Vérifie si la touche appuyée est 'Escape' (Échap)
+    if (event.key === 'Escape') {
+        const cloak = document.getElementById('cloak-overlay');
         
-        // 2. Retirer le flou et réactiver les clics
-        document.body.classList.remove('modal-open');
-    }
-}, true); // L'option 'true' force la capture de la touche en priorité
-
-function shareSite() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Zoltrogame',
-            text: 'Plein de jeux gratuits sans installation :',
-            url: window.location.href
-        });
-    } else {
-        navigator.clipboard.writeText(window.location.href);
-        alert('Lien copié dans le presse-papier !');
-    }
-}
-
-// Mode Camouflage / Furtif (Touche Échap)
-let isCloaked = false;
-const originalTitle = document.title;
-const originalFavicon = document.querySelector("link[rel*='icon']")?.href;
-
-function toggleCloak() {
-    isCloaked = !isCloaked;
-    const favicon = document.querySelector("link[rel*='icon']");
-    
-    if (isCloaked) {
-        document.title = "Recherche documentaire — Vikidia, l'encyclopédie";
-        if (favicon) favicon.href = "https://fr.vikidia.org/favicon.ico";
-    } else {
-        document.title = originalTitle;
-        if (favicon) favicon.href = originalFavicon;
-    }
-}
-
-// Raccourci clavier avec la touche Échap
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        toggleCloak();
+        // Si l'écran est caché, on l'affiche (en flex), sinon on le cache
+        if (cloak.style.display === 'none' || cloak.style.display === '') {
+            cloak.style.display = 'flex';
+        } else {
+            cloak.style.display = 'none';
+        }
     }
 });
 
+<!-- Charge la librairie Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    // 1. Initialisation de la scène, caméra et rendu
+    const container = document.getElementById('intro-canvas');
+    const scene = new THREE.Scene();
+    
+    // Caméra placée au centre
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 60;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    // 2. Création des particules
+    const particleCount = 12000;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const targetZ = new Float32Array(particleCount * 3);
+    const targetGalaxy = new Float32Array(particleCount * 3);
+
+    // Génération des formes (Aléatoire -> Z -> Galaxie)
+    for(let i = 0; i < particleCount; i++) {
+        // Position initiale (écran noir avec particules éparpillées)
+        positions[i*3] = (Math.random() - 0.5) * 300;
+        positions[i*3+1] = (Math.random() - 0.5) * 300;
+        positions[i*3+2] = (Math.random() - 0.5) * 300;
+
+        // Position cible pour former le "Z"
+        let zX, zY;
+        const r = Math.random();
+        if (r < 0.33) { 
+            // Barre du haut
+            zX = (Math.random() - 0.5) * 40;
+            zY = 20;
+        } else if (r < 0.66) { 
+            // Diagonale
+            const t = Math.random();
+            zX = 20 - (t * 40);
+            zY = 20 - (t * 40);
+        } else { 
+            // Barre du bas
+            zX = (Math.random() - 0.5) * 40;
+            zY = -20;
+        }
+        // Ajouter un peu de volume (bruit) au Z
+        targetZ[i*3] = zX + (Math.random() - 0.5) * 4;
+        targetZ[i*3+1] = zY + (Math.random() - 0.5) * 4;
+        targetZ[i*3+2] = (Math.random() - 0.5) * 10;
+
+        // Position cible pour la "Galaxie" (Spirale)
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 80;
+        const spiral = angle + radius * 0.15;
+        targetGalaxy[i*3] = Math.cos(spiral) * radius;
+        targetGalaxy[i*3+1] = Math.sin(spiral) * radius;
+        targetGalaxy[i*3+2] = (Math.random() - 0.5) * 30;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    
+    // Matériel des particules (aux couleurs de ZoltroGame)
+    const material = new THREE.PointsMaterial({ 
+        color: 0x00d4ff, // La couleur cyan de ton site
+        size: 0.3, 
+        transparent: true, 
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending
+    });
+    
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // 3. Animation et Timeline
+    const clock = new THREE.Clock();
+    let isFinished = false;
+
+    function animate() {
+        if (isFinished) return;
+        requestAnimationFrame(animate);
+        
+        const time = clock.getElapsedTime();
+        const posAttribute = geometry.attributes.position;
+        const pos = posAttribute.array;
+
+        // Étape 1: Formation du Z (0s à 2.5s)
+        if (time < 2.5) {
+            for(let i = 0; i < particleCount * 3; i++) {
+                pos[i] += (targetZ[i] - pos[i]) * 0.06;
+            }
+        } 
+        // Étape 2: Maintien du Z et légère rotation (2.5s à 4s)
+        else if (time >= 2.5 && time < 4) {
+            particles.rotation.y = Math.sin(time * 2) * 0.1;
+        }
+        // Étape 3: Désintégration et formation de la Galaxie (4s à 6.5s)
+        else if (time >= 4 && time < 6.5) {
+            for(let i = 0; i < particleCount * 3; i++) {
+                pos[i] += (targetGalaxy[i] - pos[i]) * 0.04;
+            }
+            particles.rotation.z -= 0.005;
+        } 
+        // Étape 4: Traversée de la galaxie (6.5s à 8.5s)
+        else if (time >= 6.5 && time < 8.5) {
+            particles.rotation.z -= 0.01;
+            camera.position.z -= 0.8; // La caméra avance vite
+            camera.rotation.z += 0.005;
+        } 
+        // Étape 5: Arrivée sur le site (Disparition de l'overlay)
+        else if (time >= 8.5) {
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 1000);
+            isFinished = true; // Stoppe la boucle de rendu pour économiser les perfs
+        }
+
+        posAttribute.needsUpdate = true;
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // 4. Gestion du redimensionnement de l'écran
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Bonus : Permettre au joueur de passer l'intro en cliquant
+    container.addEventListener('click', () => {
+        container.style.opacity = '0';
+        setTimeout(() => {
+            container.style.display = 'none';
+        }, 500);
+        isFinished = true;
+    });
+	
 function openFeedbackModal() {
     document.getElementById('feedbackModalOverlay').classList.add('active');
     document.body.classList.add('modal-open');
@@ -2271,51 +2400,6 @@ function handleFeedbackSubmit(e) {
             playCurrent();
         }
     }
-let isCloaked = false;
-const originalTitle = document.title;
-
-// On récupère le logo "Z" (favicon) existant
-let favicon = document.querySelector("link[rel*='icon']");
-
-// Sécurité : si jamais tu n'as pas de balise favicon déclarée dans le HTML, on la crée
-if (!favicon) {
-    favicon = document.createElement('link');
-    favicon.rel = 'icon';
-    document.head.appendChild(favicon);
-}
-const originalFavicon = favicon.href;
-
-// Écoute de la touche clavier "Échap" (Escape)
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        isCloaked = !isCloaked;
-        const cloakOverlay = document.getElementById('cloak-overlay');
-        
-        if (isCloaked) {
-            // ---> ON ACTIVE LE MODE FURTIF <---
-            cloakOverlay.style.display = 'block'; // Affiche la page d'exposé
-            
-            // On change le titre de l'onglet
-            document.title = "Recherche documentaire : Les Énergies"; 
-            
-            // On remplace ton logo Z par l'icône de Wikipédia
-            favicon.href = "https://fr.wikipedia.org/static/favicon/wikipedia.ico"; 
-            
-        } else {
-            // ---> ON DÉSACTIVE LE MODE FURTIF <---
-            cloakOverlay.style.display = 'none'; // Cache l'exposé
-            
-            // On remet ton titre et ton logo Z
-            document.title = originalTitle; 
-            favicon.href = originalFavicon; 
-        }
-    }
-});
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        initSiteAndMusic();
-    }
-});
 </script>
 </body>
 </html>
