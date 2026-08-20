@@ -32,6 +32,49 @@
 </button>
 
 <style>
+/* Style du texte discret (presque invisible) */
+.stealth-hint {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.2); /* Très transparent pour ne pas attirer l'œil */
+    pointer-events: none; /* Permet de cliquer à travers si besoin */
+    font-family: Arial, sans-serif;
+    z-index: 1000;
+}
+
+/* Style de la page de l'exposé (fond blanc basique, style document Word) */
+#cloak-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff; /* Fond blanc */
+    color: #000000; /* Texte noir */
+    z-index: 999999; /* S'affiche TOUT en haut, par-dessus tes jeux */
+    overflow-y: auto; /* Permet de scroller si on veut faire semblant de lire */
+    font-family: 'Times New Roman', Times, serif;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* Formatage du texte de l'exposé */
+.cloak-content {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.cloak-content h1 {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
 /* Bouton Haut Gauche */
 .feedback-button {
     position: fixed;
@@ -791,7 +834,6 @@
         <div class="action-buttons">
             <button class="action-btn" onclick="toggleFullScreen()">🖥️ Plein Écran</button>
             <button class="action-btn" onclick="playRandomGame()">🎲 Jeu Aléatoire</button>
-			<button class="action-btn" onclick="toggleCloak()" title="Raccourci : Touche Échap">🛡️ Mode Furtif</button>
 			<button class="action-btn" onclick="shareSite()">🔗 Partager à un pote</button>
         </div>
     </header>
@@ -1483,6 +1525,27 @@
 
     <button type="submit" class="feedback-submit-btn">🚀 Envoyer le message</button>
 </form>
+    </div>
+</div>
+<!-- Le petit texte discret pour le raccourci -->
+<div class="stealth-hint">🤫 Astuce : Appuie sur [Échap] pour cacher l'écran</div>
+
+<!-- L'écran de couverture (Le faux exposé) -->
+<div id="cloak-overlay" style="display: none;">
+    <div class="cloak-content">
+        <h1>Exposé : Les Énergies Renouvelables</h1>
+        <h2>1. Introduction</h2>
+        <p>L'énergie solaire est l'énergie transmise par le Soleil sous la forme de lumière et de chaleur. Cette énergie est virtuellement inépuisable à l'échelle des temps humains, ce qui en fait une énergie renouvelable majeure. Son utilisation ne produit pas de gaz à effet de serre.</p>
+        
+        <h2>2. Les panneaux photovoltaïques</h2>
+        <p>Un panneau solaire photovoltaïque est un dispositif qui permet de convertir une partie de l'énergie du rayonnement solaire en électricité. Ce principe repose sur l'effet photovoltaïque, découvert par le physicien français Edmond Becquerel en 1839.</p>
+        
+        <h2>3. Avantages et Inconvénients</h2>
+        <ul>
+            <li><strong>Avantages :</strong> Énergie propre, inépuisable et disponible partout sur Terre.</li>
+            <li><strong>Inconvénients :</strong> Production dépendante de la météo (intermittence) et coût de fabrication des panneaux.</li>
+        </ul>
+        <p><em>Source : Manuel de Physique-Chimie, Chapitre 4.</em></p>
     </div>
 </div>
 
@@ -2195,6 +2258,46 @@ function handleFeedbackSubmit(e) {
             playCurrent();
         }
     }
+let isCloaked = false;
+const originalTitle = document.title;
+
+// On récupère le logo "Z" (favicon) existant
+let favicon = document.querySelector("link[rel*='icon']");
+
+// Sécurité : si jamais tu n'as pas de balise favicon déclarée dans le HTML, on la crée
+if (!favicon) {
+    favicon = document.createElement('link');
+    favicon.rel = 'icon';
+    document.head.appendChild(favicon);
+}
+const originalFavicon = favicon.href;
+
+// Écoute de la touche clavier "Échap" (Escape)
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        isCloaked = !isCloaked;
+        const cloakOverlay = document.getElementById('cloak-overlay');
+        
+        if (isCloaked) {
+            // ---> ON ACTIVE LE MODE FURTIF <---
+            cloakOverlay.style.display = 'block'; // Affiche la page d'exposé
+            
+            // On change le titre de l'onglet
+            document.title = "Recherche documentaire : Les Énergies"; 
+            
+            // On remplace ton logo Z par l'icône de Wikipédia
+            favicon.href = "https://fr.wikipedia.org/static/favicon/wikipedia.ico"; 
+            
+        } else {
+            // ---> ON DÉSACTIVE LE MODE FURTIF <---
+            cloakOverlay.style.display = 'none'; // Cache l'exposé
+            
+            // On remet ton titre et ton logo Z
+            document.title = originalTitle; 
+            favicon.href = originalFavicon; 
+        }
+    }
+});
 </script>
 </body>
 </html>
