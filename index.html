@@ -1550,6 +1550,19 @@
 </div>
 
 <script>
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
+        // 1. Masquer l'overlay immédiatement
+        const overlay = document.getElementById('welcomeOverlay');
+        if (overlay) {
+            overlay.style.setProperty('display', 'none', 'important');
+        }
+        
+        // 2. Retirer le flou et réactiver les clics
+        document.body.classList.remove('modal-open');
+    }
+}, true); // L'option 'true' force la capture de la touche en priorité
+
 function shareSite() {
     if (navigator.share) {
         navigator.share({
