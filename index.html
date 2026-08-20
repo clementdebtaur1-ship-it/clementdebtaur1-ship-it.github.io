@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zoltrogame - Le site de mini-jeux en ligne de Clément</title>
 	<link rel="icon" type="image/png" href="favicon.png">
-    <meta name="description" content="Bienvenue sur Zoltrogame, le site de Clément regroupant les meilleurs mini-jeux gratuits en ligne : action, course, simulation, sandbox, horreur et émulateurs !">
+    <meta name="description" content="ZoltroGame propose des jeux gratuits sur PC directement dans le navigateur : jeux sans téléchargement, jeux rapides, jeux à deux, jeux multijoueur et petits jeux pour s'occuper quand on s'ennuie.">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
 <!-- Bouton cagnotte -->
 <a href="https://www.leetchi.com/fr/c/soutenir-zoltrogame-1555040?u=b2b0dabe-45c7-489f-a663-019ff11f47b5&utm_source=copylink&utm_medium=social_sharing"
@@ -27,6 +27,11 @@
 <button class="feedback-button" onclick="openFeedbackModal()">
     💬 Proposer un jeu / Bug / Plainte
 </button>
+<a href="#games">Jeux PC gratuits</a>
+<a href="#games">Jeux sans téléchargement</a>
+<a href="#games">Jeux rapides</a>
+<a href="#games">Jeux à deux</a>
+<a href="#games">Jeux quand on s'ennuie</a>
 
 <style>
 /* Bouton Haut Gauche */
@@ -753,6 +758,8 @@
 </head>
 <body class="modal-open">
 
+<div id="intro-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999999; background: #04070c; transition: opacity 1s ease;"></div>
+
 <div id="google_translate_element"></div>
 
 <script type="text/javascript">
@@ -779,6 +786,7 @@
 
     <header>
         <h1>Bienvenue sur Zoltrogame !</h1>
+		<title>ZoltroGame – Jeux PC gratuits, sans téléchargement, jeux en ligne et jeux quand on s'ennuie</title>
         <div class="search-wrapper">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -1482,6 +1490,146 @@
 </div>
 
 <script>
+<!-- Charge la librairie Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    // 1. Initialisation de la scène, caméra et rendu
+    const container = document.getElementById('intro-canvas');
+    const scene = new THREE.Scene();
+    
+    // Caméra placée au centre
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 60;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    // 2. Création des particules
+    const particleCount = 12000;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const targetZ = new Float32Array(particleCount * 3);
+    const targetGalaxy = new Float32Array(particleCount * 3);
+
+    // Génération des formes (Aléatoire -> Z -> Galaxie)
+    for(let i = 0; i < particleCount; i++) {
+        // Position initiale (écran noir avec particules éparpillées)
+        positions[i*3] = (Math.random() - 0.5) * 300;
+        positions[i*3+1] = (Math.random() - 0.5) * 300;
+        positions[i*3+2] = (Math.random() - 0.5) * 300;
+
+        // Position cible pour former le "Z"
+        let zX, zY;
+        const r = Math.random();
+        if (r < 0.33) { 
+            // Barre du haut
+            zX = (Math.random() - 0.5) * 40;
+            zY = 20;
+        } else if (r < 0.66) { 
+            // Diagonale
+            const t = Math.random();
+            zX = 20 - (t * 40);
+            zY = 20 - (t * 40);
+        } else { 
+            // Barre du bas
+            zX = (Math.random() - 0.5) * 40;
+            zY = -20;
+        }
+        // Ajouter un peu de volume (bruit) au Z
+        targetZ[i*3] = zX + (Math.random() - 0.5) * 4;
+        targetZ[i*3+1] = zY + (Math.random() - 0.5) * 4;
+        targetZ[i*3+2] = (Math.random() - 0.5) * 10;
+
+        // Position cible pour la "Galaxie" (Spirale)
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 80;
+        const spiral = angle + radius * 0.15;
+        targetGalaxy[i*3] = Math.cos(spiral) * radius;
+        targetGalaxy[i*3+1] = Math.sin(spiral) * radius;
+        targetGalaxy[i*3+2] = (Math.random() - 0.5) * 30;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    
+    // Matériel des particules (aux couleurs de ZoltroGame)
+    const material = new THREE.PointsMaterial({ 
+        color: 0x00d4ff, // La couleur cyan de ton site
+        size: 0.3, 
+        transparent: true, 
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending
+    });
+    
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // 3. Animation et Timeline
+    const clock = new THREE.Clock();
+    let isFinished = false;
+
+    function animate() {
+        if (isFinished) return;
+        requestAnimationFrame(animate);
+        
+        const time = clock.getElapsedTime();
+        const posAttribute = geometry.attributes.position;
+        const pos = posAttribute.array;
+
+        // Étape 1: Formation du Z (0s à 2.5s)
+        if (time < 2.5) {
+            for(let i = 0; i < particleCount * 3; i++) {
+                pos[i] += (targetZ[i] - pos[i]) * 0.06;
+            }
+        } 
+        // Étape 2: Maintien du Z et légère rotation (2.5s à 4s)
+        else if (time >= 2.5 && time < 4) {
+            particles.rotation.y = Math.sin(time * 2) * 0.1;
+        }
+        // Étape 3: Désintégration et formation de la Galaxie (4s à 6.5s)
+        else if (time >= 4 && time < 6.5) {
+            for(let i = 0; i < particleCount * 3; i++) {
+                pos[i] += (targetGalaxy[i] - pos[i]) * 0.04;
+            }
+            particles.rotation.z -= 0.005;
+        } 
+        // Étape 4: Traversée de la galaxie (6.5s à 8.5s)
+        else if (time >= 6.5 && time < 8.5) {
+            particles.rotation.z -= 0.01;
+            camera.position.z -= 0.8; // La caméra avance vite
+            camera.rotation.z += 0.005;
+        } 
+        // Étape 5: Arrivée sur le site (Disparition de l'overlay)
+        else if (time >= 8.5) {
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 1000);
+            isFinished = true; // Stoppe la boucle de rendu pour économiser les perfs
+        }
+
+        posAttribute.needsUpdate = true;
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // 4. Gestion du redimensionnement de l'écran
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Bonus : Permettre au joueur de passer l'intro en cliquant
+    container.addEventListener('click', () => {
+        container.style.opacity = '0';
+        setTimeout(() => {
+            container.style.display = 'none';
+        }, 500);
+        isFinished = true;
+    });
+	
 function openFeedbackModal() {
     document.getElementById('feedbackModalOverlay').classList.add('active');
     document.body.classList.add('modal-open');
