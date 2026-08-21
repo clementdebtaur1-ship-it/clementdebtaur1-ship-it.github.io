@@ -193,7 +193,7 @@
             overflow-x: hidden;
         }
 
-        body.modal-open #siteContent > *:not(.playlist-picker-overlay):not(.welcome-overlay) {
+        body.modal-open #siteContent > *:not(.playlist-picker-overlay) {
             filter: blur(8px);
             pointer-events: none;
         }
@@ -230,6 +230,14 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(0 0 20px rgba(0,212,255,0.3));
+        }
+
+        /* Titre principal : toujours parfaitement centré */
+        header > h1 {
+            width: 100%;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .site-intro {
@@ -337,6 +345,26 @@
             border-color: var(--accent);
             color: #070a10;
         }
+
+        /* Navigation catégories renforcée */
+        #categoryTabs {
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background: rgba(7, 10, 16, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding-bottom: 14px;
+        }
+
+        #categoryTabs .tab-btn {
+            user-select: none;
+        }
+
+        .category-section {
+            scroll-margin-top: 95px;
+        }
+
 
         main {
             padding: 30px 40px 60px;
@@ -750,78 +778,89 @@
     .game-card,.music-card{position:relative}
     .music-player button{cursor:pointer}
 	
-/* --- CSS DU MODE FURTIF --- */
-.stealth-hint {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    color: rgba(255, 255, 255, 0.2); /* Très transparent pour être discret */
-    font-size: 11px;
-    z-index: 9999;
-    pointer-events: none;
-    font-family: Arial, sans-serif;
+/* --- MODE FURTIF : PRESENTATION STYLE POWERPOINT --- */
+.stealth-hint{display:none!important}
+#cloak-overlay{
+ position:fixed!important; inset:0!important; width:100vw!important; height:100vh!important;
+ z-index:2147483647!important; display:none; box-sizing:border-box;
+ align-items:stretch; justify-content:center; padding:0!important;
+ background:#f4f5f7!important; color:#202124!important;
+ pointer-events:none; overflow:hidden!important; font-family:Arial,Helvetica,sans-serif;
 }
+#cloak-overlay.is-visible{display:flex!important;pointer-events:auto!important}
+body.cloak-open{overflow:hidden!important}
+.cloak-shell{width:100vw!important;height:100vh!important;max-height:none!important;display:grid!important;grid-template-rows:58px 1fr!important;gap:0!important;background:#f4f5f7!important}
+.cloak-topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 22px!important;background:#fff!important;border:0!important;border-bottom:1px solid #d9dce1!important;border-radius:0!important;box-shadow:0 2px 8px rgba(0,0,0,.08)!important;font-family:Arial,Helvetica,sans-serif!important}
+.cloak-brand{font-size:15px!important;font-weight:700!important;color:#24272c!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cloak-top-actions{display:flex;gap:8px;align-items:center}
+.cloak-btn{border:1px solid #c9cdd3!important;background:#fff!important;color:#333!important;border-radius:5px!important;padding:7px 13px!important;cursor:pointer;font-size:13px!important;font-weight:600!important}
+.cloak-btn:hover{background:#f0f2f5!important}
+.cloak-controls{display:flex;align-items:center;gap:10px;padding:10px 22px!important;background:#fff;border-bottom:1px solid #e0e2e6;position:absolute;top:58px;left:0;right:0;z-index:3;transform:translateY(-120%);opacity:0;visibility:hidden;transition:transform .22s ease,opacity .18s ease,visibility .18s ease;box-shadow:0 4px 12px rgba(0,0,0,.08);pointer-events:none}
+.cloak-controls.is-revealed,.cloak-controls:hover,.cloak-topbar:hover + .cloak-controls{transform:translateY(0);opacity:1;visibility:visible;pointer-events:auto}
+.cloak-topbar{transition:opacity .18s ease}
+.cloak-topbar.is-faded{opacity:.15}
 
-#cloak-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffffff; /* Fond parfaitement blanc */
-    color: #000000; /* Texte noir */
-    z-index: 999999999; /* Z-index géant pour passer par-dessus TOUT le site */
-    display: flex;
-    justify-content: center;
-    padding: 60px 20px;
-    font-family: 'Times New Roman', Times, serif; /* Police d'exposé classique */
-    overflow-y: auto;
-}
+.cloak-controls label{font-size:12px;font-weight:600;color:#555;display:flex;align-items:center;gap:7px}
+.cloak-controls select{border:1px solid #cfd3d8;border-radius:5px;background:#fff;padding:6px 8px;font-size:12px;color:#222}
+.cloak-slide{position:relative;min-height:0!important;height:100%!important;margin:0!important;padding:70px 8vw 50px!important;background:#fff!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:auto!important;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box}
+#cloak-slide-content{width:min(1100px,88vw);margin:0 auto!important}
+.cloak-slide h1{font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(34px,5vw,64px)!important;line-height:1.08!important;color:#1f2937!important;background:none!important;-webkit-text-fill-color:initial!important;letter-spacing:-1.5px!important;text-transform:none!important;filter:none!important;border:0!important;padding:0!important;margin:0 0 22px!important}
+.cloak-slide h2{font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(28px,3.4vw,44px)!important;color:#1f2937!important;margin:0 0 20px!important}
+.cloak-slide p,.cloak-slide li{font-size:clamp(18px,2vw,25px)!important;line-height:1.55!important;color:#4b5563!important}
+.cloak-slide ul{padding-left:30px!important}
+.slide-kicker{font-size:14px!important;font-weight:700!important;color:#2563eb!important;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px!important}
+.title-sub{font-size:clamp(19px,2.2vw,28px)!important;color:#6b7280!important;max-width:900px}
+.title-meta{display:flex;gap:8px;margin-top:25px}.badge{padding:7px 11px;background:#eef2ff;border:1px solid #dbe4ff;border-radius:5px;font-size:12px;color:#334155}
+.problem{margin:20px 0!important;padding:16px 20px!important;border-left:4px solid #2563eb!important;background:#f5f7fa!important;color:#374151!important;font-size:18px!important}
+.slide-number{position:fixed!important;right:24px!important;bottom:18px!important;color:#8a9099!important;font-size:12px!important;background:transparent!important;border:0!important;padding:0!important}
+.cloak-footer{display:none!important}
 
-.cloak-content {
-    max-width: 800px;
-    width: 100%;
-    text-align: left;
-    line-height: 1.6;
-}
+/* --- THÈMES AUTOMATIQUES SELON LA CLASSE --- */
+#cloak-overlay{--theme-main:#2563eb;--theme-soft:#eef4ff;--theme-bg:#f4f7fb;--theme-ink:#172033;--theme-card:#ffffff;--theme-border:#d8e2f0}
+#cloak-overlay.level-6e{--theme-main:#0ea5e9;--theme-soft:#e0f7ff;--theme-bg:#eefaff;--theme-ink:#12324a;--theme-border:#bde8f8}
+#cloak-overlay.level-5e{--theme-main:#10b981;--theme-soft:#e5fbf2;--theme-bg:#effcf7;--theme-ink:#123b31;--theme-border:#bfeede}
+#cloak-overlay.level-4e{--theme-main:#8b5cf6;--theme-soft:#f0eaff;--theme-bg:#f7f3ff;--theme-ink:#2e1d55;--theme-border:#ddd0ff}
+#cloak-overlay.level-3e{--theme-main:#f97316;--theme-soft:#fff0e5;--theme-bg:#fff7f0;--theme-ink:#4a2410;--theme-border:#ffd6bd}
+#cloak-overlay.level-2nde{--theme-main:#2563eb;--theme-soft:#e9f0ff;--theme-bg:#f3f6fc;--theme-ink:#162846;--theme-border:#cbd9f2}
+#cloak-overlay.level-1ere{--theme-main:#be123c;--theme-soft:#ffe8ef;--theme-bg:#fff4f7;--theme-ink:#4b1022;--theme-border:#f3c2cf}
+#cloak-overlay.level-terminale{--theme-main:#047857;--theme-soft:#e4f7f0;--theme-bg:#f1faf6;--theme-ink:#10382c;--theme-border:#bde4d4}
+#cloak-overlay.level-6e .cloak-slide{background:linear-gradient(135deg,#fff 0%,var(--theme-bg) 100%)!important}
+#cloak-overlay.level-5e .cloak-slide{background:linear-gradient(135deg,#fff 0%,var(--theme-bg) 100%)!important}
+#cloak-overlay.level-4e .cloak-slide{background:linear-gradient(135deg,#fff 0%,var(--theme-bg) 100%)!important}
+#cloak-overlay.level-3e .cloak-slide{background:linear-gradient(135deg,#fff 0%,var(--theme-bg) 100%)!important}
+#cloak-overlay.level-2nde .cloak-slide{background:linear-gradient(135deg,#fff 0%,var(--theme-bg) 100%)!important}
+#cloak-overlay.level-1ere .cloak-slide{background:linear-gradient(135deg,#fff 0%,var(--theme-bg) 100%)!important}
+#cloak-overlay.level-terminale .cloak-slide{background:linear-gradient(135deg,#fff 0%,var(--theme-bg) 100%)!important}
+#cloak-overlay .cloak-topbar{border-bottom:3px solid var(--theme-main)!important;background:var(--theme-card)!important}
+#cloak-overlay .cloak-brand{color:var(--theme-ink)!important}
+#cloak-overlay .cloak-btn:hover{background:var(--theme-soft)!important;border-color:var(--theme-main)!important;color:var(--theme-main)!important}
+#cloak-overlay .cloak-controls{background:var(--theme-card)!important;border-bottom-color:var(--theme-border)!important}
+#cloak-overlay .cloak-controls select{border-color:var(--theme-border)!important}
+#cloak-overlay .cloak-slide h1,#cloak-overlay .cloak-slide h2{color:var(--theme-ink)!important}
+#cloak-overlay .slide-kicker{color:var(--theme-main)!important}
+#cloak-overlay .badge{background:var(--theme-soft)!important;border-color:var(--theme-border)!important;color:var(--theme-ink)!important}
+#cloak-overlay .problem{border-left-color:var(--theme-main)!important;background:var(--theme-soft)!important;color:var(--theme-ink)!important}
+#cloak-overlay .slide-number{color:var(--theme-main)!important}
+/* Thèmes pédagogiques par niveau : décor et ambiance, pas seulement des couleurs */
+#cloak-overlay.level-6e{--theme-art:'☀️  🌍  🌙  🪐';}
+#cloak-overlay.level-5e{--theme-art:'🌿  🧬  🔬  🐾';}
+#cloak-overlay.level-4e{--theme-art:'⚡  ⚙️  🧪  🔭';}
+#cloak-overlay.level-3e{--theme-art:'🏛️  🌍  🧠  📚';}
+#cloak-overlay.level-2nde{--theme-art:'📐  🔬  💻  🌐';}
+#cloak-overlay.level-1ere{--theme-art:'🧠  📊  🧬  🏛️';}
+#cloak-overlay.level-terminale{--theme-art:'🎓  📈  🧠  🌐';}
+#cloak-overlay .cloak-slide{position:relative;overflow:hidden}
+#cloak-overlay .cloak-slide::after{content:var(--theme-art);position:absolute;right:34px;bottom:22px;font-size:28px;letter-spacing:8px;opacity:.16;pointer-events:none;white-space:nowrap}
+#cloak-overlay.level-6e .cloak-slide::before{content:'EXPLORATION DE L’ESPACE';position:absolute;top:24px;right:34px;font-size:11px;font-weight:800;letter-spacing:2px;opacity:.35}
+#cloak-overlay.level-terminale .cloak-slide::before{content:'PRÉPARATION • APPROFONDISSEMENT';position:absolute;top:24px;right:34px;font-size:11px;font-weight:800;letter-spacing:2px;opacity:.35}
+#cloak-overlay .level-theme-card{margin:22px 0;padding:18px 20px;border-radius:18px;background:var(--theme-soft);border:1px solid var(--theme-border);font-weight:600}
+#cloak-overlay .level-theme-card .theme-symbols{font-size:30px;margin-bottom:8px;letter-spacing:7px}
 
-/* On écrase le style néon du h1 principal du site pour l'exposé */
-.cloak-content h1 {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 2.2rem;
-    color: #000;
-    background: none;
-    -webkit-text-fill-color: initial;
-    letter-spacing: normal;
-    text-transform: none;
-    filter: none;
-    border-bottom: 2px solid #000;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-}
 
-.cloak-content h2 {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.5rem;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.cloak-content p, .cloak-content ul {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-}
-
-.cloak-content ul {
-    padding-left: 30px;
-}
-
+@media(max-width:700px){.cloak-topbar{padding:0 12px!important}.cloak-brand{font-size:13px!important}.cloak-btn{padding:6px 9px!important}.cloak-slide{padding:50px 24px 40px!important}.cloak-controls{flex-wrap:wrap}.cloak-controls label{font-size:11px}}
 </style>
 </head>
-<body class="modal-open">
-
-<div id="intro-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999999; background: #04070c; transition: opacity 1s ease;"></div>
+<body>
 
 <div id="google_translate_element"></div>
 
@@ -836,14 +875,6 @@
 </script>
 
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<div class="welcome-overlay" id="welcomeOverlay">
-    <div class="welcome-box">
-        <h2 class="welcome-title">Prêt pour l'aventure ?</h2>
-        <p class="welcome-text">Bienvenue sur Zoltrogame ! Appuie sur le bouton pour accéder aux mini-jeux de Zoltrogame.</p>
-        <button class="enjoy-launch-btn" onclick="initSiteAndMusic()">🔊 ENJOY YOUR PLAY</button>
-    </div>
-</div>
 
 <div id="siteContent">
 
@@ -1551,210 +1582,324 @@
     </div>
 </div>
 <!-- --- DÉBUT DU MODE FURTIF --- -->
-<!-- Le petit texte discret pour le raccourci -->
-<div class="stealth-hint">🤫 Astuce : Appuie sur [Échap] pour cacher l'écran</div>
+<div class="stealth-hint">🤫 Échap : ouvrir la présentation</div>
 
-<!-- L'écran de couverture (Le faux exposé) -->
-<div id="cloak-overlay" style="display: none;">
-    <div class="cloak-content">
-        <h1>Exposé : Les Énergies Renouvelables</h1>
-        <h2>1. Introduction</h2>
-        <p>L'énergie solaire est l'énergie transmise par le Soleil sous la forme de lumière et de chaleur. Cette énergie est virtuellement inépuisable à l'échelle des temps humains, ce qui en fait une énergie renouvelable majeure. Son utilisation ne produit pas de gaz à effet de serre.</p>
-        
-        <h2>2. Les panneaux photovoltaïques</h2>
-        <p>Un panneau solaire photovoltaïque est un dispositif qui permet de convertir une partie de l'énergie du rayonnement solaire en électricité. Ce principe repose sur l'effet photovoltaïque, découvert par le physicien français Edmond Becquerel en 1839.</p>
-        
-        <h2>3. Avantages et Inconvénients</h2>
-        <ul>
-            <li><strong>Avantages :</strong> Énergie propre, inépuisable et disponible partout sur Terre.</li>
-            <li><strong>Inconvénients :</strong> Production dépendante de la météo (intermittence) et coût de fabrication des panneaux.</li>
-        </ul>
-        <p><em>Source : Manuel de Physique-Chimie, Chapitre 4.</em></p>
+<div id="cloak-overlay" aria-hidden="true">
+  <div class="cloak-shell">
+    <div class="cloak-topbar">
+      <div class="cloak-brand" id="cloak-brand">Chapitre • Présentation</div>
+      <div class="cloak-top-actions">
+        <button class="cloak-btn" type="button" onclick="previousStealthSlide()">←</button>
+        <button class="cloak-btn" type="button" onclick="nextStealthSlide()">→</button>
+        <button class="cloak-btn" type="button" onclick="toggleStealthCloak()">Échap</button>
+      </div>
     </div>
+
+    <div class="cloak-controls">
+      <label>Matière
+        <select id="cloak-subject-select" onchange="updateStealthPresentation()">
+          <option value="francais">Français</option>
+          <option value="maths">Mathématiques</option>
+          <option value="histoire">Histoire-Géo</option>
+          <option value="svt">SVT</option>
+          <option value="physique">Physique-Chimie</option>
+          <option value="anglais">Anglais</option>
+          <option value="espagnol">Espagnol</option>
+          <option value="emc">EMC</option>
+          <option value="technologie">Technologie</option>
+        </select>
+      </label>
+      <label>Niveau
+        <select id="cloak-level-select" onchange="updateStealthPresentation()">
+          <option value="6e">6e</option><option value="5e">5e</option><option value="4e">4e</option><option value="3e">3e</option>
+          <option value="2nde">2nde</option><option value="1ere">1ère</option><option value="terminale">Terminale</option>
+        </select>
+      </label>
+      <label>Présentation
+        <select id="cloak-style-select" onchange="updateStealthPresentation()">
+          <option value="sobre">Sobre</option><option value="classique">Classique</option><option value="cours">Cours</option>
+        </select>
+      </label>
+      <label>Logo onglet
+        <select id="cloak-favicon-select" onchange="setStealthFavicon(this.value)">
+          <option value="paper">Document</option><option value="book">Livre</option><option value="note">Note</option><option value="math">Maths</option><option value="history">Histoire</option>
+        </select>
+      </label>
+      <button class="cloak-btn" type="button" onclick="editCurrentPresentation()">✏️ Modifier l'exposé</button>
+    </div>
+
+    <div class="cloak-slide" id="cloak-slide">
+      <div id="cloak-slide-content"></div>
+      <div class="slide-number" id="cloak-slide-number">1 / 4</div>
+    </div>
+    <div class="cloak-footer">← → pour changer de diapositive • Échap pour fermer</div>
+  </div>
 </div>
 <!-- --- FIN DU MODE FURTIF --- -->
 
+<!-- --- SCRIPT DU MODE FURTIF --- -->
 <script>
-// --- SCRIPT DU MODE FURTIF ---
-document.addEventListener('keydown', function(event) {
-    // Vérifie si la touche appuyée est 'Escape' (Échap)
-    if (event.key === 'Escape') {
-        const cloak = document.getElementById('cloak-overlay');
-        
-        // Si l'écran est caché, on l'affiche (en flex), sinon on le cache
-        if (cloak.style.display === 'none' || cloak.style.display === '') {
-            cloak.style.display = 'flex';
-        } else {
-            cloak.style.display = 'none';
-        }
+(function(){
+  const cloak=document.getElementById('cloak-overlay');
+  const hint=document.querySelector('.stealth-hint');
+  const favicon=document.querySelector('link[rel="icon"]');
+  if(!cloak) return;
+  const originalFavicon=favicon ? favicon.getAttribute('href') : 'favicon.png';
+  let currentSlide=0;
+  let slides=[];
+  let controlsTimer=null;
+  const controls=document.querySelector('.cloak-controls');
+  const topbar=document.querySelector('.cloak-topbar');
+  function revealControls(){
+    if(!cloak.classList.contains('is-visible')) return;
+    clearTimeout(controlsTimer);
+    if(controls) controls.classList.add('is-revealed');
+    if(topbar) topbar.classList.remove('is-faded');
+    controlsTimer=setTimeout(()=>{
+      if(controls && !controls.matches(':hover') && !topbar.matches(':hover')){
+        controls.classList.remove('is-revealed');
+        if(topbar) topbar.classList.add('is-faded');
+      }
+    },900);
+  }
+  cloak.addEventListener('mousemove',function(e){
+    if(e.clientY <= 105) revealControls();
+    else if(controls && !controls.matches(':hover') && !topbar.matches(':hover')){
+      controls.classList.remove('is-revealed');
+      if(topbar) topbar.classList.add('is-faded');
     }
-});
+  });
+  if(controls) controls.addEventListener('mouseenter',revealControls);
+  if(topbar) topbar.addEventListener('mouseenter',revealControls);
 
-<!-- Charge la librairie Three.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  const favicons={
+    paper:'📄', book:'📘', note:'📝', math:'∑', history:'⌛'
+  };
+  function faviconSvg(char){
+    return 'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#ffffff"/><rect x="8" y="8" width="48" height="48" rx="6" fill="none" stroke="#222" stroke-width="3"/><text x="32" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#222">${char}</text></svg>`);
+  }
+  window.setStealthFavicon=function(name){ if(favicon) favicon.setAttribute('href', faviconSvg(favicons[name]||'📄')); };
 
-    // 1. Initialisation de la scène, caméra et rendu
-    const container = document.getElementById('intro-canvas');
-    const scene = new THREE.Scene();
-    
-    // Caméra placée au centre
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 60;
+  const topics={
+    francais:{title:'Le rôle du récit', sub:'Comment une histoire capte-t-elle l’attention du lecteur ?', body:['Introduction','Un récit organise des personnages, des lieux et des événements. Le choix du point de vue, du temps et du rythme influence la manière dont le lecteur reçoit l’histoire.','Points clés',['Le point de vue peut être interne, externe ou omniscient.','Le rythme peut accélérer ou ralentir le récit.','Les descriptions donnent des informations sur les lieux et les personnages.'],'Conclusion','La construction du récit guide la lecture et permet de produire des effets différents.']},
+    maths:{title:'Proportionnalité', sub:'Reconnaître et utiliser une relation de proportionnalité.', body:['Introduction','Une situation est proportionnelle lorsque deux grandeurs varient selon un même coefficient.','Méthode',['Repérer les grandeurs.','Chercher le coefficient de proportionnalité.','Utiliser une règle de trois ou un tableau.'],'Conclusion','La proportionnalité est un outil pour résoudre de nombreux problèmes du quotidien.']},
+    histoire:{title:'La Révolution française', sub:'Pourquoi 1789 marque-t-elle un tournant majeur ?', body:['Introduction','En 1789, la France traverse une crise politique, sociale et financière. Les événements de l’année transforment profondément le fonctionnement du pays.','Repères',['1789 : convocation des États généraux.','14 juillet 1789 : prise de la Bastille.','Août 1789 : Déclaration des droits de l’homme et du citoyen.'],'Conclusion','La Révolution française modifie durablement les institutions et les principes politiques en France.']},
+    svt:{title:'La nutrition et l’organisme', sub:'Comment les aliments fournissent-ils ce dont le corps a besoin ?', body:['Introduction','Après ingestion, les aliments sont transformés et leurs nutriments passent dans le sang pour être distribués aux organes.','Fonctionnement',['La digestion transforme les aliments.','Les nutriments sont absorbés dans l’intestin grêle.','Le sang les transporte vers les organes.'],'Conclusion','La nutrition repose sur la digestion, l’absorption et le transport des nutriments.']},
+    physique:{title:'L’énergie et ses conversions', sub:'Comment une énergie change-t-elle de forme ?', body:['Introduction','Un système peut recevoir, stocker, transférer ou convertir de l’énergie.','Exemples',['Une lampe convertit de l’énergie électrique en lumière et en chaleur.','Un moteur transforme de l’énergie en mouvement.','Les pertes expliquent pourquoi une conversion n’est jamais totalement utile.'],'Conclusion','Comprendre les conversions d’énergie permet d’analyser le fonctionnement des objets et des systèmes.']},
+    anglais:{title:'Social Media and Communication', sub:'How have social media changed the way we communicate?', body:['Introduction','Social media allows people to communicate quickly, share information and build communities across distances.','Main ideas',['Communication is faster.','Information can spread very quickly.','Users must check sources and protect privacy.'],'Conclusion','Social media offers powerful communication tools, but responsible use remains essential.']},
+    espagnol:{title:'La vida cotidiana en España', sub:'Quelques repères pour comprendre les habitudes et les rythmes de vie.', body:['Introducción','La vida cotidiana en España presenta hábitos liés aux horaires, aux repas et à la vie sociale.','Puntos clave',['Las comidas pueden ser más tardías.','La vida social ocupa un lugar importante.','Las costumbres cambian según las regiones.'],'Conclusión','Las habitudes quotidiennes montrent la diversité culturelle d’un pays.']},
+    emc:{title:'La liberté d’expression', sub:'Pourquoi est-elle un droit essentiel dans une démocratie ?', body:['Introduction','La liberté d’expression permet de donner son opinion, de débattre et de participer à la vie collective.','Repères',['Elle permet le débat public.','Elle s’exerce dans le respect de la loi.','Elle implique aussi une responsabilité.'],'Conclusion','Une démocratie repose sur la possibilité de s’exprimer, de discuter et de confronter les idées.']},
+    technologie:{title:'Le cycle de vie d’un objet', sub:'Comment un objet est-il conçu, fabriqué et utilisé ?', body:['Introduction','Un objet technique passe par plusieurs étapes, de sa conception à sa fin de vie.','Étapes',['Conception et choix des matériaux.','Fabrication et distribution.','Utilisation puis réemploi, recyclage ou fin de vie.'],'Conclusion','Étudier le cycle de vie permet de mieux comprendre les choix techniques et leurs impacts.']}
+  };
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
+  const levelDetails={
+    '6e':'niveau 6e','5e':'niveau 5e','4e':'niveau 4e','3e':'niveau 3e','2nde':'niveau seconde','1ere':'niveau première','terminale':'niveau terminale'
+  };
 
-    // 2. Création des particules
-    const particleCount = 12000;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const targetZ = new Float32Array(particleCount * 3);
-    const targetGalaxy = new Float32Array(particleCount * 3);
+  // Les exposés ne sont PAS sauvegardés dans localStorage.
+  // Une modification est valable uniquement pendant la session actuelle.
+  // Ainsi, si un élève écrit par exemple « caca », le texte revient aux
+  // contenus d'origine au prochain rechargement de la page.
 
-    // Génération des formes (Aléatoire -> Z -> Galaxie)
-    for(let i = 0; i < particleCount; i++) {
-        // Position initiale (écran noir avec particules éparpillées)
-        positions[i*3] = (Math.random() - 0.5) * 300;
-        positions[i*3+1] = (Math.random() - 0.5) * 300;
-        positions[i*3+2] = (Math.random() - 0.5) * 300;
+  window.editCurrentPresentation=function(){
+    const subject=document.getElementById('cloak-subject-select').value;
+    const level=document.getElementById('cloak-level-select').value;
+    const data=subjectLevelDetails[subject]?.[level];
+    if(!data) return;
+    const title=prompt('Titre de l’exposé :',data[0]);
+    if(title===null) return;
+    const question=prompt('Question / problématique :',data[1]);
+    if(question===null) return;
+    const intro=prompt('Introduction :',data[2]);
+    if(intro===null) return;
+    const points=prompt('Idées du sujet (séparées par |) :',data[3].join(' | '));
+    if(points===null) return;
+    data[0]=title.trim()||data[0];
+    data[1]=question.trim()||data[1];
+    data[2]=intro.trim()||data[2];
+    data[3]=points.split('|').map(x=>x.trim()).filter(Boolean);
+    currentSlide=0;
+    renderSlides();
+  };
 
-        // Position cible pour former le "Z"
-        let zX, zY;
-        const r = Math.random();
-        if (r < 0.33) { 
-            // Barre du haut
-            zX = (Math.random() - 0.5) * 40;
-            zY = 20;
-        } else if (r < 0.66) { 
-            // Diagonale
-            const t = Math.random();
-            zX = 20 - (t * 40);
-            zY = 20 - (t * 40);
-        } else { 
-            // Barre du bas
-            zX = (Math.random() - 0.5) * 40;
-            zY = -20;
-        }
-        // Ajouter un peu de volume (bruit) au Z
-        targetZ[i*3] = zX + (Math.random() - 0.5) * 4;
-        targetZ[i*3+1] = zY + (Math.random() - 0.5) * 4;
-        targetZ[i*3+2] = (Math.random() - 0.5) * 10;
+  const levelThemeDetails={
+    '6e':{label:'Mission spatiale',symbols:'☀️ 🌍 🌙 🪐',text:'Un univers visuel inspiré du système solaire : exploration, planètes, espace et découvertes.',title:'À la découverte du système solaire',question:'Comment fonctionne notre système solaire ?',intro:'Le système solaire est notre environnement spatial. Il comprend le Soleil, des planètes, des lunes et de nombreux petits objets. Observer cet ensemble permet de mieux comprendre notre place dans l’Univers.',points:['Le Soleil est au centre du système solaire.','Les huit planètes suivent des orbites autour du Soleil.','La Terre est une planète rocheuse qui possède une atmosphère et de l’eau liquide.','Les lunes, astéroïdes et comètes complètent cet ensemble.'],conclusion:'Le système solaire est un vaste ensemble en mouvement. L’observation des planètes nous aide à comprendre la Terre et les grands phénomènes de l’espace.'},
+    '5e':{label:'Laboratoire du vivant',symbols:'🌿 🧬 🔬 🐾',text:'Un univers autour du vivant : nature, corps humain, biodiversité et expériences.',title:'Explorer le monde du vivant',question:'Comment les êtres vivants fonctionnent-ils et évoluent-ils ?',intro:'Le monde vivant rassemble une grande diversité d’êtres vivants. Leur observation permet de comprendre leurs besoins, leur organisation, leurs relations avec leur milieu et la diversité de la nature.',points:['Les êtres vivants ont des besoins et des fonctions essentielles.','Les cellules sont des unités fondamentales du vivant.','Les espèces vivent en interaction avec leur environnement.','La biodiversité évolue et peut être protégée.'],conclusion:'Comprendre le vivant consiste à observer son organisation, ses besoins et ses interactions avec l’environnement.'},
+    '4e':{label:'Sciences & inventions',symbols:'⚡ ⚙️ 🧪 🔭',text:'Une ambiance laboratoire tournée vers les phénomènes physiques, la technologie et les inventions.',title:'Sciences, énergie et inventions',question:'Comment les sciences permettent-elles d’expliquer et de transformer le monde ?',intro:'Les sciences permettent d’observer des phénomènes, de formuler des hypothèses et de tester des solutions. Les inventions utilisent ces connaissances pour répondre à des besoins.',points:['Une expérience permet de tester une hypothèse.','L’énergie peut être transférée ou transformée.','Les objets techniques utilisent des systèmes et des matériaux.','Les inventions résultent souvent de découvertes et d’améliorations successives.'],conclusion:'Les sciences donnent des méthodes pour comprendre les phénomènes et les inventions transforment ces connaissances en solutions concrètes.'},
+    '3e':{label:'Monde & société',symbols:'🏛️ 🌍 🧠 📚',text:'Un univers documentaire autour de l’histoire, de la société, de la géographie et de la réflexion.',title:'Comprendre le monde contemporain',question:'Comment les sociétés construisent-elles leur histoire et leur avenir ?',intro:'Comprendre le monde demande de croiser les événements historiques, les territoires, les populations et les choix des sociétés. Les documents permettent d’analyser les changements et leurs conséquences.',points:['Les événements historiques transforment les sociétés.','Les territoires sont organisés et aménagés par les populations.','Les sociétés font face à des enjeux politiques, sociaux et environnementaux.','Analyser des documents permet de construire une argumentation.'],conclusion:'Étudier le monde contemporain permet de relier histoire, géographie et société pour mieux comprendre les enjeux actuels.'},
+    '2nde':{label:'Sciences & numérique',symbols:'📐 🔬 💻 🌐',text:'Un thème moderne mêlant sciences, mathématiques, numérique et raisonnement.',title:'Sciences, données et numérique',question:'Comment les sciences et le numérique permettent-ils de modéliser le réel ?',intro:'Les sciences utilisent les mathématiques, les données et les outils numériques pour représenter des phénomènes complexes. Les modèles permettent ensuite de tester des hypothèses et de prévoir des résultats.',points:['Les données permettent de décrire et comparer des phénomènes.','Les mathématiques construisent des modèles.','Le numérique permet de traiter rapidement de grandes quantités d’informations.','Un modèle reste une représentation simplifiée du réel.'],conclusion:'Les outils scientifiques et numériques permettent de mieux comprendre le réel en combinant observation, calcul, données et modélisation.'},
+    '1ere':{label:'Analyse & réflexion',symbols:'🧠 📊 🧬 🏛️',text:'Une présentation structurée pour approfondir les notions, analyser des documents et argumenter.',title:'Analyser, démontrer et argumenter',question:'Comment construire une analyse solide à partir de connaissances et de preuves ?',intro:'À ce niveau, il faut relier les connaissances à des documents, des données et des arguments. Une bonne analyse distingue les faits, les interprétations et les conclusions.',points:['Identifier précisément la question posée.','Sélectionner les informations utiles et fiables.','Relier les preuves aux arguments.','Construire une conclusion qui répond réellement à la problématique.'],conclusion:'Une analyse solide repose sur une problématique claire, des preuves pertinentes et une argumentation organisée.'},
+    'terminale':{label:'Grand oral & expertise',symbols:'🎓 📈 🧠 🌐',text:'Une ambiance universitaire : problématique, argumentation, données, synthèse et préparation aux épreuves.',title:'Construire une réflexion d’expert',question:'Comment défendre une problématique avec des connaissances, des preuves et une argumentation claire ?',intro:'Au lycée, une présentation réussie doit transformer des connaissances en raisonnement. Il faut poser une problématique, sélectionner des preuves, expliquer les liens entre les idées et construire une conclusion convaincante.',points:['Formuler une problématique précise et intéressante.','Sélectionner des données ou exemples réellement pertinents.','Développer une argumentation logique et personnelle.','Conclure en répondant clairement à la problématique.'],conclusion:'Une présentation experte ne consiste pas seulement à réciter : elle montre que l’on comprend, que l’on sait argumenter et que l’on peut défendre une idée avec précision.'}
+  };
 
-        // Position cible pour la "Galaxie" (Spirale)
-        const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * 80;
-        const spiral = angle + radius * 0.15;
-        targetGalaxy[i*3] = Math.cos(spiral) * radius;
-        targetGalaxy[i*3+1] = Math.sin(spiral) * radius;
-        targetGalaxy[i*3+2] = (Math.random() - 0.5) * 30;
+  function applyLevelTheme(level){
+    const levels=['6e','5e','4e','3e','2nde','1ere','terminale'];
+    levels.forEach(l=>cloak.classList.remove('level-'+l));
+    cloak.classList.add('level-'+(levels.includes(level)?level:'6e'));
+  }
+
+  const subjectLevelDetails={
+    francais:{
+      '6e':['Récits d’aventure','Comment un récit fait-il voyager le lecteur ?','Découvrir les personnages, les lieux, le schéma narratif et le point de vue à travers les récits d’aventure.',['Personnages et héros','Cadre spatio-temporel','Étapes du récit','Point de vue et descriptions']],
+      '5e':['Héros, chevaliers et récits','Comment les récits médiévaux construisent-ils un héros ?','Étudier les aventures, les valeurs et les épreuves des héros dans les récits médiévaux et de chevalerie.',['Le héros et ses qualités','Quête et épreuves','Valeurs de chevalerie','Récit et description']],
+      '4e':['Théâtre et comédie','Comment le théâtre fait-il rire ou réfléchir ?','Comprendre comment les dialogues, les personnages et les situations produisent des effets sur le spectateur.',['Dialogue et didascalies','Comique de situation','Personnages et conflits','Mise en scène']],
+      '3e':['Argumenter et convaincre','Comment défendre une idée avec efficacité ?','Construire une argumentation en utilisant des arguments, des exemples et des procédés adaptés au destinataire.',['Thèse et arguments','Exemples et preuves','Procédés de persuasion','Organisation du discours']],
+      '2nde':['Le récit et ses points de vue','Comment le narrateur guide-t-il notre lecture ?','Analyser la construction d’un récit, le point de vue, le temps et les effets produits sur le lecteur.',['Narrateur et focalisation','Temps du récit','Descriptions','Effets sur le lecteur']],
+      '1ere':['Poésie et modernité','Comment la poésie transforme-t-elle notre regard ?','Analyser les images, les rythmes et les choix d’écriture qui donnent une force particulière au poème.',['Images et métaphores','Versification et rythme','Voix poétique','Interprétation']],
+      'terminale':['Littérature et argumentation','Comment une œuvre peut-elle défendre une vision du monde ?','Relier l’analyse littéraire à une réflexion argumentée sur les idées, les valeurs et les choix d’écriture.',['Problématique','Procédés d’écriture','Interprétation','Argumentation']]
+    },
+    maths:{
+      '6e':['Fractions et mesures','Comment représenter et comparer des fractions ?','Construire les premières notions de fraction, de mesure et de proportion à partir de situations concrètes.',['Partager une unité','Comparer des fractions','Mesurer et convertir','Résoudre un problème']],
+      '5e':['Proportionnalité','Comment reconnaître une situation proportionnelle ?','Utiliser tableaux, coefficients et pourcentages pour résoudre des situations de la vie courante.',['Coefficient de proportionnalité','Tableaux','Pourcentages','Échelles']],
+      '4e':['Théorème de Pythagore','Comment calculer une longueur dans un triangle rectangle ?','Utiliser le théorème de Pythagore pour calculer ou vérifier une longueur.',['Triangle rectangle','Carré des longueurs','Calcul de la longueur','Vérification']],
+      '3e':['Théorème de Thalès','Comment calculer une longueur grâce aux triangles ?','Utiliser les configurations de Thalès et les rapports de longueurs pour résoudre des problèmes géométriques.',['Triangles et parallèles','Rapports de longueurs','Calcul','Réciproque']],
+      '2nde':['Fonctions','Comment une fonction modélise-t-elle une situation ?','Passer d’une situation à une expression, une courbe ou un tableau de valeurs.',['Image et antécédent','Courbe','Tableau de valeurs','Modélisation']],
+      '1ere':['Dérivation','Comment étudier les variations d’une fonction ?','Utiliser la dérivée pour étudier les variations et rechercher des extrema.',['Nombre dérivé','Fonction dérivée','Variations','Extremum']],
+      'terminale':['Probabilités et variables aléatoires','Comment modéliser une situation aléatoire ?','Construire et exploiter des modèles probabilistes pour calculer des probabilités et interpréter des résultats.',['Loi de probabilité','Espérance','Indépendance','Interprétation']]
+    },
+    histoire:{
+      '6e':['Premières civilisations','Comment les premières civilisations organisent-elles les sociétés ?','Étudier les débuts des grandes civilisations, les villes, les pouvoirs et les écritures.',['Mésopotamie','Égypte','Premières villes','Écriture et pouvoir']],
+      '5e':['Moyen Âge','Comment les sociétés médiévales sont-elles organisées ?','Comprendre seigneurs, paysans, villes, royaumes et religions dans l’Europe médiévale.',['Seigneurs et paysans','Église','Villes','Royaumes']],
+      '4e':['Révolution et XIXe siècle','Pourquoi la Révolution française transforme-t-elle la société ?','Analyser les bouleversements politiques et sociaux de 1789 au XIXe siècle.',['1789','Droits et citoyenneté','Empire','Transformations sociales']],
+      '3e':['Guerres mondiales et société','Comment les guerres mondiales transforment-elles les sociétés ?','Étudier les conflits, les violences de masse et leurs conséquences politiques et humaines.',['Première Guerre mondiale','Totalitarismes','Seconde Guerre mondiale','Bilan humain']],
+      '2nde':['Méditerranée antique','Comment les civilisations de la Méditerranée construisent-elles des modèles politiques ?','Comparer les héritages grecs et romains et leurs formes d’organisation politique.',['Cités grecques','Athènes','Rome','Héritages']],
+      '1ere':['Révolutions, République et société','Comment les révolutions politiques transforment-elles les sociétés ?','Relier changements politiques, industrialisation et transformations sociales au XIXe siècle.',['Révolutions','Industrialisation','République','Sociétés']],
+      'terminale':['Le monde depuis 1945','Comment le monde s’organise-t-il depuis 1945 ?','Analyser les grandes recompositions géopolitiques, économiques et sociales du monde contemporain.',['Guerre froide','Décolonisation','Mondialisation','Nouveaux équilibres']]
+    },
+    svt:{
+      '6e':['La planète Terre et le vivant','Comment la Terre permet-elle la vie ?','Observer les milieux de vie, leurs ressources et les relations entre les êtres vivants.',['Milieux de vie','Biodiversité','Chaînes alimentaires','Ressources']],
+      '5e':['Corps humain et nutrition','Comment notre corps reçoit-il l’énergie dont il a besoin ?','Relier alimentation, digestion, respiration et fonctionnement de l’organisme.',['Aliments','Digestion','Respiration','Besoins des organes']],
+      '4e':['Reproduction et génétique','Comment les caractères se transmettent-ils ?','Découvrir les mécanismes de la reproduction et les bases de la transmission des caractères.',['Reproduction','Cellules','ADN','Caractères']],
+      '3e':['Évolution et santé','Comment expliquer la diversité du vivant et protéger notre santé ?','Relier génétique, évolution, microbes et prévention pour comprendre le vivant.',['Évolution','Micro-organismes','Immunité','Prévention']],
+      '2nde':['Cellule et génome','Comment l’information génétique organise-t-elle le vivant ?','Étudier la cellule, l’ADN et l’expression de l’information génétique.',['Cellule','ADN','Gènes','Expression']],
+      '1ere':['Génétique et évolution','Comment les mécanismes génétiques produisent-ils de la diversité ?','Analyser mutations, brassages génétiques et sélection pour expliquer l’évolution.',['Mutations','Brassage','Sélection','Évolution']],
+      'terminale':['Génome, évolution et environnement','Comment les sciences du vivant expliquent-elles les grandes transformations du vivant ?','Mobiliser génétique, évolution, climat et fonctionnement des écosystèmes pour raisonner à plusieurs échelles.',['Génome','Évolution','Climat','Écosystèmes']]
+    },
+    physique:{
+      '6e':['Mouvement et lumière','Comment décrire ce que l’on observe ?','Premières mesures et observations autour de la lumière, des mouvements et des objets.',['Lumière','Ombres','Mouvement','Mesures']],
+      '5e':['Électricité et circuits','Comment faire fonctionner un circuit électrique ?','Construire et représenter des circuits simples et comprendre le rôle des composants.',['Circuit','Générateur','Récepteur','Sécurité']],
+      '4e':['Énergie et transformations','Comment l’énergie se transforme-t-elle ?','Identifier les formes d’énergie et les transformations dans des objets du quotidien.',['Énergie','Transfert','Conversion','Rendement']],
+      '3e':['Matière, énergie et signaux','Comment expliquer le fonctionnement d’un système physique ?','Relier grandeurs physiques, énergie et signaux à des situations concrètes.',['Grandeurs','Énergie','Signaux','Modèles']],
+      '2nde':['Mouvement et interactions','Comment prévoir le mouvement d’un objet ?','Décrire un mouvement et relier les interactions aux variations de mouvement.',['Référentiel','Vitesse','Forces','Trajectoire']],
+      '1ere':['Ondes et énergie','Comment un signal transporte-t-il de l’information ?','Étudier propagation, fréquence, énergie et applications des ondes.',['Signal','Fréquence','Propagation','Énergie']],
+      'terminale':['Modélisation physique','Comment utiliser les lois physiques pour prévoir un phénomène ?','Construire un modèle, exploiter des équations et confronter les résultats à une situation réelle.',['Modèle','Équations','Mesures','Validation']]
+    },
+    anglais:{
+      '6e':['Daily Life','How do we talk about our everyday life?','Learn to introduce yourself, describe routines, likes and simple activities.',['Greetings','Daily routines','Likes and dislikes','Simple questions']],
+      '5e':['Travel and Discovery','How can we discover another country?','Use English to describe places, travel experiences and cultural discoveries.',['Places','Directions','Travel','Culture']],
+      '4e':['Media and Communication','How does media shape the way we communicate?','Understand everyday media, opinions and responsible communication in English.',['Social media','Opinions','Information','Communication']],
+      '3e':['Citizens and the World','How can young people act in the world?','Discuss projects, rights, environmental issues and personal responsibility.',['Citizenship','Environment','Projects','Arguments']],
+      '2nde':['Culture and Identity','How does culture shape identity?','Compare cultures, identities and ways of life using more complex English.',['Identity','Culture','Comparison','Expression']],
+      '1ere':['Science, Media and Society','How does information influence society?','Analyse English-language documents, media messages and viewpoints.',['Media','Science','Viewpoints','Critical thinking']],
+      'terminale':['Global Issues','How can we discuss major global issues in English?','Build a structured oral argument about technology, society, environment or culture.',['Problem','Evidence','Argument','Conclusion']]
+    },
+    espagnol:{
+      '6e':['Mi mundo','¿Cómo hablar de uno mismo en español?','Présenter sa famille, ses goûts, ses activités et son environnement proche.',['Presentarse','Familia','Gustos','Rutinas']],
+      '5e':['Viajes y cultura','¿Cómo descubrir un país hispanohablante?','Découvrir lieux, traditions et habitudes à travers un vocabulaire concret.',['Países','Viajes','Tradiciones','Vida cotidiana']],
+      '4e':['Juventud y sociedad','¿Qué lugar ocupa la juventud en la sociedad?','Exprimer opinions, habitudes et projets autour de la vie des jeunes.',['Juventud','Opiniones','Proyectos','Sociedad']],
+      '3e':['Mundo hispánico','¿Cómo se representan las sociedades hispanohablantes?','Comparer documents et points de vue sur les cultures et sociétés du monde hispanique.',['Culturas','Historia','Sociedad','Comparación']],
+      '2nde':['Identidad y cultura','¿Cómo se construye una identidad cultural?','Étudier langue, culture et identité à travers des documents authentiques.',['Identidad','Cultura','Lengua','Diversidad']],
+      '1ere':['Arte, memoria y sociedad','¿Cómo puede el arte transmitir una memoria?','Analyser œuvres et documents pour comprendre mémoire, histoire et société.',['Arte','Memoria','Historia','Interpretación']],
+      'terminale':['Mundo contemporáneo','¿Cómo hablar de los grandes desafíos del mundo hispánico?','Construire une argumentation orale sur les enjeux contemporains dans le monde hispanophone.',['Desafíos','Argumentos','Documentos','Conclusión']]
+    },
+    emc:{
+      '6e':['Règles et vivre ensemble','Pourquoi avons-nous besoin de règles ?','Comprendre les règles communes, les droits et les responsabilités dans la vie collective.',['Règles','Droits','Responsabilités','Respect']],
+      '5e':['Égalité et différences','Comment vivre ensemble malgré nos différences ?','Réfléchir à l’égalité, aux discriminations et au respect des autres.',['Égalité','Discrimination','Respect','Solidarité']],
+      '4e':['Liberté et responsabilité','Comment exercer sa liberté de manière responsable ?','Comprendre droits, libertés, limites et responsabilités dans une démocratie.',['Liberté','Loi','Responsabilité','Débat']],
+      '3e':['Démocratie et citoyenneté','Comment participer à la vie démocratique ?','Étudier vote, débat, institutions et engagement citoyen.',['Citoyenneté','Vote','Institutions','Engagement']],
+      '2nde':['Justice et État de droit','Pourquoi la justice est-elle essentielle ?','Comprendre principes de justice, droits et fonctionnement de l’État de droit.',['Droit','Justice','Égalité','Institutions']],
+      '1ere':['Libertés publiques','Comment protéger les libertés dans une démocratie ?','Mettre en tension libertés individuelles, sécurité, débat public et droit.',['Libertés','Droit','Sécurité','Débat public']],
+      'terminale':['Démocratie et enjeux contemporains','Comment défendre la démocratie face aux nouveaux défis ?','Analyser information, participation, institutions et enjeux contemporains avec une argumentation structurée.',['Démocratie','Information','Institutions','Engagement']]
+    },
+    technologie:{
+      '6e':['Objets techniques','Comment fonctionne un objet du quotidien ?','Observer les fonctions, matériaux et usages d’objets simples.',['Besoin','Fonction','Matériaux','Usage']],
+      '5e':['Conception d’un objet','Comment concevoir une solution technique ?','Passer du besoin au cahier des charges puis à une solution technique.',['Besoin','Cahier des charges','Solutions','Prototype']],
+      '4e':['Réseaux et systèmes','Comment les objets communiquent-ils ?','Découvrir capteurs, réseaux, informations et systèmes automatisés.',['Capteurs','Réseaux','Données','Automatisation']],
+      '3e':['Projet et innovation','Comment concevoir un objet innovant ?','Organiser un projet, choisir des solutions et prendre en compte contraintes et impacts.',['Projet','Contraintes','Innovation','Impact']],
+      '2nde':['Numérique et données','Comment un système numérique traite-t-il l’information ?','Comprendre données, algorithmes, réseaux et systèmes numériques.',['Données','Algorithmes','Réseaux','Systèmes']],
+      '1ere':['Ingénierie et innovation','Comment optimiser une solution technique ?','Analyser performances, contraintes et compromis dans une démarche d’ingénierie.',['Performances','Contraintes','Optimisation','Innovation']],
+      'terminale':['Systèmes complexes','Comment modéliser et améliorer un système technique ?','Mobiliser modélisation, données, automatisation et analyse des performances.',['Modélisation','Automatisation','Données','Performances']]
     }
+  };
 
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    
-    // Matériel des particules (aux couleurs de ZoltroGame)
-    const material = new THREE.PointsMaterial({ 
-        color: 0x00d4ff, // La couleur cyan de ton site
-        size: 0.3, 
-        transparent: true, 
-        opacity: 0.9,
-        blending: THREE.AdditiveBlending
-    });
-    
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+  function getSubjectLevelTheme(subject,level){
+    const data=subjectLevelDetails[subject]?.[level];
+    if(!data) return null;
+    return {title:data[0],question:data[1],intro:data[2],points:data[3]};
+  }
 
-    // 3. Animation et Timeline
-    const clock = new THREE.Clock();
-    let isFinished = false;
+  function renderSlides(){
+    const subject=document.getElementById('cloak-subject-select').value;
+    const level=document.getElementById('cloak-level-select').value;
+    applyLevelTheme(level);
+    const style=document.getElementById('cloak-style-select').value;
+    const levelTheme=levelThemeDetails[level]||levelThemeDetails['6e'];
+    const specific=getSubjectLevelTheme(subject,level)||getSubjectLevelTheme('francais',level);
+    const theme={...levelTheme,...specific, label:specific.title, text:specific.intro, symbols:levelTheme.symbols};
+    const question=theme.question;
+    const intro=theme.intro;
+    const bullets=theme.points;
+    const extra=style==='cours' ? '<p class="problem"><strong>Question directrice :</strong> '+question+'</p>' : (style==='classique' ? '<p class="problem">'+question+'</p>' : '');
+    const method=bullets.map((x,i)=>`<li><strong>Étape ${i+1} :</strong> ${x}</li>`);
+    const subjectName=document.getElementById('cloak-subject-select').selectedOptions[0].textContent;
+    slides=[
+      `<div class="slide-kicker">${levelDetails[level]} • ${subjectName} • exposé</div><h1>${theme.title}</h1><p class="title-sub">${question}</p><div class="level-theme-card"><div class="theme-symbols">${levelTheme.symbols}</div><strong>${levelTheme.label} — ${subjectName}</strong><br><span>${levelTheme.text}</span></div>${extra}<div class="title-meta"><span class="badge">${levelDetails[level]}</span><span class="badge">${subjectName}</span><span class="badge">8 diapositives</span></div>`,
+      `<div class="slide-kicker">1 • Introduction</div><h2>Entrer dans le sujet</h2><p>${intro}</p><p>Le contenu est adapté à la <strong>${levelDetails[level]}</strong> et traite directement de <strong>${subjectName}</strong>.</p><div class="problem"><strong>Question à retenir :</strong> ${question}</div>`,
+      `<div class="slide-kicker">2 • Notions essentielles</div><h2>Ce qu’il faut connaître</h2><ul>${bullets.map(x=>`<li>${x}</li>`).join('')}</ul>`,
+      `<div class="slide-kicker">3 • Approfondissement</div><h2>Comprendre le sujet</h2><p>${intro}</p><div class="problem"><strong>Point central :</strong> ${bullets[0]} ${bullets[1]||''}</div><p>À ce niveau scolaire, on cherche surtout à comprendre les notions et à les relier à des exemples.</p>`,
+      `<div class="slide-kicker">4 • Méthode</div><h2>Comment travailler ce sujet ?</h2><ul>${method.join('')}</ul><p class="title-sub">La méthode est adaptée aux attendus de la ${levelDetails[level]}.</p>`,
+      `<div class="slide-kicker">5 • Exemple</div><h2>Une situation concrète</h2><p>On peut appliquer ces notions à la question : <strong>${question}</strong></p><div class="problem"><strong>Exemple :</strong> ${bullets[2]||bullets[0]}</div><p>${bullets[3]||'Cet exemple permet de relier les connaissances à une situation concrète.'}</p>`,
+      `<div class="slide-kicker">6 • Synthèse</div><h2>Les grandes idées</h2><ul>${bullets.map(x=>`<li>${x}</li>`).join('')}</ul><div class="problem"><strong>À retenir :</strong> ${theme.title} se comprend grâce à ces notions principales.</div>`,
+      `<div class="slide-kicker">7 • Conclusion</div><h2>Conclusion</h2><p>${intro}</p><p>La présentation répond à la problématique <strong>${question}</strong> en mobilisant les notions de <strong>${subjectName}</strong> au niveau <strong>${levelDetails[level]}</strong>.</p><p class="title-sub">Fin de l’exposé — merci.</p>`
+    ];
+    currentSlide=Math.min(currentSlide,slides.length-1);
+    document.getElementById('cloak-brand').textContent=theme.title;
+    renderCurrentSlide();
+  }
+  function renderCurrentSlide(){
+    document.getElementById('cloak-slide-content').innerHTML=slides[currentSlide]||'';
+    document.getElementById('cloak-slide-number').textContent=`${currentSlide+1} / ${slides.length||1}`;
+  }
+  window.updateStealthPresentation=function(){ currentSlide=0; renderSlides(); };
+  window.nextStealthSlide=function(){ if(!slides.length) renderSlides(); currentSlide=Math.min(currentSlide+1,slides.length-1); renderCurrentSlide(); };
+  window.previousStealthSlide=function(){ if(!slides.length) renderSlides(); currentSlide=Math.max(currentSlide-1,0); renderCurrentSlide(); };
 
-    function animate() {
-        if (isFinished) return;
-        requestAnimationFrame(animate);
-        
-        const time = clock.getElapsedTime();
-        const posAttribute = geometry.attributes.position;
-        const pos = posAttribute.array;
-
-        // Étape 1: Formation du Z (0s à 2.5s)
-        if (time < 2.5) {
-            for(let i = 0; i < particleCount * 3; i++) {
-                pos[i] += (targetZ[i] - pos[i]) * 0.06;
-            }
-        } 
-        // Étape 2: Maintien du Z et légère rotation (2.5s à 4s)
-        else if (time >= 2.5 && time < 4) {
-            particles.rotation.y = Math.sin(time * 2) * 0.1;
-        }
-        // Étape 3: Désintégration et formation de la Galaxie (4s à 6.5s)
-        else if (time >= 4 && time < 6.5) {
-            for(let i = 0; i < particleCount * 3; i++) {
-                pos[i] += (targetGalaxy[i] - pos[i]) * 0.04;
-            }
-            particles.rotation.z -= 0.005;
-        } 
-        // Étape 4: Traversée de la galaxie (6.5s à 8.5s)
-        else if (time >= 6.5 && time < 8.5) {
-            particles.rotation.z -= 0.01;
-            camera.position.z -= 0.8; // La caméra avance vite
-            camera.rotation.z += 0.005;
-        } 
-        // Étape 5: Arrivée sur le site (Disparition de l'overlay)
-        else if (time >= 8.5) {
-            container.style.opacity = '0';
-            setTimeout(() => {
-                container.style.display = 'none';
-            }, 1000);
-            isFinished = true; // Stoppe la boucle de rendu pour économiser les perfs
-        }
-
-        posAttribute.needsUpdate = true;
-        renderer.render(scene, camera);
+  function setVisible(v){
+    cloak.classList.toggle('is-visible',v);
+    cloak.setAttribute('aria-hidden',v?'false':'true');
+    if(hint) hint.classList.toggle('is-hidden',v);
+    document.body.classList.toggle('cloak-open',v);
+    if(v){
+      currentSlide=0;
+      renderSlides();
+      setStealthFavicon(document.getElementById('cloak-favicon-select').value);
+      if(controls) controls.classList.remove('is-revealed');
+      if(topbar) topbar.classList.add('is-faded');
+    } else {
+      if(controls) controls.classList.remove('is-revealed');
+      if(topbar) topbar.classList.remove('is-faded');
+      if(favicon) favicon.setAttribute('href',originalFavicon);
     }
-    animate();
-
-    // 4. Gestion du redimensionnement de l'écran
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // Bonus : Permettre au joueur de passer l'intro en cliquant
-    container.addEventListener('click', () => {
-        container.style.opacity = '0';
-        setTimeout(() => {
-            container.style.display = 'none';
-        }, 500);
-        isFinished = true;
-    });
-	
-function openFeedbackModal() {
-    document.getElementById('feedbackModalOverlay').classList.add('active');
-    document.body.classList.add('modal-open');
-}
-
-function closeFeedbackModal() {
-    document.getElementById('feedbackModalOverlay').classList.remove('active');
-    if (!document.getElementById('welcomeOverlay') || document.getElementById('welcomeOverlay').style.display === 'none') {
-        document.body.classList.remove('modal-open');
+  }
+  window.toggleStealthCloak=function(){
+    const opening=!cloak.classList.contains('is-visible');
+    setVisible(opening);
+    if(opening && !document.fullscreenElement){
+      const el=document.documentElement;
+      if(el.requestFullscreen){ el.requestFullscreen().catch(()=>{}); }
+    } else if(!opening && document.fullscreenElement && document.exitFullscreen){
+      document.exitFullscreen().catch(()=>{});
     }
-}
-
-function handleFeedbackSubmit(e) {
-    e.preventDefault();
-    const type = document.getElementById('feedbackType').value;
-    const contact = document.getElementById('feedbackContact').value || 'Anonyme';
-    const message = document.getElementById('feedbackMessage').value;
-
-    // Affiche une confirmation à l'utilisateur
-    alert(`Merci ${contact} ! Ton retour (${type.toUpperCase()}) a bien été envoyé.`);
-
-    // Réinitialise et ferme la fenêtre
-    document.getElementById('feedbackForm').reset();
-    closeFeedbackModal();
-}
+  };
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape' || e.key==='Esc'){ e.preventDefault(); e.stopImmediatePropagation(); toggleStealthCloak(); return; }
+    if(!cloak.classList.contains('is-visible')) return;
+    if(e.key==='ArrowRight'){ e.preventDefault(); nextStealthSlide(); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); previousStealthSlide(); }
+  },true);
+  updateStealthPresentation();
+})();
+</script>
 
     const catLabels = {
         'action': 'Action / FPS',
@@ -2035,6 +2180,18 @@ function handleFeedbackSubmit(e) {
             }
 
             applyFilter(searchInput.value);
+
+            // Quand une catégorie est choisie, on amène l'utilisateur directement à son contenu.
+            if (activeCat !== 'all' && activeCat !== 'favoris') {
+                const targetSection = document.querySelector(`.category-section[data-category="${activeCat}"]`);
+                if (targetSection) {
+                    requestAnimationFrame(() => {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                }
+            } else if (activeCat === 'all') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         });
     });
 
@@ -2229,13 +2386,19 @@ function handleFeedbackSubmit(e) {
         });
     }
 
-    function onPlayerReady() { 
-        playerReady=true; 
-        ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); 
-        if(shouldAutoPlay){ 
-            shouldAutoPlay=false; 
-            ytPlayer.playVideo(); 
-        } 
+    function onPlayerReady() {
+        playerReady = true;
+        ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value, 10));
+        /*
+         * IMPORTANT :
+         * Aucun autoplay. Le lecteur est prêt, mais la musique reste arrêtée
+         * jusqu'au clic explicite sur le bouton central ▶.
+         */
+        if (shouldAutoPlay) {
+            shouldAutoPlay = false;
+            // Sécurité : même si un ancien état demandait un autoplay,
+            // on ne lance jamais la musique automatiquement.
+        }
     }
 
     function onPlayerStateChange(e) {
@@ -2245,10 +2408,30 @@ function handleFeedbackSubmit(e) {
     }
 
     function loadYouTubeIframe(targetId) {
-        currentVideoId=targetId;
-        if (ytPlayer && playerReady) { 
-            ytPlayer.loadVideoById(targetId); 
-            ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); 
+        currentVideoId = targetId;
+        if (ytPlayer && playerReady) {
+            // cueVideoById charge la vidéo sans la démarrer.
+            ytPlayer.cueVideoById(targetId);
+            ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value, 10));
+        }
+    }
+
+    function ensureMusicReady() {
+        // Prépare uniquement le lecteur. Aucun démarrage automatique.
+        shouldAutoPlay = false;
+
+        if (playerReady && ytPlayer) return;
+
+        if (window.YT && window.YT.Player) {
+            if (!ytPlayer) onYouTubeIframeAPIReady();
+            return;
+        }
+
+        if (!window.__zoltroYTLoading) {
+            window.__zoltroYTLoading = true;
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
         }
     }
 
@@ -2266,40 +2449,82 @@ function handleFeedbackSubmit(e) {
 
     function toggleTrack(targetId) {
         refreshMusicTracks();
-        const idx=musicTracks.findIndex(t=>t.id===targetId); 
-        if(idx>=0) currentTrackIndex=idx;
-        updatePlayerInfo();
-        if (ytPlayer && playerReady) { 
-            ytPlayer.loadVideoById(targetId); 
-            ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value,10)); 
-            isPlaying=true; 
-            startProgress(); 
-        }
-        updateMusicUI();
-    }
+        const idx = musicTracks.findIndex(t => t.id === targetId);
+        if (idx >= 0) currentTrackIndex = idx;
 
-    function toggleMusic() {
-        if (!ytPlayer || !playerReady) return;
-        if (isPlaying) stopMusic(); else playCurrent();
+        currentVideoId = targetId;
+        updatePlayerInfo();
+
+        // Cliquer sur une pochette sélectionne seulement la musique.
+        // Elle ne doit JAMAIS démarrer automatiquement.
+        if (ytPlayer && playerReady) {
+            ytPlayer.cueVideoById(targetId);
+            ytPlayer.setVolume(parseInt(document.getElementById('volumeBar').value, 10));
+        } else {
+            ensureMusicReady();
+        }
+
+        isPlaying = false;
+        stopProgress();
+        updateMusicUI();
         collapseAfterAction();
     }
 
-    function nextTrack(){ 
-        refreshMusicTracks();
-        if(!musicTracks.length)return; 
-        currentTrackIndex=(currentTrackIndex+1)%musicTracks.length; 
-        updatePlayerInfo(); 
-        toggleTrack(currentVideoId); 
-        collapseAfterAction(); 
+    function toggleMusic() {
+        /*
+         * Seul ce bouton central peut démarrer la musique.
+         */
+        if (!ytPlayer || !playerReady) {
+            ensureMusicReady();
+            const waitForPlayer = setInterval(() => {
+                if (ytPlayer && playerReady) {
+                    clearInterval(waitForPlayer);
+                    playCurrent();
+                }
+            }, 100);
+            setTimeout(() => clearInterval(waitForPlayer), 10000);
+            collapseAfterAction();
+            return;
+        }
+
+        if (isPlaying) stopMusic();
+        else playCurrent();
+
+        collapseAfterAction();
     }
 
-    function previousTrack(){ 
+    function nextTrack() {
         refreshMusicTracks();
-        if(!musicTracks.length)return; 
-        currentTrackIndex=(currentTrackIndex-1+musicTracks.length)%musicTracks.length; 
-        updatePlayerInfo(); 
-        toggleTrack(currentVideoId); 
-        collapseAfterAction(); 
+        if (!musicTracks.length) return;
+
+        currentTrackIndex = (currentTrackIndex + 1) % musicTracks.length;
+        const next = musicTracks[currentTrackIndex];
+
+        // Sélection uniquement : le bouton ▶ reste nécessaire pour démarrer.
+        currentVideoId = next.id;
+        isPlaying = false;
+        stopMusic();
+        updatePlayerInfo();
+
+        if (ytPlayer && playerReady) ytPlayer.cueVideoById(next.id);
+        collapseAfterAction();
+    }
+
+    function previousTrack() {
+        refreshMusicTracks();
+        if (!musicTracks.length) return;
+
+        currentTrackIndex = (currentTrackIndex - 1 + musicTracks.length) % musicTracks.length;
+        const previous = musicTracks[currentTrackIndex];
+
+        // Sélection uniquement : aucun autoplay.
+        currentVideoId = previous.id;
+        isPlaying = false;
+        stopMusic();
+        updatePlayerInfo();
+
+        if (ytPlayer && playerReady) ytPlayer.cueVideoById(previous.id);
+        collapseAfterAction();
     }
 
     function seekMusic(v){ 
@@ -2385,20 +2610,10 @@ function handleFeedbackSubmit(e) {
     });
 
     function initSiteAndMusic() {
-        const overlay = document.getElementById('welcomeOverlay');
-        if (overlay) overlay.style.display = 'none';
-        document.body.classList.remove('modal-open');
-
-        if (!window.YT) {
-            const tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
-        shouldAutoPlay = true;
-        if (playerReady) {
-            playCurrent();
-        }
+        // Prépare le lecteur sans lancer de musique.
+        // Le seul démarrage autorisé passe par le bouton central ▶.
+        ensureMusicReady();
+        updateMusicUI();
     }
 </script>
 </body>
