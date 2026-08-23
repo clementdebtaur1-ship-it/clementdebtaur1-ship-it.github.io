@@ -312,6 +312,80 @@
             box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
         }
 
+        .language-control {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--accent);
+            background: rgba(0, 212, 255, 0.06);
+            font-size: 0.9rem;
+        }
+
+        #languageSwitcher {
+            padding: 8px 2px;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #languageSwitcher option { background: var(--card-bg); color: var(--text); }
+
+        #languageSearch {
+            width: 115px;
+            padding: 7px 8px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: rgba(7, 10, 16, 0.65);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        #languageSearch::placeholder { color: var(--text-muted); }
+
+        .language-suggestions {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 32px;
+            z-index: 20;
+            display: none;
+            width: 230px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 5px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            box-shadow: 0 8px 20px rgba(0,0,0,.4);
+        }
+
+        .language-suggestions.active { display: block; }
+        .language-suggestion {
+            display: block;
+            width: 100%;
+            padding: 7px 8px;
+            border: 0;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+        }
+        .language-suggestion:hover { background: rgba(0,212,255,.15); color: var(--accent); }
+
+        @media (max-width: 600px) {
+            .language-control { width: 100%; justify-content: center; }
+            #languageSearch { width: 42%; }
+            #languageSwitcher { width: 42%; }
+        }
+
         .category-tabs {
             display: flex;
             flex-wrap: wrap;
@@ -815,6 +889,25 @@ body.cloak-open{overflow:hidden!important}
 .slide-number{position:fixed!important;right:24px!important;bottom:18px!important;color:#8a9099!important;font-size:12px!important;background:transparent!important;border:0!important;padding:0!important}
 .cloak-footer{display:none!important}
 
+/* Interface PowerPoint : ruban, espace de travail gris et diapositive blanche. */
+#cloak-overlay{background:#e7e6e6!important;color:#202124!important}
+#cloak-overlay .cloak-shell{grid-template-rows:62px auto 1fr 28px!important;background:#e7e6e6!important}
+#cloak-overlay .cloak-topbar{height:62px!important;padding:0 18px!important;background:#217346!important;border:0!important;border-bottom:1px solid #185c37!important;box-shadow:0 2px 5px rgba(0,0,0,.22)!important}
+#cloak-overlay .cloak-brand{font-family:Arial,Helvetica,sans-serif!important;font-size:15px!important;font-weight:600!important;color:#fff!important}
+#cloak-overlay .cloak-top-actions{gap:3px!important}
+#cloak-overlay .cloak-btn{min-width:36px!important;height:34px!important;padding:6px 11px!important;border:1px solid rgba(255,255,255,.3)!important;border-radius:3px!important;background:transparent!important;color:#fff!important;font-family:Arial,Helvetica,sans-serif!important;font-size:13px!important}
+#cloak-overlay .cloak-btn:hover{background:rgba(255,255,255,.18)!important;border-color:#fff!important;color:#fff!important}
+#cloak-overlay .cloak-controls{position:relative!important;top:auto!important;left:auto!important;right:auto!important;z-index:2!important;display:flex!important;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;flex-wrap:wrap!important;min-height:48px!important;padding:8px 18px!important;background:#fff!important;border-bottom:1px solid #c9c9c9!important;box-shadow:0 2px 4px rgba(0,0,0,.14)!important}
+#cloak-overlay .cloak-controls label{font-family:Arial,Helvetica,sans-serif!important;font-size:12px!important;color:#444!important}
+#cloak-overlay .cloak-controls select{border:1px solid #b7b7b7!important;border-radius:2px!important;padding:6px 8px!important;background:#fff!important;color:#222!important}
+#cloak-overlay .cloak-slide{height:100%!important;padding:34px 7vw 38px!important;background:#e7e6e6!important;justify-content:center!important;overflow:auto!important}
+#cloak-overlay #cloak-slide-content{width:min(1050px,88vw)!important;min-height:min(590px,70vh)!important;padding:64px 72px!important;background:#fff!important;border:1px solid #c9c9c9!important;box-shadow:0 2px 8px rgba(0,0,0,.2)!important}
+#cloak-overlay .cloak-slide h1{font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(34px,5vw,62px)!important;font-weight:700!important;color:#1f1f1f!important}
+#cloak-overlay .cloak-slide h2{font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(28px,3.4vw,44px)!important;font-weight:600!important;color:#1f1f1f!important}
+#cloak-overlay .cloak-slide p,#cloak-overlay .cloak-slide li{font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(18px,2vw,25px)!important;line-height:1.55!important;color:#404040!important}
+#cloak-overlay .cloak-footer{display:flex!important;align-items:center!important;padding:0 18px!important;background:#f3f3f3!important;border-top:1px solid #c9c9c9!important;color:#666!important;font:11px Arial,sans-serif!important}
+#cloak-overlay .slide-number{right:24px!important;bottom:8px!important;color:#666!important}
+
 /* --- THÈMES AUTOMATIQUES SELON LA CLASSE --- */
 #cloak-overlay{--theme-main:#2563eb;--theme-soft:#eef4ff;--theme-bg:#f4f7fb;--theme-ink:#172033;--theme-card:#ffffff;--theme-border:#d8e2f0}
 #cloak-overlay.level-6e{--theme-main:#0ea5e9;--theme-soft:#e0f7ff;--theme-bg:#eefaff;--theme-ink:#12324a;--theme-border:#bde8f8}
@@ -856,25 +949,132 @@ body.cloak-open{overflow:hidden!important}
 #cloak-overlay .level-theme-card{margin:22px 0;padding:18px 20px;border-radius:18px;background:var(--theme-soft);border:1px solid var(--theme-border);font-weight:600}
 #cloak-overlay .level-theme-card .theme-symbols{font-size:30px;margin-bottom:8px;letter-spacing:7px}
 
+/* Style PowerPoint classique : ruban orange, miniatures et zone de travail. */
+#cloak-overlay .cloak-shell{grid-template-columns:170px 1fr!important;grid-template-rows:62px auto 1fr 28px!important;background:#d9d9d9!important}
+#cloak-overlay .cloak-topbar{grid-column:1 / -1!important;grid-row:1!important;background:#d24726!important;border-bottom-color:#a8321a!important}
+#cloak-overlay .cloak-controls{grid-column:1 / -1!important;grid-row:2!important;background:#f2f2f2!important;border-bottom-color:#c5c5c5!important}
+#cloak-overlay .cloak-sidebar{grid-column:1!important;grid-row:3!important;display:block!important;overflow:auto!important;padding:14px 10px!important;background:#f2f2f2!important;border-right:1px solid #b8b8b8!important}
+#cloak-overlay .cloak-sidebar-title{margin:0 0 10px;padding:0 5px;color:#666;font:12px Arial,sans-serif;text-transform:uppercase}
+#cloak-overlay #cloak-thumbnails{display:flex;flex-direction:column;gap:8px}
+#cloak-overlay .cloak-thumbnail{display:flex;align-items:center;justify-content:center;min-height:72px;padding:8px;border:1px solid #b8b8b8;border-radius:2px;background:#fff;color:#777;font:12px Arial,sans-serif;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+#cloak-overlay .cloak-thumbnail:hover{border-color:#d24726}
+#cloak-overlay .cloak-thumbnail.active{border:2px solid #d24726;color:#d24726;font-weight:700}
+#cloak-overlay .cloak-slide{grid-column:2!important;grid-row:3!important;padding:34px 5vw 38px!important;background:#d9d9d9!important}
+#cloak-overlay #cloak-slide-content{width:min(1050px,88vw)!important;min-height:min(590px,70vh)!important;background:#fff!important;border:1px solid #aaa!important;box-shadow:0 3px 10px rgba(0,0,0,.25)!important}
+#cloak-overlay .cloak-footer{grid-column:1 / -1!important;grid-row:4!important;background:#f2f2f2!important;border-top-color:#b8b8b8!important}
 
+/* Couleur du ruban de PowerPoint classique, prioritaire sur les thèmes de niveau. */
+#cloak-overlay.level-6e .cloak-topbar,#cloak-overlay.level-5e .cloak-topbar,#cloak-overlay.level-4e .cloak-topbar,#cloak-overlay.level-3e .cloak-topbar,#cloak-overlay.level-2nde .cloak-topbar,#cloak-overlay.level-1ere .cloak-topbar,#cloak-overlay.level-terminale .cloak-topbar{background:#d24726!important;border-bottom-color:#a8321a!important}
+
+/* Le ruban Office garde sa couleur, quel que soit le thème scolaire. */
+#cloak-overlay.level-6e .cloak-topbar,#cloak-overlay.level-5e .cloak-topbar,#cloak-overlay.level-4e .cloak-topbar,#cloak-overlay.level-3e .cloak-topbar,#cloak-overlay.level-2nde .cloak-topbar,#cloak-overlay.level-1ere .cloak-topbar,#cloak-overlay.level-terminale .cloak-topbar{background:#217346!important;border-bottom-color:#185c37!important}
+
+/* Couleur PowerPoint classique, appliquee apres les themes de niveau. */
+.ppt-ribbon-tabs{display:flex;align-items:stretch;gap:2px;width:100%;height:32px;margin:-8px -18px 0;padding:0 18px;background:#d24726}
+.ppt-ribbon-tab,.ppt-file-tab{padding:7px 13px;border:0;border-radius:0;background:transparent;color:#fff;font:12px Arial,sans-serif;cursor:pointer}
+.ppt-file-tab{background:#a8321a;font-weight:700}
+.ppt-ribbon-tab:hover,.ppt-ribbon-tab.active{background:#fff;color:#a8321a}
+.ppt-ribbon-tools{display:flex;align-items:stretch;gap:0;width:100%;height:62px;margin:0 -18px 2px;padding:4px 18px;background:#fff;border-bottom:1px solid #c5c5c5}
+.ppt-tool-group{display:flex;align-items:center;gap:5px;padding:3px 14px;border-right:1px solid #ddd;color:#555;font:11px Arial,sans-serif}
+.ppt-tool-group button{border:0;background:transparent;color:#444;font:11px Arial,sans-serif;text-align:left;cursor:pointer}
+.ppt-tool-group span{font-size:22px;color:#d24726}
+#cloak-overlay .cloak-controls{align-content:flex-start;gap:7px!important}
+#cloak-overlay .cloak-sidebar-title{font-weight:700;color:#555}
+#cloak-overlay .cloak-thumbnail{position:relative;min-height:78px;padding:12px 8px 8px;text-align:center}
+#cloak-overlay .cloak-thumbnail::before{content:'';position:absolute;top:10px;left:25%;right:25%;height:32px;background:linear-gradient(#f4f4f4 0 35%,#d24726 36% 43%,#f4f4f4 44%);border:1px solid #ddd}
+#cloak-overlay .cloak-thumbnail{padding-top:52px}
+#cloak-overlay .cloak-slide{display:flex!important;flex-direction:column!important;align-items:center!important;gap:10px!important}
+#cloak-overlay .ppt-notes{width:min(1050px,88vw);padding:7px 10px;border-top:1px solid #aaa;background:#fff;color:#888;font:12px Arial,sans-serif}
+#cloak-overlay .slide-number{z-index:3}
+#cloak-overlay.level-6e .cloak-topbar,#cloak-overlay.level-5e .cloak-topbar,#cloak-overlay.level-4e .cloak-topbar,#cloak-overlay.level-3e .cloak-topbar,#cloak-overlay.level-2nde .cloak-topbar,#cloak-overlay.level-1ere .cloak-topbar,#cloak-overlay.level-terminale .cloak-topbar{background:#d24726!important;border-bottom-color:#a8321a!important}
 @media(max-width:700px){.cloak-topbar{padding:0 12px!important}.cloak-brand{font-size:13px!important}.cloak-btn{padding:6px 9px!important}.cloak-slide{padding:50px 24px 40px!important}.cloak-controls{flex-wrap:wrap}.cloak-controls label{font-size:11px}}
 </style>
 </head>
 <body>
 
-<div id="google_translate_element"></div>
+<script>
+    const siteTranslations = {
+        fr: { title: 'Bienvenue sur Zoltrogame !', search: 'Rechercher un jeu...', fullscreen: '🖥️ Plein Écran', random: '🎲 Jeu Aléatoire', all: '🎮 Tous', action: '💥 Action / FPS', course: '🏎️ Course / Conduite', simulation: '✈️ Simulation', sandbox: '🧱 Sandbox', imagination: '🎨 Imagination', exploration: '🌌 Exploration / Horreur', emulateur: '🖥️ Émulateur', strategie: '♟️ Stratégie', combat: '🥊 Combat', io: '🧬 .IO / Survie', party: '🎉 Party Games', gestion: '💰 Gestion / Économie', puzzle: '🧠 Radio / Réparation / Utile', favoris: '❤️ Mes favoris', musique: '🎵 Musique' },
+        en: { title: 'Welcome to Zoltrogame!', search: 'Search for a game...', fullscreen: '🖥️ Fullscreen', random: '🎲 Random Game', all: '🎮 All', action: '💥 Action / FPS', course: '🏎️ Racing / Driving', simulation: '✈️ Simulation', sandbox: '🧱 Sandbox', imagination: '🎨 Imagination', exploration: '🌌 Exploration / Horror', emulateur: '🖥️ Emulator', strategie: '♟️ Strategy', combat: '🥊 Combat', io: '🧬 .IO / Survival', party: '🎉 Party Games', gestion: '💰 Management / Economy', puzzle: '🧠 Radio / Repair / Useful', favoris: '❤️ My favorites', musique: '🎵 Music' },
+        es: { title: '¡Bienvenido a Zoltrogame!', search: 'Buscar un juego...', fullscreen: '🖥️ Pantalla completa', random: '🎲 Juego aleatorio', all: '🎮 Todos', action: '💥 Acción / FPS', course: '🏎️ Carreras / Conducción', simulation: '✈️ Simulación', sandbox: '🧱 Sandbox', imagination: '🎨 Imaginación', exploration: '🌌 Exploración / Terror', emulateur: '🖥️ Emulador', strategie: '♟️ Estrategia', combat: '🥊 Combate', io: '🧬 .IO / Supervivencia', party: '🎉 Juegos de fiesta', gestion: '💰 Gestión / Economía', puzzle: '🧠 Radio / Reparación / Útil', favoris: '❤️ Mis favoritos', musique: '🎵 Música' },
+        de: { title: 'Willkommen bei Zoltrogame!', search: 'Spiel suchen...', fullscreen: '🖥️ Vollbild', random: '🎲 Zufälliges Spiel', all: '🎮 Alle', action: '💥 Action / FPS', course: '🏎️ Rennen / Fahren', simulation: '✈️ Simulation', sandbox: '🧱 Sandbox', imagination: '🎨 Fantasie', exploration: '🌌 Erkundung / Horror', emulateur: '🖥️ Emulator', strategie: '♟️ Strategie', combat: '🥊 Kampf', io: '🧬 .IO / Überleben', party: '🎉 Partyspiele', gestion: '💰 Management / Wirtschaft', puzzle: '🧠 Radio / Reparatur / Nützlich', favoris: '❤️ Meine Favoriten', musique: '🎵 Musik' },
+        it: { title: 'Benvenuto su Zoltrogame!', search: 'Cerca un gioco...', fullscreen: '🖥️ Schermo intero', random: '🎲 Gioco casuale', all: '🎮 Tutti', action: '💥 Azione / FPS', course: '🏎️ Corse / Guida', simulation: '✈️ Simulazione', sandbox: '🧱 Sandbox', imagination: '🎨 Immaginazione', exploration: '🌌 Esplorazione / Horror', emulateur: '🖥️ Emulatore', strategie: '♟️ Strategia', combat: '🥊 Combattimento', io: '🧬 .IO / Sopravvivenza', party: '🎉 Giochi di gruppo', gestion: '💰 Gestione / Economia', puzzle: '🧠 Radio / Riparazione / Utile', favoris: '❤️ I miei preferiti', musique: '🎵 Musica' }
+    };
 
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'fr', 
-      includedLanguages: 'en,es,de,it', // Langues proposées
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-  }
+    const allLanguageCodes = 'ar bg ca cs da de el en es fi fr he hi hu id it ja ko nl no pl pt ro ru sk sv th tr uk vi zh'.split(' ');
+
+    function populateLanguageSwitcher() {
+        const selector = document.getElementById('languageSwitcher');
+        if (!selector) return;
+        const names = allLanguageCodes.map(code => {
+            let nativeName = '';
+            let englishName = '';
+            try { nativeName = new Intl.DisplayNames([code], { type: 'language' }).of(code) || ''; } catch (error) { /* Use the code below. */ }
+            try { englishName = new Intl.DisplayNames(['en'], { type: 'language' }).of(code) || ''; } catch (error) { /* Use the code below. */ }
+            const label = nativeName || englishName || `Langue ${code.toUpperCase()}`;
+            return { code, label: `${label}${englishName && englishName !== label ? ` / ${englishName}` : ''} (${code})` };
+        }).sort((a, b) => a.label.localeCompare(b.label));
+        selector.replaceChildren(...names.map(({ code, label }) => new Option(label, code)));
+        const search = document.getElementById('languageSearch');
+        const suggestions = document.getElementById('languageSuggestions');
+        if (search) search.addEventListener('input', () => {
+            const query = search.value.trim().toLocaleLowerCase();
+            [...selector.options].forEach(option => {
+                option.hidden = Boolean(query) && !option.textContent.toLocaleLowerCase().includes(query) && !option.value.includes(query);
+            });
+            if (!suggestions) return;
+            suggestions.replaceChildren();
+            const matches = names.filter(({ code, label }) => !query || label.toLocaleLowerCase().includes(query) || code.includes(query)).slice(0, 8);
+            matches.forEach(({ code, label }) => {
+                const suggestion = document.createElement('button');
+                suggestion.type = 'button';
+                suggestion.className = 'language-suggestion';
+                suggestion.textContent = label;
+                suggestion.addEventListener('click', () => {
+                    selector.value = code;
+                    search.value = '';
+                    suggestions.classList.remove('active');
+                    changeSiteLanguage(code);
+                });
+                suggestions.appendChild(suggestion);
+            });
+            suggestions.classList.toggle('active', matches.length > 0 && query.length > 0);
+        });
+        if (search && suggestions) search.addEventListener('blur', () => setTimeout(() => suggestions.classList.remove('active'), 150));
+    }
+
+    function changeSiteLanguage(language) {
+        const selected = allLanguageCodes.includes(language) ? language : 'fr';
+        localStorage.setItem('zoltro-language', selected);
+        applySiteLanguage(selected);
+    }
+
+    function applySiteLanguage(language) {
+        const text = siteTranslations[language] || siteTranslations.fr;
+        document.documentElement.lang = language;
+        document.querySelector('header h1').textContent = text.title;
+        document.getElementById('searchInput').placeholder = text.search;
+        document.querySelector('.action-btn[onclick*="toggleFullScreen"]').textContent = text.fullscreen;
+        document.querySelector('.action-btn[onclick*="playRandomGame"]').textContent = text.random;
+        document.querySelectorAll('#categoryTabs .tab-btn').forEach(button => {
+            const key = button.dataset.cat;
+            if (text[key]) button.textContent = text[key];
+        });
+        document.querySelectorAll('.category-section').forEach(section => {
+            const title = section.querySelector('.category-title');
+            const key = section.dataset.category;
+            if (title && text[key]) title.textContent = text[key].replace(/^[^\p{L}\p{N}]+/u, '').trim();
+        });
+        const selector = document.getElementById('languageSwitcher');
+        if (selector) selector.value = language;
+    }
+
+    const initialLanguage = localStorage.getItem('zoltro-language') || (navigator.language || 'fr').slice(0, 2).toLowerCase();
+    window.addEventListener('DOMContentLoaded', () => {
+        populateLanguageSwitcher();
+        applySiteLanguage(allLanguageCodes.includes(initialLanguage) ? initialLanguage : 'fr');
+    });
 </script>
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <div id="siteContent">
 
@@ -889,6 +1089,12 @@ body.cloak-open{overflow:hidden!important}
         <div class="action-buttons">
             <button class="action-btn" onclick="toggleFullScreen()">🖥️ Plein Écran</button>
             <button class="action-btn" onclick="playRandomGame()">🎲 Jeu Aléatoire</button>
+            <label class="language-control" for="languageSwitcher">🌐
+                <input id="languageSearch" type="search" placeholder="Rechercher une langue..." aria-label="Rechercher une langue">
+                <div id="languageSuggestions" class="language-suggestions" role="listbox"></div>
+                <select id="languageSwitcher" aria-label="Choisir la langue" onchange="changeSiteLanguage(this.value)">
+                </select>
+            </label>
         </div>
     </header>
 
@@ -1596,6 +1802,25 @@ body.cloak-open{overflow:hidden!important}
     </div>
 
     <div class="cloak-controls">
+            <div class="ppt-ribbon-tabs" aria-label="Onglets du ruban">
+                <button class="ppt-file-tab" type="button" onclick="toggleStealthCloak()">Fichier</button>
+                <button class="ppt-ribbon-tab active" type="button" data-ribbon-tab="accueil">Accueil</button>
+                <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="insertion">Insertion</button>
+                <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="creation">Création</button>
+                <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="transitions">Transitions</button>
+                <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="animations">Animations</button>
+                <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="diaporama">Diaporama</button>
+                <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="revision">Révision</button>
+                <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="affichage">Affichage</button>
+            </div>
+            <div class="ppt-ribbon-tools" aria-hidden="true">
+                <div class="ppt-tool-group"><button type="button" onclick="previousStealthSlide()">Précédente</button><span>◀</span></div>
+                <div class="ppt-tool-group"><button type="button" onclick="nextStealthSlide()">Nouvelle<br>diapositive</button><span>▣</span></div>
+                <div class="ppt-tool-group"><button type="button" onclick="updateStealthPresentation()">Disposition</button><span>▤</span></div>
+                <div class="ppt-tool-group"><button type="button" onclick="editCurrentPresentation()">Modifier</button><span>A</span></div>
+                <div class="ppt-tool-group"><button type="button" onclick="nextStealthSlide()">Suivante</button><span>▶</span></div>
+                <div class="ppt-tool-group"><button type="button" onclick="toggleStealthCloak()">Fermer</button><span>✕</span></div>
+            </div>
       <label>Matière
         <select id="cloak-subject-select" onchange="updateStealthPresentation()">
           <option value="francais">Français</option>
@@ -1607,6 +1832,7 @@ body.cloak-open{overflow:hidden!important}
           <option value="espagnol">Espagnol</option>
           <option value="emc">EMC</option>
           <option value="technologie">Technologie</option>
+          <option value="powerpoint" selected>PowerPoint</option>
         </select>
       </label>
       <label>Niveau
@@ -1628,8 +1854,14 @@ body.cloak-open{overflow:hidden!important}
       <button class="cloak-btn" type="button" onclick="editCurrentPresentation()">✏️ Modifier l'exposé</button>
     </div>
 
+        <aside class="cloak-sidebar" aria-label="Miniatures des diapositives">
+            <div class="cloak-sidebar-title">Diapositives</div>
+            <div id="cloak-thumbnails"></div>
+        </aside>
+
     <div class="cloak-slide" id="cloak-slide">
       <div id="cloak-slide-content"></div>
+            <div class="ppt-notes">Cliquez pour ajouter des notes</div>
       <div class="slide-number" id="cloak-slide-number">1 / 4</div>
     </div>
     <div class="cloak-footer">← → pour changer de diapositive • Échap pour fermer</div>
@@ -1650,6 +1882,12 @@ body.cloak-open{overflow:hidden!important}
   let controlsTimer=null;
   const controls=document.querySelector('.cloak-controls');
   const topbar=document.querySelector('.cloak-topbar');
+    document.querySelectorAll('.ppt-ribbon-tab').forEach(tab=>{
+        tab.addEventListener('click',()=>{
+            document.querySelectorAll('.ppt-ribbon-tab').forEach(item=>item.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
   function revealControls(){
     if(!cloak.classList.contains('is-visible')) return;
     clearTimeout(controlsTimer);
@@ -1822,6 +2060,10 @@ body.cloak-open{overflow:hidden!important}
     }
   };
 
+    const powerpointPresentation=['Microsoft PowerPoint','Qu’est-ce que PowerPoint et à quoi sert-il ?','Microsoft PowerPoint est un logiciel de présentation par diapositives de la suite Microsoft 365. Il permet de créer, mettre en forme, animer et partager des présentations adaptées à différents usages.',['Fonctionnalités visuelles et multimédias','Animation et interactivité','Formats et compatibilité']];
+    subjectLevelDetails.powerpoint={};
+    ['6e','5e','4e','3e','2nde','1ere','terminale'].forEach(level=>{ subjectLevelDetails.powerpoint[level]=powerpointPresentation; });
+
   function getSubjectLevelTheme(subject,level){
     const data=subjectLevelDetails[subject]?.[level];
     if(!data) return null;
@@ -1853,12 +2095,24 @@ body.cloak-open{overflow:hidden!important}
       `<div class="slide-kicker">7 • Conclusion</div><h2>Conclusion</h2><p>${intro}</p><p>La présentation répond à la problématique <strong>${question}</strong> en mobilisant les notions de <strong>${subjectName}</strong> au niveau <strong>${levelDetails[level]}</strong>.</p><p class="title-sub">Fin de l’exposé — merci.</p>`
     ];
     currentSlide=Math.min(currentSlide,slides.length-1);
-    document.getElementById('cloak-brand').textContent=theme.title;
+    document.getElementById('cloak-brand').textContent='Présentation - PowerPoint';
     renderCurrentSlide();
   }
   function renderCurrentSlide(){
     document.getElementById('cloak-slide-content').innerHTML=slides[currentSlide]||'';
     document.getElementById('cloak-slide-number').textContent=`${currentSlide+1} / ${slides.length||1}`;
+        const thumbnails=document.getElementById('cloak-thumbnails');
+        if(thumbnails){
+            thumbnails.replaceChildren(...slides.map((slide,index)=>{
+                const button=document.createElement('button');
+                button.type='button';
+                button.className='cloak-thumbnail'+(index===currentSlide?' active':'');
+                button.textContent=String(index+1);
+                button.title=`Diapositive ${index+1}`;
+                button.addEventListener('click',()=>{ currentSlide=index; renderCurrentSlide(); });
+                return button;
+            }));
+        }
   }
   window.updateStealthPresentation=function(){ currentSlide=0; renderSlides(); };
   window.nextStealthSlide=function(){ if(!slides.length) renderSlides(); currentSlide=Math.min(currentSlide+1,slides.length-1); renderCurrentSlide(); };
@@ -1901,6 +2155,7 @@ body.cloak-open{overflow:hidden!important}
 })();
 </script>
 
+<script>
     const catLabels = {
         'action': 'Action / FPS',
         'course': 'Course / Conduite',
@@ -1932,7 +2187,7 @@ body.cloak-open{overflow:hidden!important}
                     if (cat === 'musique') {
                         countElem.textContent = `${totalVisibleCards} titre${totalVisibleCards > 1 ? 's' : ''}`;
                     } else {
-                        countElem.textContent = `${totalVisibleCards} jeu${totalVisibleCards > 1 ? 's' : ''}`;
+                        countElem.textContent = `${totalVisibleCards} jeu${totalVisibleCards > 1 ? 'x' : ''}`;
                     }
                 }
             }
@@ -2615,6 +2870,8 @@ body.cloak-open{overflow:hidden!important}
         ensureMusicReady();
         updateMusicUI();
     }
+
+    initSiteAndMusic();
 </script>
 </body>
 </html>
