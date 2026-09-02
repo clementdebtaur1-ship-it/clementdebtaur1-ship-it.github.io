@@ -988,6 +988,30 @@ body.cloak-open{overflow:hidden!important}
 #cloak-overlay .slide-number{z-index:3}
 #cloak-overlay.level-6e .cloak-topbar,#cloak-overlay.level-5e .cloak-topbar,#cloak-overlay.level-4e .cloak-topbar,#cloak-overlay.level-3e .cloak-topbar,#cloak-overlay.level-2nde .cloak-topbar,#cloak-overlay.level-1ere .cloak-topbar,#cloak-overlay.level-terminale .cloak-topbar{background:#d24726!important;border-bottom-color:#a8321a!important}
 @media(max-width:700px){.cloak-topbar{padding:0 12px!important}.cloak-brand{font-size:13px!important}.cloak-btn{padding:6px 9px!important}.cloak-slide{padding:50px 24px 40px!important}.cloak-controls{flex-wrap:wrap}.cloak-controls label{font-size:11px}}
+
+/* --- LECTEUR DE JEUX INTÉGRÉ STYLE POKI --- */
+#zoltro-game-overlay{
+ position:fixed;inset:0;z-index:2147483000;display:none;background:#070a10;
+ flex-direction:column;overflow:hidden;
+}
+#zoltro-game-overlay.active{display:flex}
+.zoltro-game-bar{height:54px;flex:0 0 54px;display:flex;align-items:center;gap:8px;padding:0 12px;background:rgba(7,10,16,.97);border-bottom:1px solid rgba(0,212,255,.22);color:#fff;font-family:'Rajdhani',sans-serif}
+.zoltro-game-title{flex:1;min-width:0;font-family:'Orbitron',monospace;font-size:.8rem;font-weight:700;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zoltro-game-btn{border:1px solid rgba(0,212,255,.3);background:rgba(0,212,255,.08);color:#dffaff;border-radius:7px;padding:7px 10px;cursor:pointer;font-weight:700;font-family:inherit}
+.zoltro-game-btn:hover{background:rgba(0,212,255,.18);border-color:var(--accent)}
+#zoltro-game-frame{flex:1;width:100%;height:calc(100vh - 54px);border:0;background:#000}
+.zoltro-game-help{position:absolute;left:50%;top:54px;transform:translateX(-50%);padding:7px 12px;background:rgba(0,0,0,.65);color:#fff;border-radius:0 0 8px 8px;font:12px Arial,sans-serif;opacity:0;pointer-events:none;transition:opacity .2s}
+#zoltro-game-overlay:hover .zoltro-game-help{opacity:1}
+.zoltro-game-fallback{position:absolute;inset:54px 0 0;display:flex;align-items:center;justify-content:center;background:rgba(7,10,16,.96);z-index:5;padding:24px;text-align:center}
+.zoltro-game-fallback[hidden]{display:none}
+.zoltro-game-fallback-box{width:min(560px,92vw);padding:34px;border:1px solid rgba(0,212,255,.35);border-radius:18px;background:linear-gradient(145deg,#111620,#090d14);box-shadow:0 20px 70px rgba(0,0,0,.55),0 0 30px rgba(0,212,255,.08);color:#fff}
+.zoltro-game-fallback-icon{font-size:42px;margin-bottom:10px}
+.zoltro-game-fallback-box h2{font-family:'Orbitron',monospace;font-size:1.1rem;margin-bottom:10px}
+.zoltro-game-fallback-box p{color:#aeb8c8;line-height:1.5;margin-bottom:22px}
+.zoltro-game-fallback-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.zoltro-game-open-btn{background:var(--accent)!important;color:#070a10!important}
+@media(max-width:700px){.zoltro-game-bar{height:50px;flex-basis:50px}.zoltro-game-btn{padding:6px 8px;font-size:11px}.zoltro-game-title{font-size:11px}#zoltro-game-frame{height:calc(100vh - 50px)}.zoltro-game-fallback{inset:50px 0 0}}
+
 </style>
 </head>
 <body>
@@ -1309,7 +1333,7 @@ body.cloak-open{overflow:hidden!important}
                     <img src="https://i.makeagif.com/media/4-02-2020/-kSJtT.gif" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>FNAF 2</span></div>
                 </a>
-                <a href="https://irv77.github.io/hd_fnaf/3/" target="_blank" class="game-card" data-name="FNAF 3" data-cat="horeur">
+                <a href="https://irv77.github.io/hd_fnaf/3/" target="_blank" class="game-card" data-name="FNAF 3" data-cat="exploration">
                     <img class="static-img" src="https://m.media-amazon.com/images/I/81paxGYlcqL.png" alt="FNAF 3" loading="lazy">
                     <img src="https://i.makeagif.com/media/3-24-2015/6LLqFK.gif" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>FNAF 3</span></div>
@@ -1329,12 +1353,12 @@ body.cloak-open{overflow:hidden!important}
                     <img src="https://i.makeagif.com/media/12-04-2016/hC5_vf.gif" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>FNAF Sister Location</span></div>
                 </a>
-                <a href="https://irv77.github.io/hd_fnaf/ps/" target="_blank" class="game-card" data-name="FNAF Pizzeria Simulator" data-cat="horeur">
+                <a href="https://irv77.github.io/hd_fnaf/ps/" target="_blank" class="game-card" data-name="FNAF Pizzeria Simulator" data-cat="exploration">
                     <img class="static-img" src="https://static.wikia.nocookie.net/freddy-fazbears-pizzeria-simulator/images/d/d3/Fnaf6icon.png/revision/latest/thumbnail/width/360/height/450?cb=20190824045400" alt="FNAF Pizzeria Simulator" loading="lazy">
                     <img src="https://i.makeagif.com/media/3-12-2018/VwmYvI.gif" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>FNAF Pizzeria Simulator</span></div>
                 </a>
-                <a href="https://irv77.github.io/hd_fnaf/ucn/" target="_blank" class="game-card" data-name="FNAF UCN" data-cat="horeur">
+                <a href="https://irv77.github.io/hd_fnaf/ucn/" target="_blank" class="game-card" data-name="FNAF UCN" data-cat="exploration">
                     <img class="static-img" src="https://play-lh.googleusercontent.com/pB7dsLLcRgADtFpEPeKc5mSyAn1E1JzrdQ1V7-Y5hizgub3G8e9UJIc5opC9mYXKSBw" alt="FNAF UCN" loading="lazy">
                     <img src="https://i.makeagif.com/media/6-27-2018/Ev3_77.gif" alt="Animation MakeGif" width="400">
                     <div class="game-info"><span>FNAF UCN</span></div>
@@ -1756,6 +1780,31 @@ body.cloak-open{overflow:hidden!important}
 
 <div id="audio-container"><div id="yt-player"></div></div>
 
+
+<!-- --- LECTEUR DE JEUX INTÉGRÉ ZOLTROGAME --- -->
+<div id="zoltro-game-overlay" aria-hidden="true">
+  <div class="zoltro-game-bar">
+    <button class="zoltro-game-btn" type="button" onclick="closeZoltroGame()">← ZoltroGame</button>
+    <div class="zoltro-game-title" id="zoltro-game-title">Jeu</div>
+    <button class="zoltro-game-btn" type="button" onclick="toggleStealthCloak()">📚 PowerPoint</button>
+    <button class="zoltro-game-btn" type="button" onclick="toggleZoltroGameFullscreen()">⛶</button>
+    <button class="zoltro-game-btn" type="button" onclick="openCurrentGameNewTab()">↗</button>
+  </div>
+  <div class="zoltro-game-help">Le bouton 📚 PowerPoint ouvre le mode présentation Zoltrogame.</div>
+  <iframe id="zoltro-game-frame" title="Jeu ZoltroGame" allow="autoplay; fullscreen; gamepad; pointer-lock" allowfullscreen></iframe>
+  <div id="zoltro-game-fallback" class="zoltro-game-fallback" hidden>
+    <div class="zoltro-game-fallback-box">
+      <div class="zoltro-game-fallback-icon">🎮</div>
+      <h2>Ce jeu ne peut pas être intégré ici</h2>
+      <p>Le site du jeu bloque l'affichage dans une fenêtre intégrée. Tu peux quand même le lancer normalement.</p>
+      <div class="zoltro-game-fallback-actions">
+        <button type="button" class="zoltro-game-btn" onclick="reloadCurrentGame()">↻ Réessayer</button>
+        <button type="button" class="zoltro-game-btn zoltro-game-open-btn" onclick="openCurrentGameNewTab()">↗ Ouvrir le jeu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Fenêtre Modale de Contact / Signalement -->
 <div class="feedback-modal-overlay" id="feedbackModalOverlay" onclick="if(event.target === this) closeFeedbackModal()">
     <div class="feedback-modal">
@@ -2068,9 +2117,18 @@ body.cloak-open{overflow:hidden!important}
     }
   };
 
-    const powerpointPresentation=['Microsoft PowerPoint','Qu’est-ce que PowerPoint et à quoi sert-il ?','Microsoft PowerPoint est un logiciel de présentation par diapositives de la suite Microsoft 365. Il permet de créer, mettre en forme, animer et partager des présentations adaptées à différents usages.',['Fonctionnalités visuelles et multimédias','Animation et interactivité','Formats et compatibilité']];
+    // Le mode PowerPoint change réellement selon le niveau sélectionné.
+    const powerpointByLevel={
+      '6e':['Découvrir PowerPoint','À quoi sert une présentation numérique ?','Découvrir les bases de PowerPoint : créer des diapositives, ajouter du texte et organiser les idées simplement.',['Créer une diapositive','Ajouter un titre et du texte','Insérer une image','Présenter clairement une idée']],
+      '5e':['Créer une présentation efficace','Comment rendre un diaporama clair et intéressant ?','Apprendre à organiser une présentation avec des titres, des images et une progression logique.',['Organiser les diapositives','Choisir des images utiles','Utiliser des titres courts','Respecter une structure simple']],
+      '4e':['Mise en forme et narration','Comment construire un diaporama qui explique vraiment quelque chose ?','Utiliser la mise en forme, les schémas et les transitions pour accompagner une explication sans surcharger les diapositives.',['Hiérarchiser les informations','Créer un schéma lisible','Choisir une transition adaptée','Éviter la surcharge visuelle']],
+      '3e':['Présenter et convaincre','Comment utiliser PowerPoint pour défendre une idée ?','Construire une présentation structurée avec une problématique, des arguments, des exemples et une conclusion.',['Formuler une problématique','Organiser les arguments','Illustrer avec des données','Conclure efficacement']],
+      '2nde':['Communication visuelle','Comment transformer des informations en présentation claire ?','Analyser le rôle du texte, des images, des données et de la mise en page pour communiquer efficacement.',['Sélectionner les informations','Structurer les données','Créer une hiérarchie visuelle','Adapter le support au public']],
+      '1ere':['Argumentation et données','Comment une présentation peut-elle renforcer une démonstration ?','Construire un support qui distingue faits, données, interprétations et arguments, tout en gardant une lecture rapide.',['Vérifier les sources','Présenter des données','Relier preuves et arguments','Maîtriser le rythme oral']],
+      'terminale':['Présentation experte','Comment construire un support professionnel pour défendre une problématique ?','Concevoir un diaporama synthétique et rigoureux, adapté à un oral, avec données, références et argumentation.',['Problématique précise','Sources et références','Synthèse des données','Argumentation et oral']]
+    };
     subjectLevelDetails.powerpoint={};
-    ['6e','5e','4e','3e','2nde','1ere','terminale'].forEach(level=>{ subjectLevelDetails.powerpoint[level]=powerpointPresentation; });
+    Object.entries(powerpointByLevel).forEach(([level,data])=>{ subjectLevelDetails.powerpoint[level]=data; });
 
   function getSubjectLevelTheme(subject,level){
     const data=subjectLevelDetails[subject]?.[level];
@@ -2094,13 +2152,14 @@ body.cloak-open{overflow:hidden!important}
     const subjectName=document.getElementById('cloak-subject-select').selectedOptions[0].textContent;
     slides=[
       `<div class="slide-kicker">${levelDetails[level]} • ${subjectName} • exposé</div><h1>${theme.title}</h1><p class="title-sub">${question}</p><div class="level-theme-card"><div class="theme-symbols">${levelTheme.symbols}</div><strong>${levelTheme.label} — ${subjectName}</strong><br><span>${levelTheme.text}</span></div>${extra}<div class="title-meta"><span class="badge">${levelDetails[level]}</span><span class="badge">${subjectName}</span><span class="badge">8 diapositives</span></div>`,
-      `<div class="slide-kicker">1 • Introduction</div><h2>Entrer dans le sujet</h2><p>${intro}</p><p>Le contenu est adapté à la <strong>${levelDetails[level]}</strong> et traite directement de <strong>${subjectName}</strong>.</p><div class="problem"><strong>Question à retenir :</strong> ${question}</div>`,
-      `<div class="slide-kicker">2 • Notions essentielles</div><h2>Ce qu’il faut connaître</h2><ul>${bullets.map(x=>`<li>${x}</li>`).join('')}</ul>`,
-      `<div class="slide-kicker">3 • Approfondissement</div><h2>Comprendre le sujet</h2><p>${intro}</p><div class="problem"><strong>Point central :</strong> ${bullets[0]} ${bullets[1]||''}</div><p>À ce niveau scolaire, on cherche surtout à comprendre les notions et à les relier à des exemples.</p>`,
+      `<div class="slide-kicker">1 • Introduction</div><h2>Entrer dans le sujet</h2><p>${intro}</p><p>Le contenu est adapté à la <strong>${levelDetails[level]}</strong> : le vocabulaire, les exemples et le niveau de détail changent avec la classe.</p><div class="problem"><strong>Question à retenir :</strong> ${question}</div>`,
+      `<div class="slide-kicker">2 • Objectifs du niveau</div><h2>Ce qu’il faut savoir faire</h2><ul>${bullets.map(x=>`<li>${x}</li>`).join('')}</ul><div class="problem"><strong>Niveau :</strong> ${levelDetails[level]} — ${levelTheme.label}.</div>`,
+      `<div class="slide-kicker">3 • Notions essentielles</div><h2>Les notions à connaître</h2><p>${intro}</p><div class="level-theme-card"><div class="theme-symbols">${levelTheme.symbols}</div><strong>Compétences visées</strong><br><span>${bullets.slice(0,2).join(' • ')}</span></div>`,
       `<div class="slide-kicker">4 • Méthode</div><h2>Comment travailler ce sujet ?</h2><ul>${method.join('')}</ul><p class="title-sub">La méthode est adaptée aux attendus de la ${levelDetails[level]}.</p>`,
       `<div class="slide-kicker">5 • Exemple</div><h2>Une situation concrète</h2><p>On peut appliquer ces notions à la question : <strong>${question}</strong></p><div class="problem"><strong>Exemple :</strong> ${bullets[2]||bullets[0]}</div><p>${bullets[3]||'Cet exemple permet de relier les connaissances à une situation concrète.'}</p>`,
-      `<div class="slide-kicker">6 • Synthèse</div><h2>Les grandes idées</h2><ul>${bullets.map(x=>`<li>${x}</li>`).join('')}</ul><div class="problem"><strong>À retenir :</strong> ${theme.title} se comprend grâce à ces notions principales.</div>`,
-      `<div class="slide-kicker">7 • Conclusion</div><h2>Conclusion</h2><p>${intro}</p><p>La présentation répond à la problématique <strong>${question}</strong> en mobilisant les notions de <strong>${subjectName}</strong> au niveau <strong>${levelDetails[level]}</strong>.</p><p class="title-sub">Fin de l’exposé — merci.</p>`
+      `<div class="slide-kicker">6 • Repères</div><h2>Les points à retenir</h2><ul>${bullets.map((x,i)=>`<li><strong>${i+1}.</strong> ${x}</li>`).join('')}</ul><div class="problem"><strong>Progression :</strong> ce contenu correspond au niveau ${levelDetails[level]}.</div>`,
+      `<div class="slide-kicker">7 • Synthèse</div><h2>Résumé</h2><p>${theme.title} se construit autour de <strong>${bullets[0]}</strong>, <strong>${bullets[1]||'notions essentielles'}</strong> et d’exemples adaptés au niveau.</p><div class="level-theme-card"><strong>Conseil pour ce niveau</strong><br><span>${levelTheme.text}</span></div>`,
+      `<div class="slide-kicker">8 • Conclusion</div><h2>Conclusion</h2><p>${intro}</p><p>La présentation répond à la problématique <strong>${question}</strong> en mobilisant les notions de <strong>${subjectName}</strong> au niveau <strong>${levelDetails[level]}</strong>.</p><p class="title-sub">Fin de l’exposé — merci.</p>`
     ];
     currentSlide=Math.min(currentSlide,slides.length-1);
     document.getElementById('cloak-brand').textContent='Présentation - PowerPoint';
@@ -2881,5 +2940,96 @@ body.cloak-open{overflow:hidden!important}
 
     initSiteAndMusic();
 </script>
+
+<script>
+/* --- Navigation des jeux dans ZoltroGame, comme un portail de jeux intégré --- */
+(function(){
+  const overlay=document.getElementById('zoltro-game-overlay');
+  const frame=document.getElementById('zoltro-game-frame');
+  const title=document.getElementById('zoltro-game-title');
+  if(!overlay||!frame) return;
+  let currentUrl='';
+  let gameLoadTimer=null;
+  const fallback=document.getElementById('zoltro-game-fallback');
+
+  function hideGameFallback(){ if(fallback) fallback.hidden=true; }
+  function showGameFallback(){ if(fallback) fallback.hidden=false; }
+
+  window.reloadCurrentGame=function(){
+    if(!currentUrl) return;
+    hideGameFallback();
+    clearTimeout(gameLoadTimer);
+    frame.src='about:blank';
+    setTimeout(()=>{ frame.src=currentUrl; },60);
+    gameLoadTimer=setTimeout(showGameFallback,7000);
+  };
+
+  window.openGameInZoltro=function(url,name){
+    if(!url) return;
+    currentUrl=url;
+    title.textContent=name || 'Jeu';
+    hideGameFallback();
+    clearTimeout(gameLoadTimer);
+    frame.src=url;
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    gameLoadTimer=setTimeout(()=>{
+      if(overlay.classList.contains('active')) showGameFallback();
+    },7000);
+  };
+
+  window.closeZoltroGame=function(){
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden','true');
+    clearTimeout(gameLoadTimer);
+    hideGameFallback();
+    frame.src='about:blank';
+    document.body.style.overflow='';
+    if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+  };
+
+  window.openCurrentGameNewTab=function(){
+    if(currentUrl) window.open(currentUrl,'_blank','noopener,noreferrer');
+  };
+
+  frame.addEventListener('load',()=>{
+    clearTimeout(gameLoadTimer);
+  });
+
+  window.toggleZoltroGameFullscreen=function(){
+    if(!document.fullscreenElement){
+      if(overlay.requestFullscreen) overlay.requestFullscreen().catch(()=>{});
+    }else if(document.exitFullscreen){
+      document.exitFullscreen().catch(()=>{});
+    }
+  };
+
+  document.querySelectorAll('.game-card').forEach(card=>{
+    card.addEventListener('click',function(e){
+      if(e.target.closest('.like-btn')) return;
+      e.preventDefault();
+      const url=this.href;
+      const name=this.dataset.name || this.querySelector('.game-info span')?.textContent || 'Jeu';
+      openGameInZoltro(url,name);
+    });
+  });
+
+  const oldRandom=window.playRandomGame;
+  window.playRandomGame=function(){
+    const visibleGames=document.querySelectorAll('.game-card:not(.hidden)');
+    if(!visibleGames.length){ alert("Aucun jeu n'est actuellement visible !"); return; }
+    const card=visibleGames[Math.floor(Math.random()*visibleGames.length)];
+    openGameInZoltro(card.href,card.dataset.name || 'Jeu aléatoire');
+  };
+
+  window.addEventListener('keydown',function(e){
+    if(e.key==='Escape' && overlay.classList.contains('active') && !document.getElementById('cloak-overlay')?.classList.contains('is-visible')){
+      closeZoltroGame();
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
