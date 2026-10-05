@@ -60,33 +60,44 @@
 .feedback-modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 100001;
+    z-index: 2147483644;
     display: none;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    padding: 20px;
-    background: rgba(4, 7, 12, 0.82);
-    backdrop-filter: blur(10px);
+    overflow-y: auto;
+    background: rgba(4, 7, 12, 0.98);
 }
 
 .feedback-modal-overlay.active { display: flex; }
 
 .feedback-modal {
     position: relative;
-    width: min(480px, 100%);
-    padding: 25px;
-    border: 1px solid var(--accent);
-    border-radius: 16px;
-    background: var(--card-bg);
-    box-shadow: 0 0 30px rgba(0, 212, 255, 0.25);
+    width: min(720px, 100%);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 72px 32px 48px;
+    border: 0;
+    border-radius: 0;
+    background: var(--bg);
+    box-shadow: none;
     font-family: 'Rajdhani', sans-serif;
 }
 
 .feedback-modal h2 {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.2rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
     color: #fff;
     margin-bottom: 6px;
+}
+
+.feedback-account-note {
+    margin: 20px 0 24px;
+    padding: 12px 14px;
+    border-left: 2px solid var(--accent2);
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--text-muted);
+    font-size: 0.95rem;
 }
 
 .feedback-form-group {
@@ -127,21 +138,20 @@
 .feedback-submit-btn {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
-    color: #070a10;
+    background: var(--accent);
+    color: #10151b;
     border: none;
     border-radius: 8px;
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    font-size: 0.9rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s ease;
     margin-top: 5px;
 }
 
 .feedback-submit-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    background: #fff;
 }
 
 .leetchi-button {
@@ -1061,6 +1071,21 @@
         .auth-message.error { color: #ff7ea8; }
         .auth-message.success { color: #7ef7cf; }
 
+        .auth-context-notice {
+            display: none;
+            margin: 0 0 16px;
+            padding: 12px 14px;
+            border: 1px solid rgba(155, 183, 209, 0.16);
+            border-left: 3px solid var(--accent2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .auth-context-notice.active { display: block; }
+
         .login-gate-message {
             position: fixed;
             right: 18px;
@@ -1127,6 +1152,7 @@
             header { padding: 14px 16px; }
             main { padding: 20px 16px 40px; }
             h1 { font-size: 1.1rem; letter-spacing: 3px; }
+            .feedback-modal { padding: 64px 18px 32px; }
             .category-tabs { gap: 8px; padding: 10px 12px 0; }
             #categoryTabs { padding-bottom: 10px; }
             #categoryTabs .tab-btn { min-height: 32px; padding: 5px 9px; font-size: 0.85rem; }
@@ -1416,6 +1442,7 @@ body.cloak-open{overflow:hidden!important}
         const title = document.getElementById('authTitle');
         const submitBtn = document.getElementById('authSubmitBtn');
         const nameField = document.getElementById('authNameField');
+        const contextNotice = document.getElementById('authContextNotice');
         const tabs = document.querySelectorAll('.auth-tab');
         const isRegister = mode === 'register';
 
@@ -1424,6 +1451,13 @@ body.cloak-open{overflow:hidden!important}
         nameField.style.display = isRegister ? 'flex' : 'none';
         title.textContent = isRegister ? 'Créer un compte' : 'Se connecter';
         submitBtn.textContent = isRegister ? 'Créer le compte' : 'Se connecter';
+        const feedbackPending = Boolean(window._zoltroFeedbackPending);
+        if (contextNotice) {
+            contextNotice.textContent = feedbackPending
+                ? 'Le centre de signalement est réservé aux membres. Connecte-toi ou crée un compte : le formulaire s’ouvrira ensuite automatiquement.'
+                : '';
+            contextNotice.classList.toggle('active', feedbackPending);
+        }
 
         tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.mode === mode));
         overlay.classList.add('active');
@@ -1442,7 +1476,7 @@ body.cloak-open{overflow:hidden!important}
         if (!isRegister) nameInput.value = '';
     }
 
-    function closeAuthModal() {
+    function closeAuthModal(continueToFeedback = false) {
         const overlay = document.getElementById('authOverlay');
         if (!overlay) return;
         overlay.classList.remove('active');
@@ -1455,6 +1489,12 @@ body.cloak-open{overflow:hidden!important}
             message.className = 'auth-message';
         }
         document.body.classList.remove('modal-open');
+        if (continueToFeedback && window._zoltroFeedbackPending && getCurrentUser()) {
+            window._zoltroFeedbackPending = false;
+            openFeedbackModal();
+        } else if (!continueToFeedback) {
+            window._zoltroFeedbackPending = false;
+        }
     }
 
     async function handleAuthSubmit(event) {
@@ -1499,7 +1539,7 @@ body.cloak-open{overflow:hidden!important}
                     message.className = 'auth-message success';
                 }
                 syncUserData();
-                setTimeout(closeAuthModal, 800);
+                setTimeout(() => closeAuthModal(true), 800);
                 return;
             }
 
@@ -1519,7 +1559,7 @@ body.cloak-open{overflow:hidden!important}
                 message.className = 'auth-message success';
             }
             syncUserData();
-            setTimeout(closeAuthModal, 700);
+            setTimeout(() => closeAuthModal(true), 700);
         } catch (error) {
             if (message) {
                 message.textContent = error.message || 'Une erreur est survenue.';
@@ -1553,6 +1593,44 @@ body.cloak-open{overflow:hidden!important}
     function requireAuth() {
         if (getCurrentUser()) return true;
         showLoginGateMessage();
+        return false;
+    }
+
+    function openFeedbackModal() {
+        if (!getCurrentUser()) {
+            window._zoltroFeedbackPending = true;
+            openAuthModal('login');
+            return;
+        }
+
+        const user = getCurrentUser();
+        const overlay = document.getElementById('feedbackModalOverlay');
+        const accountNote = document.getElementById('feedbackAccountNote');
+        const accountName = document.getElementById('feedbackAccountName');
+        const accountEmail = document.getElementById('feedbackAccountEmail');
+        if (!overlay) return;
+        if (accountNote) accountNote.textContent = `Connecté en tant que ${user.name} (${user.email}). Ces informations seront jointes au signalement.`;
+        if (accountName) accountName.value = user.name || '';
+        if (accountEmail) accountEmail.value = user.email || '';
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeFeedbackModal() {
+        const overlay = document.getElementById('feedbackModalOverlay');
+        if (!overlay) return;
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+    }
+
+    function guardFeedbackSubmit(event) {
+        if (requireAuth()) return true;
+        event.preventDefault();
+        closeFeedbackModal();
+        window._zoltroFeedbackPending = true;
+        openAuthModal('login');
         return false;
     }
 
@@ -1694,6 +1772,7 @@ body.cloak-open{overflow:hidden!important}
             <span class="eyebrow">Mon compte</span>
             <h3 id="authTitle">Se connecter</h3>
         </div>
+        <p class="auth-context-notice" id="authContextNotice"></p>
         <div class="auth-tabs">
             <button type="button" class="auth-tab active" data-mode="login">Connexion</button>
             <button type="button" class="auth-tab" data-mode="register">Créer un compte</button>
@@ -2465,16 +2544,20 @@ body.cloak-open{overflow:hidden!important}
 </div>
 
 <!-- Fenêtre Modale de Contact / Signalement -->
-<div class="feedback-modal-overlay" id="feedbackModalOverlay" onclick="if(event.target === this) closeFeedbackModal()">
-    <div class="feedback-modal">
+<div class="feedback-modal-overlay" id="feedbackModalOverlay" aria-hidden="true" onclick="if(event.target === this) closeFeedbackModal()">
+    <div class="feedback-modal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
         <button type="button" class="playlist-picker-close" onclick="closeFeedbackModal()" aria-label="Fermer">✕</button>
-        <h2>Espace Communauté</h2>
-        <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem;">
-            Dépose une plainte, propose un nouveau jeu ou signale un bug d'animation Three.js.
+        <h2 id="feedbackTitle">Centre de signalement</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
+            Choisis le sujet et décris précisément ta demande. Elle sera transmise à l’équipe Zoltrogame.
         </p>
-<form action="https://formsubmit.co/clement.deb.taur.1@gmail.com" method="POST">
+        <div class="feedback-account-note" id="feedbackAccountNote"></div>
+<form action="https://formsubmit.co/clement.deb.taur.1@gmail.com" method="POST" onsubmit="return guardFeedbackSubmit(event)">
     <!-- Empêche le spam via Captcha si tu le souhaites -->
     <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="Nouveau signalement Zoltrogame">
+    <input type="hidden" name="Nom du compte" id="feedbackAccountName">
+    <input type="hidden" name="Email du compte" id="feedbackAccountEmail">
     
     <!-- Redirige l'utilisateur sur ton site après l'envoi -->
     <input type="hidden" name="_next" value="https://zoltrogame.com/thanks_you/">
@@ -2483,15 +2566,15 @@ body.cloak-open{overflow:hidden!important}
         <label for="feedbackType">Catégorie :</label>
         <select id="feedbackType" name="Categorie" required>
             <option value="jeu">Proposer un nouveau jeu</option>
-            <option value="bug">Bug avec une animation Three.js</option>
+            <option value="bug">Signaler un bug sur le site ou un jeu</option>
             <option value="plainte">Plainte / Réclamation</option>
             <option value="autre">Autre idée / Suggestion</option>
         </select>
     </div>
 
     <div class="feedback-form-group">
-        <label for="feedbackContact">Ton pseudo ou Email (optionnel) :</label>
-        <input type="text" id="feedbackContact" name="Contact" placeholder="Ex: ton prénom ou ton email">
+        <label for="feedbackContact">Autre moyen de contact (facultatif) :</label>
+        <input type="text" id="feedbackContact" name="Contact" placeholder="Ex. : un pseudo ou un autre email">
     </div>
 
     <div class="feedback-form-group">
