@@ -21,11 +21,11 @@
    target="_blank"
    rel="noopener noreferrer"
    class="leetchi-button">
-    💜 Soutenir Zoltrogame 💰
+    Soutenir Zoltrogame
 </a>
 <!-- Bouton Espace Retour en haut à gauche -->
 <button class="feedback-button" onclick="openFeedbackModal()">
-    💬 Proposer un jeu / Bug / Plainte
+    Proposer un jeu / Bug / Réclamation
 </button>
 
 <style>
@@ -36,25 +36,24 @@
     left: 15px;
     z-index: 9999;
     padding: 7px 11px;
-    border-radius: 8px;
-    background: rgba(25, 25, 35, 0.85);
-    color: #fff;
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 999px;
+    background: rgba(18, 22, 30, 0.9);
+    color: #edf3ff;
+    border: 1px solid rgba(255,255,255,0.09);
     font-family: inherit;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    box-shadow: none;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .feedback-button:hover {
     transform: translateY(-1px);
-    background: rgba(0, 212, 255, 0.2);
-    border-color: var(--accent);
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+    background: rgba(27, 31, 38, 0.96);
+    border-color: rgba(255,255,255,0.15);
 }
 
 /* Modal Formulaire */
@@ -151,42 +150,50 @@
     right: 15px;
     z-index: 9999;
     padding: 7px 11px;
-    border-radius: 8px;
-    background: rgba(25, 25, 35, 0.85);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    background: rgba(18, 22, 30, 0.9);
+    color: #edf3ff;
+    border: 1px solid rgba(255,255,255,0.09);
     font-family: inherit;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    box-shadow: none;
     transition: all 0.2s ease;
 }
 
 .leetchi-button:hover {
     transform: translateY(-1px);
-    background: rgba(40, 40, 55, 0.95);
-    border-color: rgba(255,255,255,0.25);
+    background: rgba(27, 31, 38, 0.96);
+    border-color: rgba(255,255,255,0.15);
 }
 
         :root {
-            --bg: #070a10;
-            --bg2: #0d1117;
-            --accent: #00d4ff;
-            --accent2: #ff3c6e;
-            --accent3: #a855f7;
-            --card-bg: #111620;
-            --border: rgba(0, 212, 255, 0.15);
-            --text: #e2e8f0;
-            --text-muted: #64748b;
+            --bg: #0b0f14;
+            --bg2: #111821;
+            --surface: rgba(19, 25, 34, 0.92);
+            --surface-strong: rgba(14, 18, 24, 0.97);
+            --accent: #dfe9f5;
+            --accent2: #9bb7d1;
+            --accent3: #bcbcff;
+            --card-bg: rgba(18, 22, 29, 0.9);
+            --card-bg-strong: rgba(12, 15, 20, 0.96);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #edf3ff;
+            --text-strong: #ffffff;
+            --text-muted: #98a9b8;
+            --shadow: rgba(0, 0, 0, 0.28);
+            --glow: rgba(255, 255, 255, 0.04);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        a { color: inherit; text-decoration: none; }
 
         body {
-            background-color: var(--bg);
+            background:
+                linear-gradient(180deg, #0a0d12 0%, #0d141d 100%);
             color: var(--text);
             font-family: 'Rajdhani', sans-serif;
             min-height: 100vh;
@@ -209,27 +216,27 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(7, 10, 16, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 18px 40px;
+            background: rgba(12, 16, 22, 0.78);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+            padding: 18px 40px 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.9rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            background: linear-gradient(90deg, var(--accent), var(--accent3), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 20px rgba(0,212,255,0.3));
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(1.2rem, 2vw, 2rem);
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 0.02em;
+            color: #f4f8ff;
+            filter: none;
+            text-shadow: 0 0 0 transparent;
         }
 
         /* Titre principal : toujours parfaitement centré */
@@ -241,42 +248,45 @@
         }
 
         .site-intro {
-            font-size: 1rem;
+            font-size: 0.92rem;
             color: var(--text-muted);
             text-align: center;
-            letter-spacing: 1px;
-            margin-top: -5px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top: -2px;
         }
 
         .search-wrapper {
             position: relative;
-            width: 100%;
-            max-width: 600px;
+            width: min(100%, 640px);
+            margin: 0 auto;
         }
 
         .search-wrapper svg {
             position: absolute;
-            left: 16px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--accent);
             width: 18px;
             height: 18px;
+            opacity: 0.9;
         }
 
         #searchInput {
             width: 100%;
-            padding: 12px 20px 12px 48px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            padding: 14px 22px 14px 50px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 14px;
             color: var(--text);
             font-family: 'Rajdhani', sans-serif;
             font-size: 1rem;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 0.04em;
             outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 8px 24px rgba(2, 6, 23, 0.18);
         }
 
         #searchInput::placeholder { color: var(--text-muted); }
@@ -288,28 +298,48 @@
 
         .action-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 4px;
         }
 
         .action-btn {
-            background: rgba(0, 212, 255, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 8px 16px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            padding: 10px 16px;
+            border-radius: 12px;
             font-family: 'Orbitron', monospace;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
+            box-shadow: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn svg,
+        .language-control > svg {
+            width: 17px;
+            height: 17px;
+            flex: 0 0 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .action-btn:hover {
-            background: var(--accent);
-            color: #070a10;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.14);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
         }
 
         .language-control {
@@ -389,35 +419,51 @@
         .category-tabs {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 7px;
             justify-content: center;
-            padding: 20px 40px 0;
+            padding: 14px 32px 0;
         }
 
         .tab-btn {
-            padding: 6px 16px;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            min-height: 34px;
+            padding: 6px 11px;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
             color: var(--text-muted);
-            font-family: 'Orbitron', monospace;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn svg {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 15px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .tab-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+            border-color: rgba(255, 255, 255, 0.18);
+            color: var(--text-strong);
+            transform: translateY(-1px);
         }
 
         .tab-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #070a10;
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.14);
+            color: var(--text-strong);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
         }
 
         /* Navigation catégories renforcée */
@@ -441,11 +487,13 @@
 
 
         main {
-            padding: 30px 40px 60px;
+            width: min(1280px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 26px 0 64px;
         }
 
         .category-section {
-            margin-bottom: 50px;
+            margin-bottom: 52px;
         }
 
         .category-header {
@@ -456,7 +504,27 @@
         }
 
         .category-icon {
-            font-size: 1.4rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            color: var(--text-strong);
+            opacity: 0.9;
+        }
+
+        .nav-icon,
+        .category-icon svg,
+        .account-pill svg {
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            vertical-align: middle;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .category-title {
@@ -493,15 +561,16 @@
 
         .game-card {
             position: relative;
-            border-radius: 8px;
+            border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             text-decoration: none;
             display: block;
-            background: var(--card-bg);
+            background: linear-gradient(180deg, rgba(17, 25, 39, 0.9), rgba(9, 13, 20, 0.98));
             aspect-ratio: 16/12;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
         }
 
         .game-card img {
@@ -526,9 +595,9 @@
         }
 
         .game-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 20px rgba(0,212,255,0.2);
-            border-color: rgba(0,212,255,0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 26px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .game-card:hover .static-img {
@@ -834,11 +903,234 @@
 
         #audio-container { position: fixed; top: -500px; left: -500px; width: 1px; height: 1px; pointer-events: none; }
 
+        .account-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            padding: 9px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-strong);
+            font-family: 'Orbitron', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .account-pill:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2147483645;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .auth-overlay.active { display: flex; }
+
+        .auth-panel {
+            position: relative;
+            width: min(440px, 100%);
+            padding: 28px 24px 20px;
+            border: 1px solid rgba(94, 231, 255, 0.2);
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(10, 17, 28, 0.98));
+            box-shadow: 0 28px 80px rgba(2, 6, 23, 0.65), 0 0 24px rgba(94, 231, 255, 0.12);
+        }
+
+        .auth-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-strong);
+            cursor: pointer;
+        }
+
+        .auth-header {
+            margin-bottom: 18px;
+        }
+
+        .auth-header h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            margin-top: 10px;
+            color: var(--text-strong);
+        }
+
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .auth-tab {
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 12px;
+            padding: 10px 12px;
+            background: rgba(15, 23, 42, 0.7);
+            color: var(--text-muted);
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .auth-tab.active {
+            background: linear-gradient(135deg, rgba(94, 231, 255, 0.18), rgba(124, 108, 255, 0.18));
+            border-color: rgba(94, 231, 255, 0.3);
+            color: var(--text-strong);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .auth-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .auth-field label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .auth-field input {
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            background: rgba(7, 10, 16, 0.8);
+            color: var(--text-strong);
+            padding: 12px 14px;
+            font-size: 0.95rem;
+        }
+
+        .auth-field input:focus {
+            outline: none;
+            border-color: rgba(94, 231, 255, 0.5);
+            box-shadow: 0 0 0 3px rgba(94, 231, 255, 0.12);
+        }
+
+        .auth-submit {
+            margin-top: 8px;
+            border: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            color: #03111c;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 14px 16px;
+            cursor: pointer;
+        }
+
+        .auth-message {
+            min-height: 18px;
+            margin-top: 12px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .auth-message.error { color: #ff7ea8; }
+        .auth-message.success { color: #7ef7cf; }
+
+        .login-gate-message {
+            position: fixed;
+            right: 18px;
+            bottom: 120px;
+            z-index: 2147483646;
+            max-width: min(360px, calc(100vw - 24px));
+            display: none;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 126, 168, 0.35);
+            border-radius: 16px;
+            background: rgba(20, 12, 20, 0.96);
+            color: var(--text-strong);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .login-gate-message.active { display: block; }
+
+        .login-gate-message strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #ffb8d1;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .login-gate-message p {
+            color: var(--text-muted);
+            line-height: 1.45;
+            font-size: 0.92rem;
+            margin: 0 0 10px;
+        }
+
+        .login-gate-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .login-gate-options button {
+            border: 0;
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .login-gate-options .primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            color: #03111c;
+        }
+
+        .login-gate-options .secondary {
+            background: rgba(148, 163, 184, 0.08);
+            color: var(--text-strong);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+        }
+
         @media (max-width: 600px) {
             header { padding: 14px 16px; }
             main { padding: 20px 16px 40px; }
             h1 { font-size: 1.1rem; letter-spacing: 3px; }
-            .category-tabs { padding: 14px 16px 0; }
+            .category-tabs { gap: 6px; padding: 10px 12px 0; }
+            #categoryTabs { padding-bottom: 10px; }
+            #categoryTabs .tab-btn { min-height: 32px; padding: 5px 9px; font-size: 0.85rem; }
+            #categoryTabs .tab-btn svg { width: 14px; height: 14px; flex-basis: 14px; }
             .cards-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
             .music-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
             .welcome-box { padding: 25px 20px; }
@@ -1018,12 +1310,271 @@ body.cloak-open{overflow:hidden!important}
 
 <script>
     const siteTranslations = {
-        fr: { title: 'Bienvenue sur Zoltrogame !', search: 'Rechercher un jeu...', fullscreen: '🖥️ Plein Écran', random: '🎲 Jeu Aléatoire', all: '🎮 Tous', action: '💥 Action / FPS', course: '🏎️ Course / Conduite', simulation: '✈️ Simulation', sandbox: '🧱 Sandbox', imagination: '🎨 Imagination', exploration: '🌌 Exploration / Horreur', emulateur: '🖥️ Émulateur', strategie: '♟️ Stratégie', combat: '🥊 Combat', io: '🧬 .IO / Survie', party: '🎉 Party Games', gestion: '💰 Gestion / Économie', puzzle: '🧠 Radio / Réparation / Utile', favoris: '❤️ Mes favoris', musique: '🎵 Musique' },
-        en: { title: 'Welcome to Zoltrogame!', search: 'Search for a game...', fullscreen: '🖥️ Fullscreen', random: '🎲 Random Game', all: '🎮 All', action: '💥 Action / FPS', course: '🏎️ Racing / Driving', simulation: '✈️ Simulation', sandbox: '🧱 Sandbox', imagination: '🎨 Imagination', exploration: '🌌 Exploration / Horror', emulateur: '🖥️ Emulator', strategie: '♟️ Strategy', combat: '🥊 Combat', io: '🧬 .IO / Survival', party: '🎉 Party Games', gestion: '💰 Management / Economy', puzzle: '🧠 Radio / Repair / Useful', favoris: '❤️ My favorites', musique: '🎵 Music' },
-        es: { title: '¡Bienvenido a Zoltrogame!', search: 'Buscar un juego...', fullscreen: '🖥️ Pantalla completa', random: '🎲 Juego aleatorio', all: '🎮 Todos', action: '💥 Acción / FPS', course: '🏎️ Carreras / Conducción', simulation: '✈️ Simulación', sandbox: '🧱 Sandbox', imagination: '🎨 Imaginación', exploration: '🌌 Exploración / Terror', emulateur: '🖥️ Emulador', strategie: '♟️ Estrategia', combat: '🥊 Combate', io: '🧬 .IO / Supervivencia', party: '🎉 Juegos de fiesta', gestion: '💰 Gestión / Economía', puzzle: '🧠 Radio / Reparación / Útil', favoris: '❤️ Mis favoritos', musique: '🎵 Música' },
-        de: { title: 'Willkommen bei Zoltrogame!', search: 'Spiel suchen...', fullscreen: '🖥️ Vollbild', random: '🎲 Zufälliges Spiel', all: '🎮 Alle', action: '💥 Action / FPS', course: '🏎️ Rennen / Fahren', simulation: '✈️ Simulation', sandbox: '🧱 Sandbox', imagination: '🎨 Fantasie', exploration: '🌌 Erkundung / Horror', emulateur: '🖥️ Emulator', strategie: '♟️ Strategie', combat: '🥊 Kampf', io: '🧬 .IO / Überleben', party: '🎉 Partyspiele', gestion: '💰 Management / Wirtschaft', puzzle: '🧠 Radio / Reparatur / Nützlich', favoris: '❤️ Meine Favoriten', musique: '🎵 Musik' },
-        it: { title: 'Benvenuto su Zoltrogame!', search: 'Cerca un gioco...', fullscreen: '🖥️ Schermo intero', random: '🎲 Gioco casuale', all: '🎮 Tutti', action: '💥 Azione / FPS', course: '🏎️ Corse / Guida', simulation: '✈️ Simulazione', sandbox: '🧱 Sandbox', imagination: '🎨 Immaginazione', exploration: '🌌 Esplorazione / Horror', emulateur: '🖥️ Emulatore', strategie: '♟️ Strategia', combat: '🥊 Combattimento', io: '🧬 .IO / Sopravvivenza', party: '🎉 Giochi di gruppo', gestion: '💰 Gestione / Economia', puzzle: '🧠 Radio / Riparazione / Utile', favoris: '❤️ I miei preferiti', musique: '🎵 Musica' }
+        fr: { title: 'Bienvenue sur Zoltrogame !', search: 'Rechercher un jeu...', fullscreen: 'Plein Écran', random: 'Jeu Aléatoire', all: 'Tous', action: 'Action / FPS', course: 'Course / Conduite', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Imagination', exploration: 'Exploration / Horreur', emulateur: 'Émulateur', strategie: 'Stratégie', combat: 'Combat', io: '.IO / Survie', party: 'Party Games', gestion: 'Gestion / Économie', puzzle: 'Radio / Réparation / Utile', favoris: 'Mes favoris', musique: 'Musique' },
+        en: { title: 'Welcome to Zoltrogame!', search: 'Search for a game...', fullscreen: 'Fullscreen', random: 'Random Game', all: 'All', action: 'Action / FPS', course: 'Racing / Driving', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Imagination', exploration: 'Exploration / Horror', emulateur: 'Emulator', strategie: 'Strategy', combat: 'Combat', io: '.IO / Survival', party: 'Party Games', gestion: 'Management / Economy', puzzle: 'Radio / Repair / Useful', favoris: 'My favorites', musique: 'Music' },
+        es: { title: '¡Bienvenido a Zoltrogame!', search: 'Buscar un juego...', fullscreen: 'Pantalla completa', random: 'Juego aleatorio', all: 'Todos', action: 'Acción / FPS', course: 'Carreras / Conducción', simulation: 'Simulación', sandbox: 'Sandbox', imagination: 'Imaginación', exploration: 'Exploración / Terror', emulateur: 'Emulador', strategie: 'Estrategia', combat: 'Combate', io: '.IO / Supervivencia', party: 'Juegos de fiesta', gestion: 'Gestión / Economía', puzzle: 'Radio / Reparación / Útil', favoris: 'Mis favoritos', musique: 'Música' },
+        de: { title: 'Willkommen bei Zoltrogame!', search: 'Spiel suchen...', fullscreen: 'Vollbild', random: 'Zufälliges Spiel', all: 'Alle', action: 'Action / FPS', course: 'Rennen / Fahren', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Fantasie', exploration: 'Erdkundung / Horror', emulateur: 'Emulator', strategie: 'Strategie', combat: 'Kampf', io: '.IO / Überleben', party: 'Partyspiele', gestion: 'Management / Wirtschaft', puzzle: 'Radio / Reparatur / Nützlich', favoris: 'Meine Favoriten', musique: 'Musik' },
+        it: { title: 'Benvenuto su Zoltrogame!', search: 'Cerca un gioco...', fullscreen: 'Schermo intero', random: 'Gioco casuale', all: 'Tutti', action: 'Azione / FPS', course: 'Corse / Guida', simulation: 'Simulazione', sandbox: 'Sandbox', imagination: 'Immaginazione', exploration: 'Esplorazione / Horror', emulateur: 'Emulatore', strategie: 'Strategia', combat: 'Combattimento', io: '.IO / Sopravvivenza', party: 'Giochi di gruppo', gestion: 'Gestione / Economia', puzzle: 'Radio / Riparazione / Utile', favoris: 'I miei preferiti', musique: 'Musica' }
     };
+
+    const STORAGE_KEYS = {
+        accounts: 'zoltro_accounts_v1',
+        session: 'zoltro_session_v1'
+    };
+
+    function safeParse(value, fallback) {
+        try {
+            const parsed = value === null || value === undefined ? null : JSON.parse(value);
+            return parsed === null || parsed === undefined ? fallback : parsed;
+        } catch {
+            return fallback;
+        }
+    }
+
+    function slugify(value) {
+        return String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
+    }
+
+    function getCurrentUser() {
+        return safeParse(localStorage.getItem(STORAGE_KEYS.session), null);
+    }
+
+    function setCurrentUser(user) {
+        localStorage.setItem(STORAGE_KEYS.session, JSON.stringify(user));
+        updateAccountButton();
+    }
+
+    function clearCurrentUser() {
+        localStorage.removeItem(STORAGE_KEYS.session);
+        updateAccountButton();
+    }
+
+    function getAccounts() {
+        return safeParse(localStorage.getItem(STORAGE_KEYS.accounts), {});
+    }
+
+    function saveAccounts(accounts) {
+        localStorage.setItem(STORAGE_KEYS.accounts, JSON.stringify(accounts));
+    }
+
+    async function hashPassword(value) {
+        const text = String(value);
+        if (window.crypto && crypto.subtle) {
+            const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        return btoa(unescape(encodeURIComponent(text))).replace(/=/g, '');
+    }
+
+    function getIconSvg(name) {
+        const icons = {
+            fullscreen: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/><path d="M9 15l-6 6M15 9l6-6"/></svg>',
+            random: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="8.5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8.5" cy="15.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/></svg>',
+            account: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>',
+            all: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="4" rx="1.5"/><rect x="14" y="11" width="7" height="10" rx="1.5"/><rect x="3" y="12" width="7" height="9" rx="1.5"/></svg>',
+            action: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"/></svg>',
+            course: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l3-3 4 4 7-8"/><circle cx="18" cy="6" r="2"/><path d="M6 18h12"/></svg>',
+            simulation: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16h20"/><path d="M6 16V8l6-4 6 4v8"/><path d="M10 16v-4h4v4"/></svg>',
+            sandbox: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M6 8V5h12v3M7 8v11h10V8"/><path d="M9 12h6M9 16h6"/></svg>',
+            imagination: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 0 6 2 6 5 0 3-2 5-4 7-1.5 1.5-2 4-2 6"/><path d="M12 3c-3 0-6 2-6 5 0 3 2 5 4 7 1.5 1.5 2 4 2 6"/><path d="M9 9h6"/></svg>',
+            exploration: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 5v7l5 3"/></svg>',
+            emulateur: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 19h8M9 9h6M11 13h2"/></svg>',
+            strategie: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19V7l6-3 6 3v12"/><path d="M10 12h4M12 10v4"/></svg>',
+            combat: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v4l-3 3v5H10v-5L7 11V7z"/><path d="M9 5h6M11 3h2"/></svg>',
+            io: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/></svg>',
+            party: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6M7 7l5 5 5-5M4 16l4-4 4 4 4-4 4 4"/></svg>',
+            gestion: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M7 18V8M12 18V4M17 18v-7"/></svg>',
+            puzzle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a2 2 0 0 1 2 2v1h1a2 2 0 1 1 0 4h-1v1a2 2 0 1 1-4 0v-1H9a2 2 0 1 1 0-4h1V6a2 2 0 0 1 2-2z"/></svg>',
+            favoris: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.8-9-9.2C1.9 9 4.3 4 8.7 4c2.2 0 3.2 1.1 3.3 1.3.1-.2 1.1-1.3 3.3-1.3 4.4 0 6.8 5 6.7 7.8-2 4.4-9 9.2-9 9.2z"/></svg>',
+            musique: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>',
+            globe: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>',
+            search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg>'
+        };
+        return icons[name] || '';
+    }
+
+    function withIcon(name, text) {
+        const icon = getIconSvg(name);
+        return `${icon}<span>${text}</span>`;
+    }
+
+    function updateAccountButton() {
+        const button = document.getElementById('accountButton');
+        if (!button) return;
+        const user = getCurrentUser();
+        if (user && user.name) {
+            button.innerHTML = `${getIconSvg('account')}<span>${user.name}</span>`;
+            button.title = 'Mon compte';
+        } else {
+            button.innerHTML = `${getIconSvg('account')}<span>Se connecter</span>`;
+            button.title = 'Se connecter';
+        }
+    }
+
+    function openAuthModal(mode = 'login') {
+        const overlay = document.getElementById('authOverlay');
+        const title = document.getElementById('authTitle');
+        const submitBtn = document.getElementById('authSubmitBtn');
+        const nameField = document.getElementById('authNameField');
+        const tabs = document.querySelectorAll('.auth-tab');
+        const isRegister = mode === 'register';
+
+        if (!overlay) return;
+
+        nameField.style.display = isRegister ? 'flex' : 'none';
+        title.textContent = isRegister ? 'Créer un compte' : 'Se connecter';
+        submitBtn.textContent = isRegister ? 'Créer le compte' : 'Se connecter';
+
+        tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.mode === mode));
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+
+        const nameInput = document.getElementById('authName');
+        const emailInput = document.getElementById('authEmail');
+        const passwordInput = document.getElementById('authPassword');
+        if (isRegister) {
+            setTimeout(() => nameInput?.focus(), 40);
+        } else {
+            setTimeout(() => emailInput?.focus(), 40);
+        }
+        passwordInput.value = '';
+        if (!isRegister) nameInput.value = '';
+    }
+
+    function closeAuthModal() {
+        const overlay = document.getElementById('authOverlay');
+        if (!overlay) return;
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        const form = document.getElementById('authForm');
+        form?.reset();
+        const message = document.getElementById('authMessage');
+        if (message) {
+            message.textContent = '';
+            message.className = 'auth-message';
+        }
+        document.body.classList.remove('modal-open');
+    }
+
+    async function handleAuthSubmit(event) {
+        event.preventDefault();
+        const mode = document.querySelector('.auth-tab.active')?.dataset.mode || 'login';
+        const nameInput = document.getElementById('authName');
+        const emailInput = document.getElementById('authEmail');
+        const passwordInput = document.getElementById('authPassword');
+        const message = document.getElementById('authMessage');
+
+        const email = String(emailInput.value || '').trim();
+        const password = String(passwordInput.value || '');
+        const name = String(nameInput?.value || '').trim();
+
+        if (!email || !password || (mode === 'register' && !name)) {
+            if (message) {
+                message.textContent = mode === 'register' ? 'Remplis tous les champs.' : 'Email et mot de passe requis.';
+                message.className = 'auth-message error';
+            }
+            return;
+        }
+
+        if (message) {
+            message.textContent = mode === 'register' ? 'Création du compte…' : 'Connexion…';
+            message.className = 'auth-message';
+        }
+
+        try {
+            if (mode === 'register') {
+                const accounts = getAccounts();
+                const key = email.toLowerCase();
+                if (accounts[key]) {
+                    throw new Error('Un compte existe déjà pour cet email.');
+                }
+                const hashed = await hashPassword(password);
+                const id = `user_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+                accounts[key] = { id, name, email: key, passwordHash: hashed };
+                saveAccounts(accounts);
+                setCurrentUser({ id, name, email: key });
+                if (message) {
+                    message.textContent = `Bienvenue ${name} ! Ton compte a bien été créé.`;
+                    message.className = 'auth-message success';
+                }
+                syncUserData();
+                setTimeout(closeAuthModal, 800);
+                return;
+            }
+
+            const accounts = getAccounts();
+            const key = email.toLowerCase();
+            const user = accounts[key];
+            if (!user) {
+                throw new Error('Aucun compte trouvé pour cet email.');
+            }
+            const hashed = await hashPassword(password);
+            if (hashed !== user.passwordHash) {
+                throw new Error('Mot de passe incorrect.');
+            }
+            setCurrentUser({ id: user.id, name: user.name, email: user.email });
+            if (message) {
+                message.textContent = `Bon retour ${user.name} !`;
+                message.className = 'auth-message success';
+            }
+            syncUserData();
+            setTimeout(closeAuthModal, 700);
+        } catch (error) {
+            if (message) {
+                message.textContent = error.message || 'Une erreur est survenue.';
+                message.className = 'auth-message error';
+            }
+        }
+    }
+
+    function getFavoriteKey(name) {
+        const user = getCurrentUser();
+        const slug = slugify(name);
+        if (user && user.id) return `zoltro-favorite-user-${user.id}-${slug}`;
+        return `zoltro-favorite-${slug}`;
+    }
+
+    function showLoginGateMessage() {
+        const toast = document.getElementById('loginGateMessage');
+        if (!toast) return;
+        toast.classList.add('active');
+        clearTimeout(window._zoltroLoginGateTimer);
+        window._zoltroLoginGateTimer = setTimeout(() => {
+            toast.classList.remove('active');
+        }, 4500);
+    }
+
+    function closeLoginGateMessage() {
+        const toast = document.getElementById('loginGateMessage');
+        if (toast) toast.classList.remove('active');
+    }
+
+    function requireAuth() {
+        if (getCurrentUser()) return true;
+        showLoginGateMessage();
+        return false;
+    }
+
+    function getCurrentUserPlaylistsKey() {
+        const user = getCurrentUser();
+        return user && user.id ? `zoltro_user_playlists_${user.id}` : 'zoltro_guest_playlists';
+    }
+
+    function syncUserData() {
+        const user = getCurrentUser();
+        const key = getCurrentUserPlaylistsKey();
+        customPlaylists = safeParse(localStorage.getItem(key), {});
+        renderUserPlaylists();
+        injectLikes();
+        updateAccountButton();
+    }
+
+    function saveCurrentPlaylists() {
+        localStorage.setItem(getCurrentUserPlaylistsKey(), JSON.stringify(customPlaylists));
+        renderUserPlaylists();
+        refreshMusicTracks();
+    }
 
     const allLanguageCodes = 'ar bg ca cs da de el en es fi fr he hi hu id it ja ko nl no pl pt ro ru sk sv th tr uk vi zh'.split(' ');
 
@@ -1078,27 +1629,102 @@ body.cloak-open{overflow:hidden!important}
         document.documentElement.lang = language;
         document.querySelector('header h1').textContent = text.title;
         document.getElementById('searchInput').placeholder = text.search;
-        document.querySelector('.action-btn[onclick*="toggleFullScreen"]').textContent = text.fullscreen;
-        document.querySelector('.action-btn[onclick*="playRandomGame"]').textContent = text.random;
+        const fsBtn = document.querySelector('.action-btn[onclick*="toggleFullScreen"]');
+        if (fsBtn) fsBtn.innerHTML = `${getIconSvg('fullscreen')}<span>${text.fullscreen}</span>`;
+        const randomBtn = document.querySelector('.action-btn[onclick*="playRandomGame"]');
+        if (randomBtn) randomBtn.innerHTML = `${getIconSvg('random')}<span>${text.random}</span>`;
         document.querySelectorAll('#categoryTabs .tab-btn').forEach(button => {
             const key = button.dataset.cat;
-            if (text[key]) button.textContent = text[key];
+            if (text[key]) button.innerHTML = `${getIconSvg(key === 'all' ? 'all' : key === 'favoris' ? 'favoris' : key === 'musique' ? 'musique' : key === 'action' ? 'action' : key === 'course' ? 'course' : key === 'simulation' ? 'simulation' : key === 'sandbox' ? 'sandbox' : key === 'imagination' ? 'imagination' : key === 'exploration' ? 'exploration' : key === 'emulateur' ? 'emulateur' : key === 'strategie' ? 'strategie' : key === 'combat' ? 'combat' : key === 'io-survie' ? 'io' : key === 'party' ? 'party' : key === 'gestion' ? 'gestion' : key === 'puzzle' ? 'puzzle' : 'globe')}<span>${text[key]}</span>`;
         });
         document.querySelectorAll('.category-section').forEach(section => {
             const title = section.querySelector('.category-title');
+            const icon = section.querySelector('.category-icon');
             const key = section.dataset.category;
             if (title && text[key]) title.textContent = text[key].replace(/^[^\p{L}\p{N}]+/u, '').trim();
+            if (icon) {
+                const iconKey = key === 'action' ? 'action' : key === 'course' ? 'course' : key === 'simulation' ? 'simulation' : key === 'sandbox' ? 'sandbox' : key === 'exploration' ? 'exploration' : key === 'emulateur' ? 'emulateur' : key === 'strategie' ? 'strategie' : key === 'combat' ? 'combat' : key === 'io-survie' ? 'io' : key === 'party' ? 'party' : key === 'gestion' ? 'gestion' : key === 'puzzle' ? 'puzzle' : key === 'musik' ? 'musique' : 'globe';
+                icon.innerHTML = getIconSvg(iconKey);
+            }
         });
         const selector = document.getElementById('languageSwitcher');
         if (selector) selector.value = language;
     }
 
     const initialLanguage = localStorage.getItem('zoltro-language') || (navigator.language || 'fr').slice(0, 2).toLowerCase();
+    function bindAuthUI() {
+        const authForm = document.getElementById('authForm');
+        if (authForm) authForm.addEventListener('submit', handleAuthSubmit);
+
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', () => openAuthModal(tab.dataset.mode || 'login'));
+        });
+
+        const accountButton = document.getElementById('accountButton');
+        if (accountButton) {
+            accountButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                const user = getCurrentUser();
+                if (user) {
+                    const confirmLogout = window.confirm('Tu veux te déconnecter ?');
+                    if (confirmLogout) {
+                        clearCurrentUser();
+                        syncUserData();
+                    }
+                } else {
+                    openAuthModal('login');
+                }
+            });
+        }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
         populateLanguageSwitcher();
         applySiteLanguage(allLanguageCodes.includes(initialLanguage) ? initialLanguage : 'fr');
+        bindAuthUI();
+        updateAccountButton();
+        syncUserData();
     });
 </script>
+
+<div id="authOverlay" class="auth-overlay" aria-hidden="true">
+    <div class="auth-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <button type="button" class="auth-close" onclick="closeAuthModal()" aria-label="Fermer">✕</button>
+        <div class="auth-header">
+            <span class="eyebrow">Mon compte</span>
+            <h3 id="authTitle">Se connecter</h3>
+        </div>
+        <div class="auth-tabs">
+            <button type="button" class="auth-tab active" data-mode="login">Connexion</button>
+            <button type="button" class="auth-tab" data-mode="register">Créer un compte</button>
+        </div>
+        <form id="authForm" class="auth-form" onsubmit="return false;">
+            <div class="auth-field" id="authNameField" style="display:none;">
+                <label for="authName">Nom</label>
+                <input id="authName" type="text" placeholder="Votre nom" autocomplete="name">
+            </div>
+            <div class="auth-field">
+                <label for="authEmail">Email</label>
+                <input id="authEmail" type="email" placeholder="votre@email.com" autocomplete="email" required>
+            </div>
+            <div class="auth-field">
+                <label for="authPassword">Mot de passe</label>
+                <input id="authPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="auth-submit" id="authSubmitBtn">Se connecter</button>
+        </form>
+        <div id="authMessage" class="auth-message" aria-live="polite"></div>
+    </div>
+</div>
+
+<div id="loginGateMessage" class="login-gate-message" aria-live="polite">
+    <strong>Compte requis</strong>
+    <p>Tu dois créer un compte ou te connecter pour liker un jeu, sauvegarder un favori ou créer une playlist.</p>
+    <div class="login-gate-options">
+        <button type="button" class="primary" onclick="openAuthModal('login')">Se connecter</button>
+        <button type="button" class="secondary" onclick="closeLoginGateMessage()">Continuer</button>
+    </div>
+</div>
 
 <div id="siteContent">
 
@@ -1111,9 +1737,10 @@ body.cloak-open{overflow:hidden!important}
             <input type="text" id="searchInput" placeholder="Rechercher un jeu..." autocomplete="off">
         </div>
         <div class="action-buttons">
-            <button class="action-btn" onclick="toggleFullScreen()">🖥️ Plein Écran</button>
-            <button class="action-btn" onclick="playRandomGame()">🎲 Jeu Aléatoire</button>
-            <label class="language-control" for="languageSwitcher">🌐
+            <button class="action-btn" onclick="toggleFullScreen()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/><path d="M9 15l-6 6M15 9l6-6"/></svg><span>Plein Écran</span></button>
+            <button class="action-btn" onclick="playRandomGame()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="8.5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8.5" cy="15.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/></svg><span>Jeu Aléatoire</span></button>
+            <button type="button" id="accountButton" class="account-pill" onclick="openAuthModal()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg><span>Se connecter</span></button>
+            <label class="language-control" for="languageSwitcher"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
                 <input id="languageSearch" type="search" placeholder="Rechercher une langue..." aria-label="Rechercher une langue">
                 <div id="languageSuggestions" class="language-suggestions" role="listbox"></div>
                 <select id="languageSwitcher" aria-label="Choisir la langue" onchange="changeSiteLanguage(this.value)">
@@ -1123,28 +1750,28 @@ body.cloak-open{overflow:hidden!important}
     </header>
 
     <div class="category-tabs" id="categoryTabs">
-        <button class="tab-btn active" data-cat="all">🎮 Tous</button>
-        <button class="tab-btn" data-cat="action">💥 Action / FPS</button>
-        <button class="tab-btn" data-cat="course">🏎️ Course / Conduite</button>
-        <button class="tab-btn" data-cat="simulation">✈️ Simulation</button>
-        <button class="tab-btn" data-cat="sandbox">🧱 Sandbox</button>
-        <button class="tab-btn" data-cat="imagination">🎨 Imagination</button>
-        <button class="tab-btn" data-cat="exploration">🌌 Exploration / Horreur</button>
-        <button class="tab-btn" data-cat="emulateur">🖥️ Émulateur</button>
-        <button class="tab-btn" data-cat="strategie">♟️ Stratégie</button>
-        <button class="tab-btn" data-cat="combat">🥊 Combat</button>
-        <button class="tab-btn" data-cat="io-survie">🧬 .IO / Survie</button>
-        <button class="tab-btn" data-cat="party">🎉 Party Games</button>
-        <button class="tab-btn" data-cat="gestion">💰 Gestion / Économie</button>
-		<button class="tab-btn" data-cat="puzzle">🧠 Radio / Reparation / Utile</button>
-        <button class="tab-btn" data-cat="favoris">❤️ Mes favoris</button>
-        <button class="tab-btn" data-cat="musique">🎵 Musique</button>
+        <button class="tab-btn active" data-cat="all"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="4" rx="1.5"/><rect x="14" y="11" width="7" height="10" rx="1.5"/><rect x="3" y="12" width="7" height="9" rx="1.5"/></svg><span>Tous</span></button>
+        <button class="tab-btn" data-cat="action"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"/></svg><span>Action / FPS</span></button>
+        <button class="tab-btn" data-cat="course"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l3-3 4 4 7-8"/><circle cx="18" cy="6" r="2"/><path d="M6 18h12"/></svg><span>Course / Conduite</span></button>
+        <button class="tab-btn" data-cat="simulation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16h20"/><path d="M6 16V8l6-4 6 4v8"/><path d="M10 16v-4h4v4"/></svg><span>Simulation</span></button>
+        <button class="tab-btn" data-cat="sandbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M6 8V5h12v3M7 8v11h10V8"/><path d="M9 12h6M9 16h6"/></svg><span>Sandbox</span></button>
+        <button class="tab-btn" data-cat="imagination"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 0 6 2 6 5 0 3-2 5-4 7-1.5 1.5-2 4-2 6"/><path d="M12 3c-3 0-6 2-6 5 0 3 2 5 4 7 1.5 1.5 2 4 2 6"/><path d="M9 9h6"/></svg><span>Imagination</span></button>
+        <button class="tab-btn" data-cat="exploration"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 5v7l5 3"/></svg><span>Exploration / Horreur</span></button>
+        <button class="tab-btn" data-cat="emulateur"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 19h8M9 9h6M11 13h2"/></svg><span>Émulateur</span></button>
+        <button class="tab-btn" data-cat="strategie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19V7l6-3 6 3v12"/><path d="M10 12h4M12 10v4"/></svg><span>Stratégie</span></button>
+        <button class="tab-btn" data-cat="combat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v4l-3 3v5H10v-5L7 11V7z"/><path d="M9 5h6M11 3h2"/></svg><span>Combat</span></button>
+        <button class="tab-btn" data-cat="io-survie"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/></svg><span>.IO / Survie</span></button>
+        <button class="tab-btn" data-cat="party"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6M7 7l5 5 5-5M4 16l4-4 4 4 4-4 4 4"/></svg><span>Party Games</span></button>
+        <button class="tab-btn" data-cat="gestion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M7 18V8M12 18V4M17 18v-7"/></svg><span>Gestion / Économie</span></button>
+        <button class="tab-btn" data-cat="puzzle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a2 2 0 0 1 2 2v1h1a2 2 0 1 1 0 4h-1v1a2 2 0 1 1-4 0v-1H9a2 2 0 1 1 0-4h1V6a2 2 0 0 1 2-2z"/></svg><span>Radio / Réparation / Utile</span></button>
+        <button class="tab-btn" data-cat="favoris"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.8-9-9.2C1.9 9 4.3 4 8.7 4c2.2 0 3.2 1.1 3.3 1.3.1-.2 1.1-1.3 3.3-1.3 4.4 0 6.8 5 6.7 7.8-2 4.4-9 9.2-9 9.2z"/></svg><span>Mes favoris</span></button>
+        <button class="tab-btn" data-cat="musique"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg><span>Musique</span></button>
     </div>
 
     <main id="mainContent">
         <div class="category-section" data-category="action">
             <div class="category-header">
-                <span class="category-icon">💥</span>
+                <span class="category-icon" data-icon="action"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"/></svg></span>
                 <span class="category-title">Action / FPS</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-action">0 jeux</span>
@@ -1216,7 +1843,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="course">
             <div class="category-header">
-                <span class="category-icon">🏎️</span>
+                <span class="category-icon" data-icon="course"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l3-3 4 4 7-8"/><circle cx="18" cy="6" r="2"/><path d="M6 18h12"/></svg></span>
                 <span class="category-title">Course / Conduite</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-course">0 jeux</span>
@@ -1254,7 +1881,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="simulation">
             <div class="category-header">
-                <span class="category-icon">✈️</span>
+                <span class="category-icon" data-icon="simulation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16h20"/><path d="M6 16V8l6-4 6 4v8"/><path d="M10 16v-4h4v4"/></svg></span>
                 <span class="category-title">Simulation</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-simulation">0 jeux</span>
@@ -1287,7 +1914,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="sandbox">
             <div class="category-header">
-                <span class="category-icon">🧱</span>
+                <span class="category-icon" data-icon="sandbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M6 8V5h12v3M7 8v11h10V8"/><path d="M9 12h6M9 16h6"/></svg></span>
                 <span class="category-title">Sandbox</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-sandbox">0 jeux</span>
@@ -1320,7 +1947,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="exploration">
             <div class="category-header">
-                <span class="category-icon">🌌</span>
+                <span class="category-icon" data-icon="exploration"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 5v7l5 3"/></svg></span>
                 <span class="category-title">Exploration / Horreur</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-exploration">0 jeux</span>
@@ -1380,7 +2007,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="imagination">
             <div class="category-header">
-                <span class="category-icon">🤯</span>
+                <span class="category-icon" data-icon="imagination"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 0 6 2 6 5 0 3-2 5-4 7-1.5 1.5-2 4-2 6"/><path d="M12 3c-3 0-6 2-6 5 0 3 2 5 4 7 1.5 1.5 2 4 2 6"/><path d="M9 9h6"/></svg></span>
                 <span class="category-title">Imagination</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-imagination">0 jeux</span>
@@ -1391,10 +2018,10 @@ body.cloak-open{overflow:hidden!important}
                     <div class="game-info"><span>Lostgamer</span></div>
                 </a>
 				<a href="https://hideandseek.world/" target="_blank" class="game-card" data-name="hide and seek world" data-cat="imagination">
-                    <img class="game-poster" src="https://hideandseek.world/_next/image?url=%2Fimages%2Fgame-modes%2Fworldstreaksicon.svg&w=96&q=75" alt="hide and seek world" loading="lazy">
+                    <img class="game-poster" src="https://hideandseek.world/images/worldstreaksicon.svg" alt="hide and seek world" loading="lazy">
                     <div class="game-info"><span>hide and seek world</span></div>
                 </a>
-				<a href="https://hollowguessr.pages.dev" target="_blank" class="game-card" data-name="hollowguessr" data-cat="imaghttps://hideandseek.world/_next/image?url=%2Fimages%2Fgame-modes%2Fworldstreaksicon.svg&w=96&q=75ination">
+				<a href="https://hollowguessr.pages.dev" target="_blank" class="game-card" data-name="hollowguessr" data-cat="imagination">
                     <img class="game-poster" src="https://preview.redd.it/i-made-a-geoguessr-style-game-for-hollow-knight-v0-0jqp0svthzhe1.png?width=1636&format=png&auto=webp&s=f289f544ad7545897a91b408ac2637daea149228" alt="hollowguessr" loading="lazy">
                     <div class="game-info"><span>Hollowguessr</span></div>
                 </a>
@@ -1425,7 +2052,7 @@ body.cloak-open{overflow:hidden!important}
         
         <div class="category-section" data-category="emulateur">
             <div class="category-header">
-                <span class="category-icon">🖥️</span>
+                <span class="category-icon" data-icon="emulateur"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 19h8M9 9h6M11 13h2"/></svg></span>
                 <span class="category-title">Émulateur</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-emulateur">0 jeux</span>
@@ -1449,7 +2076,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="strategie">
             <div class="category-header">
-                <span class="category-icon">♟️</span>
+                <span class="category-icon" data-icon="strategie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19V7l6-3 6 3v12"/><path d="M10 12h4M12 10v4"/></svg></span>
                 <span class="category-title">Stratégie</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-strategie">0 jeux</span>
@@ -1469,7 +2096,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="combat">
             <div class="category-header">
-                <span class="category-icon">🥊</span>
+                <span class="category-icon" data-icon="combat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v4l-3 3v5H10v-5L7 11V7z"/><path d="M9 5h6M11 3h2"/></svg></span>
                 <span class="category-title">Combat</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-combat">0 jeux</span>
@@ -1516,7 +2143,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="io-survie">
             <div class="category-header">
-                <span class="category-icon">🧬</span>
+                <span class="category-icon" data-icon="io"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/></svg></span>
                 <span class="category-title">.IO / Survie</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-io-survie">0 jeux</span>
@@ -1569,7 +2196,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="party">
             <div class="category-header">
-                <span class="category-icon">🎉</span>
+                <span class="category-icon" data-icon="party"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6M7 7l5 5 5-5M4 16l4-4 4 4 4-4 4 4"/></svg></span>
                 <span class="category-title">Party Games</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-party">0 jeux</span>
@@ -1598,7 +2225,7 @@ body.cloak-open{overflow:hidden!important}
 		
 		<div class="category-section" data-category="gestion">
             <div class="category-header">
-                <span class="category-icon">💰</span>
+                <span class="category-icon" data-icon="gestion"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M7 18V8M12 18V4M17 18v-7"/></svg></span>
                 <span class="category-title">Gestion / Économie</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-gestion">0 jeux</span>
@@ -1614,7 +2241,7 @@ body.cloak-open{overflow:hidden!important}
 
         <div class="category-section" data-category="puzzle">
             <div class="category-header">
-                <span class="category-icon">🧠</span>
+                <span class="category-icon" data-icon="puzzle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a2 2 0 0 1 2 2v1h1a2 2 0 1 1 0 4h-1v1a2 2 0 1 1-4 0v-1H9a2 2 0 1 1 0-4h1V6a2 2 0 0 1 2-2z"/></svg></span>
                 <span class="category-title">Radio / Réparation / Utile</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-puzzle">0 jeux</span>
@@ -1656,7 +2283,7 @@ body.cloak-open{overflow:hidden!important}
         <!-- SECTION MUSIQUE AVEC YOUTUBE & PLAYLISTS PERSONALISÉES -->
         <div class="category-section hidden" data-category="musique">
             <div class="category-header">
-                <span class="category-icon">🎵</span>
+                <span class="category-icon" data-icon="musique"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg></span>
                 <span class="category-title">Bibliothèque Musicale Zoltrogame</span>
                 <div class="category-line"></div>
                 <span class="category-count" id="count-musique">0 titres</span>
@@ -1664,23 +2291,23 @@ body.cloak-open{overflow:hidden!important}
             
             <div class="youtube-search-box" id="youtubeSearchBox">
                 <input id="youtubeSearchInput" type="search" placeholder="Rechercher une musique sur YouTube..." autocomplete="off">
-                <button type="button" id="youtubeSearchButton">🔎 Rechercher</button>
+                <button type="button" id="youtubeSearchButton"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg> Rechercher</button>
             </div>
             <div class="youtube-search-status" id="youtubeSearchStatus"></div>
 
             <!-- ONGLES ET BOUTON DE CRÉATION DE PLAYLIST -->
             <div class="music-nav-tabs" id="musicNavTabs">
-                <button class="tab-btn active" onclick="filterMusicSubTab('all', this)">🎵 Tous</button>
-                <button class="tab-btn" onclick="filterMusicSubTab('hits-chill', this)">💿 Hits & Chill</button>
-                <button class="tab-btn" onclick="filterMusicSubTab('gaming', this)">🎮 Gaming & Tryhard</button>
+                <button class="tab-btn active" onclick="filterMusicSubTab('all', this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg><span>Tous</span></button>
+                <button class="tab-btn" onclick="filterMusicSubTab('hits-chill', this)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h6"/></svg><span>Hits &amp; Chill</span></button>
+                <button class="tab-btn" onclick="filterMusicSubTab('gaming', this)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="4" rx="1.5"/><rect x="14" y="11" width="7" height="10" rx="1.5"/><rect x="3" y="12" width="7" height="9" rx="1.5"/></svg><span>Gaming &amp; Tryhard</span></button>
                 <div id="customPlaylistTabs" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
-                <button class="tab-btn" style="border-color: var(--accent3); color: var(--accent3);" onclick="createNewPlaylist()">➕ Nouvelle Playlist</button>
+                <button class="tab-btn" style="border-color: var(--accent3); color: var(--accent3);" onclick="createNewPlaylist()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Nouvelle Playlist</span></button>
             </div>
 
             <!-- RÉSULTATS DE RECHERCHE YOUTUBE -->
             <div id="youtubeSearchResultsSection" style="display: none; margin-bottom: 30px;">
                 <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 15px 0; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;">
-                    🔍 Tes recherches YouTube <span style="flex:1; height:1px; background:linear-gradient(90deg, var(--border), transparent);"></span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/></svg> Tes recherches YouTube <span style="flex:1; height:1px; background:linear-gradient(90deg, var(--border), transparent);"></span>
                 </h3>
                 <div class="music-grid" id="youtubeMusicGrid"></div>
             </div>
@@ -1690,7 +2317,7 @@ body.cloak-open{overflow:hidden!important}
                 
                 <!-- PLAYLIST HITS & CHILL -->
                 <div class="playlist-block" data-playlist-id="hits-chill">
-                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 20px 0 15px; letter-spacing: 2px;">💿 Playlist : Hits & Chill</h3>
+                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 20px 0 15px; letter-spacing: 2px;"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:8px;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h6"/></svg>Playlist : Hits &amp; Chill</h3>
                     <div class="music-grid">
                         <div class="music-card" id="track-D5d5xinZI3E" data-name="Calling" data-cat="musique">
                             <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'D5d5xinZI3E', 'Calling (Spider-Verse)', 'Metro Boomin', 'https://i.ytimg.com/vi/D5d5xinZI3E/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
@@ -1733,7 +2360,7 @@ body.cloak-open{overflow:hidden!important}
 
                 <!-- PLAYLIST GAMING -->
                 <div class="playlist-block" data-playlist-id="gaming">
-                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 30px 0 15px; letter-spacing: 2px;">🎮 Playlist : Gaming & Tryhard</h3>
+                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; margin: 30px 0 15px; letter-spacing: 2px;"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:8px;"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="4" rx="1.5"/><rect x="14" y="11" width="7" height="10" rx="1.5"/><rect x="3" y="12" width="7" height="9" rx="1.5"/></svg>Playlist : Gaming &amp; Tryhard</h3>
                     <div class="music-grid">
                         <div class="music-card" id="track-n8X9_MgEdCg" data-name="Unity" data-cat="musique">
                             <button class="add-playlist-btn" onclick="openAddToPlaylistModal(event, 'n8X9_MgEdCg', 'Unity', 'TheFatRat', 'https://i.ytimg.com/vi/n8X9_MgEdCg/hqdefault.jpg')" title="Ajouter à une playlist">+</button>
@@ -1800,13 +2427,13 @@ body.cloak-open{overflow:hidden!important}
         </div>
         <div class="player-center">
             <div class="player-controls">
-                <button onclick="previousTrack()" title="Précédent">⏮</button>
+                <button onclick="previousTrack()" title="Précédent">◀</button>
                 <button class="main-play" id="playerPlay" onclick="toggleMusic()">▶</button>
-                <button onclick="nextTrack()" title="Suivant">⏭</button>
+                <button onclick="nextTrack()" title="Suivant">▶</button>
             </div>
             <div class="progress-row"><span id="currentTime">0:00</span><input id="progressBar" type="range" min="0" max="100" value="0" step="0.1" oninput="seekMusic(this.value)"><span id="duration">0:00</span></div>
         </div>
-        <div class="player-right"><button onclick="toggleMute()" id="volumeIcon">🔊</button><input id="volumeBar" type="range" min="0" max="100" value="80" oninput="setVolume(this.value)"></div>
+        <div class="player-right"><button onclick="toggleMute()" id="volumeIcon">◉</button><input id="volumeBar" type="range" min="0" max="100" value="80" oninput="setVolume(this.value)"></div>
     </div>
 </div>
 
@@ -1816,22 +2443,22 @@ body.cloak-open{overflow:hidden!important}
 <!-- --- LECTEUR DE JEUX INTÉGRÉ ZOLTROGAME --- -->
 <div id="zoltro-game-overlay" aria-hidden="true">
   <div class="zoltro-game-bar">
-    <button class="zoltro-game-btn" type="button" onclick="closeZoltroGame()">← ZoltroGame</button>
+    <button class="zoltro-game-btn" type="button" onclick="closeZoltroGame()">Retour</button>
     <div class="zoltro-game-title" id="zoltro-game-title">Jeu</div>
-    <button class="zoltro-game-btn" type="button" onclick="toggleStealthCloak()">📚 PowerPoint</button>
-    <button class="zoltro-game-btn" type="button" onclick="toggleZoltroGameFullscreen()">⛶</button>
-    <button class="zoltro-game-btn" type="button" onclick="openCurrentGameNewTab()">↗</button>
+    <button class="zoltro-game-btn" type="button" onclick="toggleStealthCloak()">Mode présentation</button>
+    <button class="zoltro-game-btn" type="button" onclick="toggleZoltroGameFullscreen()">Plein écran</button>
+    <button class="zoltro-game-btn" type="button" onclick="openCurrentGameNewTab()">Ouvrir</button>
   </div>
-  <div class="zoltro-game-help">Le bouton 📚 PowerPoint ouvre le mode présentation Zoltrogame.</div>
+  <div class="zoltro-game-help">Le mode présentation permet d’ouvrir la vue de démonstration Zoltrogame.</div>
   <iframe id="zoltro-game-frame" title="Jeu ZoltroGame" allow="autoplay; fullscreen; gamepad; pointer-lock" allowfullscreen></iframe>
   <div id="zoltro-game-fallback" class="zoltro-game-fallback" hidden>
     <div class="zoltro-game-fallback-box">
-      <div class="zoltro-game-fallback-icon">🎮</div>
+      <div class="zoltro-game-fallback-icon">⟡</div>
       <h2>Ce jeu ne peut pas être intégré ici</h2>
       <p>Le site du jeu bloque l'affichage dans une fenêtre intégrée. Tu peux quand même le lancer normalement.</p>
       <div class="zoltro-game-fallback-actions">
-        <button type="button" class="zoltro-game-btn" onclick="reloadCurrentGame()">↻ Réessayer</button>
-        <button type="button" class="zoltro-game-btn zoltro-game-open-btn" onclick="openCurrentGameNewTab()">↗ Ouvrir le jeu</button>
+        <button type="button" class="zoltro-game-btn" onclick="reloadCurrentGame()">Réessayer</button>
+        <button type="button" class="zoltro-game-btn zoltro-game-open-btn" onclick="openCurrentGameNewTab()">Ouvrir le jeu</button>
       </div>
     </div>
   </div>
@@ -1841,7 +2468,7 @@ body.cloak-open{overflow:hidden!important}
 <div class="feedback-modal-overlay" id="feedbackModalOverlay" onclick="if(event.target === this) closeFeedbackModal()">
     <div class="feedback-modal">
         <button type="button" class="playlist-picker-close" onclick="closeFeedbackModal()" aria-label="Fermer">✕</button>
-        <h2>💬 Espace Communauté</h2>
+        <h2>Espace Communauté</h2>
         <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem;">
             Dépose une plainte, propose un nouveau jeu ou signale un bug d'animation Three.js.
         </p>
@@ -1855,10 +2482,10 @@ body.cloak-open{overflow:hidden!important}
     <div class="feedback-form-group">
         <label for="feedbackType">Catégorie :</label>
         <select id="feedbackType" name="Categorie" required>
-            <option value="jeu">🎮 Proposer un nouveau jeu</option>
-            <option value="bug">🕹️ Bug avec une animation Three.js</option>
-            <option value="plainte">⚠️ Plainte / Réclamation</option>
-            <option value="autre">💡 Autre idée / Suggestion</option>
+            <option value="jeu">Proposer un nouveau jeu</option>
+            <option value="bug">Bug avec une animation Three.js</option>
+            <option value="plainte">Plainte / Réclamation</option>
+            <option value="autre">Autre idée / Suggestion</option>
         </select>
     </div>
 
@@ -1872,12 +2499,12 @@ body.cloak-open{overflow:hidden!important}
         <textarea id="feedbackMessage" name="Message" rows="4" placeholder="Décris ta demande..." required></textarea>
     </div>
 
-    <button type="submit" class="feedback-submit-btn">🚀 Envoyer le message</button>
+    <button type="submit" class="feedback-submit-btn">Envoyer le message</button>
 </form>
     </div>
 </div>
 <!-- --- DÉBUT DU MODE FURTIF --- -->
-<div class="stealth-hint">🤫 Échap : ouvrir la présentation</div>
+<div class="stealth-hint">Ouverture de la présentation</div>
 
 <div id="cloak-overlay" aria-hidden="true">
   <div class="cloak-shell">
@@ -1940,7 +2567,7 @@ body.cloak-open{overflow:hidden!important}
           <option value="paper">Document</option><option value="book">Livre</option><option value="note">Note</option><option value="math">Maths</option><option value="history">Histoire</option>
         </select>
       </label>
-      <button class="cloak-btn" type="button" onclick="editCurrentPresentation()">✏️ Modifier l'exposé</button>
+      <button class="cloak-btn" type="button" onclick="editCurrentPresentation()">Modifier l'exposé</button>
     </div>
 
         <aside class="cloak-sidebar" aria-label="Miniatures des diapositives">
@@ -2297,15 +2924,15 @@ body.cloak-open{overflow:hidden!important}
     let youtubeSearchTimeout = null;
     const YOUTUBE_API_KEY = 'AIzaSyCAU4XUD4LyOoFeW3WI1FEYcJ3uytPPAuk';
 
-    let customPlaylists = JSON.parse(localStorage.getItem('zoltro_user_playlists')) || {};
+    let customPlaylists = {};
 
     function saveCustomPlaylists() {
-        localStorage.setItem('zoltro_user_playlists', JSON.stringify(customPlaylists));
-        renderUserPlaylists();
-        refreshMusicTracks();
+        if (!requireAuth()) return;
+        saveCurrentPlaylists();
     }
 
     function createNewPlaylist() {
+        if (!requireAuth()) return;
         const name = prompt("Nom de ta nouvelle playlist :");
         if (!name || !name.trim()) return;
         const cleanName = name.trim();
@@ -2318,6 +2945,7 @@ body.cloak-open{overflow:hidden!important}
     }
 
     function deletePlaylist(name) {
+        if (!requireAuth()) return;
         if (confirm(`Veux-tu vraiment supprimer la playlist "${name}" ?`)) {
             delete customPlaylists[name];
             saveCustomPlaylists();
@@ -2325,12 +2953,14 @@ body.cloak-open{overflow:hidden!important}
     }
 
     function removeTrackFromPlaylist(playlistName, trackId) {
+        if (!requireAuth()) return;
         if (!customPlaylists[playlistName]) return;
         customPlaylists[playlistName] = customPlaylists[playlistName].filter(t => t.id !== trackId);
         saveCustomPlaylists();
     }
 
     function openAddToPlaylistModal(e, id, title, artist, cover) {
+        if (!requireAuth()) return;
         e.stopPropagation();
         e.preventDefault();
 
@@ -2352,7 +2982,7 @@ body.cloak-open{overflow:hidden!important}
                 button.type = 'button';
                 button.className = 'playlist-picker-item';
                 button.innerHTML = `
-                    <span class="playlist-picker-icon">💿</span>
+                    <span class="playlist-picker-icon"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h6"/></svg></span>
                     <span class="playlist-picker-name"></span>
                 `;
                 button.querySelector('.playlist-picker-name').textContent = pName;
@@ -2374,6 +3004,7 @@ body.cloak-open{overflow:hidden!important}
     }
 
     function addTrackToPlaylist(playlistName, id, title, artist, cover) {
+        if (!requireAuth()) return;
         if (!customPlaylists[playlistName]) return;
 
         const exists = customPlaylists[playlistName].some(t => t.id === id);
@@ -2402,7 +3033,7 @@ body.cloak-open{overflow:hidden!important}
 
             const tabBtn = document.createElement('button');
             tabBtn.className = 'tab-btn';
-            tabBtn.innerHTML = `💿 ${pName}`;
+            tabBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h6"/></svg><span>${pName}</span>`;
             tabBtn.onclick = () => filterMusicSubTab(safeId, tabBtn);
             tabsContainer.appendChild(tabBtn);
 
@@ -2411,8 +3042,8 @@ body.cloak-open{overflow:hidden!important}
             block.dataset.playlistId = safeId;
             block.innerHTML = `
                 <div style="display: flex; align-items: center; justify-content: space-between; margin: 30px 0 15px;">
-                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; letter-spacing: 2px;">💿 Playlist : ${pName}</h3>
-                    <button onclick="deletePlaylist(${JSON.stringify(pName)})" style="background: rgba(255,60,110,0.15); border: 1px solid var(--accent2); color: var(--accent2); padding: 5px 10px; border-radius: 6px; font-family:'Orbitron'; font-size: 0.7rem; cursor: pointer;">🗑️ Supprimer Playlist</button>
+                    <h3 style="color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1rem; letter-spacing: 2px;"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:8px;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h6"/></svg>Playlist : ${pName}</h3>
+                    <button onclick="deletePlaylist(${JSON.stringify(pName)})" style="background: rgba(255,60,110,0.15); border: 1px solid var(--accent2); color: var(--accent2); padding: 5px 10px; border-radius: 6px; font-family:'Orbitron'; font-size: 0.7rem; cursor: pointer;"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:5px;"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>Supprimer Playlist</button>
                 </div>
                 <div class="music-grid" id="grid-${safeId}"></div>
             `;
@@ -2430,7 +3061,7 @@ body.cloak-open{overflow:hidden!important}
                     card.dataset.name = track.title;
                     card.dataset.cat = 'musique';
                     card.innerHTML = `
-                        <button class="remove-track-btn" onclick="removeTrackFromPlaylist(${JSON.stringify(pName)}, ${JSON.stringify(track.id)})" title="Supprimer de la playlist">✕</button>
+                        <button class="remove-track-btn" onclick="removeTrackFromPlaylist(${JSON.stringify(pName)}, ${JSON.stringify(track.id)})" title="Supprimer de la playlist"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
                         <div class="cover-wrapper" onclick="toggleTrack('${track.id}')">
                             <img src="${track.cover}" alt="${track.title}">
                             <div class="play-overlay-icon">▶</div>
@@ -2669,7 +3300,7 @@ body.cloak-open{overflow:hidden!important}
             status.textContent = `${(data.items || []).length} résultat(s) pour "${query}".`;
         } catch (err) {
             console.error(err);
-            status.textContent = '❌ Erreur de recherche YouTube.';
+            status.textContent = 'Erreur de recherche YouTube.';
         }
     }
 
@@ -2695,7 +3326,7 @@ body.cloak-open{overflow:hidden!important}
     function injectLikes() {
         document.querySelectorAll('.game-card, .music-card').forEach(card => {
             if (card.querySelector('.like-btn')) return;
-            const key = 'zoltro-favorite-' + (card.dataset.name || card.id);
+            const key = getFavoriteKey(card.dataset.name || card.id);
             const liked = localStorage.getItem(key) === '1';
             const btn = document.createElement('button');
             btn.type='button'; btn.className='like-btn' + (liked ? ' liked':'');
@@ -2704,8 +3335,10 @@ body.cloak-open{overflow:hidden!important}
             btn.setAttribute('aria-label', btn.title);
             btn.addEventListener('click', e => {
                 e.preventDefault(); e.stopPropagation();
-                const nowLiked = localStorage.getItem(key) !== '1';
-                if (nowLiked) localStorage.setItem(key,'1'); else localStorage.removeItem(key);
+                if (!requireAuth()) return;
+                const targetKey = getFavoriteKey(card.dataset.name || card.id);
+                const nowLiked = localStorage.getItem(targetKey) !== '1';
+                if (nowLiked) localStorage.setItem(targetKey, '1'); else localStorage.removeItem(targetKey);
                 btn.classList.toggle('liked', nowLiked);
                 btn.textContent = nowLiked ? '♥' : '♡';
                 btn.title = nowLiked ? 'Retirer des favoris' : 'Ajouter aux favoris';
@@ -2717,7 +3350,9 @@ body.cloak-open{overflow:hidden!important}
     }
 
     function isFavorite(card) {
-        return localStorage.getItem('zoltro-favorite-' + (card.dataset.name || card.id)) === '1';
+        const name = card.dataset.name || card.id || 'item';
+        const key = getFavoriteKey(name);
+        return localStorage.getItem(key) === '1';
     }
 
     function updatePlayerInfo() {
@@ -2891,7 +3526,7 @@ body.cloak-open{overflow:hidden!important}
     function setVolume(v){ 
         if(ytPlayer&&playerReady) ytPlayer.setVolume(parseInt(v,10)); 
         const volIcon = document.getElementById('volumeIcon');
-        if(volIcon) volIcon.textContent = parseInt(v, 10) === 0 ? '🔇' : '🔊';
+        if(volIcon) volIcon.textContent = parseInt(v, 10) === 0 ? '◌' : '◉';
     }
 
     function toggleMute() {
@@ -2929,7 +3564,7 @@ body.cloak-open{overflow:hidden!important}
 
     function updateMusicUI() {
         const playBtn = document.getElementById('playerPlay');
-        if (playBtn) playBtn.textContent = isPlaying ? '⏸' : '▶';
+        if (playBtn) playBtn.textContent = isPlaying ? '❚❚' : '▶';
         const player = document.getElementById('musicPlayer');
         if (player) {
             if (isPlaying) player.classList.add('playing');
