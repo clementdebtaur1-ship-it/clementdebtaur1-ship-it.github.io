@@ -614,6 +614,13 @@
             opacity: 0;
         }
 
+        /* Lethal company n'a pas de GIF au survol. */
+        .game-card.no-gif:hover .static-img {
+            opacity: 1;
+            transform: none;
+            filter: none;
+        }
+
         .game-card:hover .gif-img {
             opacity: 1;
             transform: scale(1.05);
@@ -1871,10 +1878,9 @@ body.cloak-open{overflow:hidden!important}
                     <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdnNTAzMWVlMGl3djFscDYwMWR6MGFpcG5wd2x1MXJwZ2RwYm1yYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SNf41wfVbB8vS/giphy.gif" alt="Animation MakeAGif" width="400" loading="lazy">
                     <div class="game-info"><span>GTA V</span></div>
                 </a>
-				<a href="https://wasm.rip/files/lethal/index.html" class="game-card" data-name="Lethal" data-cat="action">
-                    <img class="static-img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1966720/capsule_616x353.jpg?t=1775380053" alt="Lethal" loading="lazy">
-                    <img src="https://media.gifdb.com/lethal-company-jumping-nvod6ccqcdsepki5.gif" alt="Animation MakeAGif" width="400" loading="lazy">
-                    <div class="game-info"><span>Lethal Companie</span></div>
+				<a href="https://wasm.rip/files/lethal/index.html" class="game-card no-gif" data-name="Lethal company" data-cat="action">
+                    <img class="static-img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1966720/capsule_616x353.jpg?t=1775380053" alt="Lethal company" loading="lazy">
+                    <div class="game-info"><span>Lethal company</span></div>
                 </a>
                 <a href="https://vel.gg/bo1z" class="game-card" data-name="BO1 Zombies" data-cat="action">
                     <img class="game-poster" src="https://upload.wikimedia.org/wikipedia/en/0/02/CoD_Black_Ops_cover.png" alt="Call of Duty: Black Ops Zombies" loading="lazy">
@@ -3885,6 +3891,11 @@ body.cloak-open{overflow:hidden!important}
       e.preventDefault();
       const url=this.href;
       const name=this.dataset.name || this.querySelector('.game-info span')?.textContent || 'Jeu';
+      // GTA 5 est le seul jeu à s'ouvrir dans un nouvel onglet.
+      if (this.dataset.name === 'GTA 5') {
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
       openGameInZoltro(url,name);
     });
   });
