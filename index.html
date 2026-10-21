@@ -1895,7 +1895,7 @@ body.cloak-open{overflow:hidden!important}
                     <img src="https://64.media.tumblr.com/5a09f69aa9e018ed1307f639886e5e5f/65c882b668daa021-39/s250x400/9fb4f4a7bed4fca381dca7090babff8548fc8fec.gifv" alt="Animation MakeAGif" width="400" loading="lazy">
                     <div class="game-info"><span>GTA Chinatown Wars (2009)</span></div>
 				</a>
-				<a href="https://gta.deloskiyt.pl/" class="game-card" data-name="GTA 5" data-cat="action">
+                <a href="https://fiveplay.lol/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="GTA 5" data-cat="action">
                     <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBTHBwTcN6hbsWra6nlvNBrOSZx38xSWqHmwMWWsLi6AuEZ0Q3gz5ffl1&s=10" alt="GTA 5" loading="lazy">
                     <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdnNTAzMWVlMGl3djFscDYwMWR6MGFpcG5wd2x1MXJwZ2RwYm1yYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SNf41wfVbB8vS/giphy.gif" alt="Animation MakeAGif" width="400" loading="lazy">
                     <div class="game-info"><span>GTA V (2013)</span></div>
@@ -3776,9 +3776,6 @@ body.cloak-open{overflow:hidden!important}
     });
 
     function initSiteAndMusic() {
-        // Prépare le lecteur sans lancer de musique.
-        // Le seul démarrage autorisé passe par le bouton central ▶.
-        ensureMusicReady();
         updateMusicUI();
     }
 
@@ -3863,36 +3860,26 @@ body.cloak-open{overflow:hidden!important}
       if(overlay.requestFullscreen) overlay.requestFullscreen().catch(()=>{});
     }else if(document.exitFullscreen){
       document.exitFullscreen().catch(()=>{});
+        }
   };
+
+    function launchGame(url,name){
+        if(name==='GTA 5'){
+            window.open(url,'_blank','noopener,noreferrer');
+            return;
+        }
+        openGameInZoltro(url,name);
+    }
 
   document.querySelectorAll('.game-card').forEach(card=>{
     card.addEventListener('click',function(e){
       if(e.target.closest('.like-btn')) return;
+            if(this.dataset.name==='GTA 5') return;
       e.preventDefault();
       const url=this.href;
       const name=this.dataset.name || this.querySelector('.game-info span')?.textContent || 'Jeu';
-
-      // Message spécial uniquement pour GTA 5
-      if (this.dataset.name === 'GTA 5') {
-        const m = document.createElement('div');
-        m.style.cssText = 'position:fixed;inset:0;z-index:999999;display:grid;place-items:center;background:rgba(0,0,0,.85);padding:20px;font-family:Arial,sans-serif';
-        m.innerHTML = `
-          <div style="max-width:480px;padding:28px;border:1px solid #c89b3c;border-radius:10px;background:linear-gradient(145deg,#29251f,#090909);color:white;text-align:center">
-            <h2 style="color:#e2b24c">GTA V — INFO DE LANCEMENT</h2>
-            <p style="line-height:1.6">Pour jouer, rends-toi sur le vrai site du jeu et choisis bien ton mode de jeu ; sinon, le jeu risque de ne pas se lancer.</p>
-            <button data-go style="padding:12px;background:#c89b3c;color:#111;border:0;border-radius:5px;cursor:pointer;margin:5px">CONTINUER VERS LE JEU</button>
-            <button data-close style="padding:12px;background:#222;color:white;border:1px solid #777;border-radius:5px;cursor:pointer;margin:5px">Annuler</button>
-          </div>`;
-        document.body.appendChild(m);
-        m.querySelector('[data-go]').onclick = () => {
-          window.open(url, '_blank', 'noopener,noreferrer');
-          m.remove();
-        };
-        m.querySelector('[data-close]').onclick = () => m.remove();
-        return;
-      }
-
-      openGameInZoltro(url,name);
+    launchGame(url,name);
+    });
     });
 
   const oldRandom=window.playRandomGame;
@@ -3900,7 +3887,7 @@ body.cloak-open{overflow:hidden!important}
     const visibleGames=document.querySelectorAll('.game-card:not(.hidden)');
     if(!visibleGames.length){ alert("Aucun jeu n'est actuellement visible !"); return; }
     const card=visibleGames[Math.floor(Math.random()*visibleGames.length)];
-    openGameInZoltro(card.href,card.dataset.name || 'Jeu aléatoire');
+    launchGame(card.href,card.dataset.name || 'Jeu aléatoire');
   };
 
   window.addEventListener('keydown',function(e){
