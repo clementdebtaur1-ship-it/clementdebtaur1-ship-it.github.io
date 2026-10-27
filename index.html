@@ -1338,6 +1338,28 @@ body.cloak-open{overflow:hidden!important}
 @media(max-width:700px){.zoltro-game-bar{height:50px;flex-basis:50px}.zoltro-game-btn{padding:6px 8px;font-size:11px}.zoltro-game-title{font-size:11px}#zoltro-game-frame{height:calc(100vh - 50px)}.zoltro-game-fallback{inset:50px 0 0}}
 
 </style>
+
+<style>
+/* En plein écran, masquer la barre Zoltrogame pour laisser toute la place au jeu. */
+#zoltro-game-overlay:fullscreen,
+#zoltro-game-overlay:-webkit-full-screen {
+  width:100vw!important;height:100vh!important;max-width:none!important;
+  margin:0!important;padding:0!important;border:0!important;border-radius:0!important;
+  background:#000!important;
+}
+#zoltro-game-overlay:fullscreen .zoltro-game-bar,
+#zoltro-game-overlay:-webkit-full-screen .zoltro-game-bar,
+#zoltro-game-overlay:fullscreen .zoltro-game-help,
+#zoltro-game-overlay:-webkit-full-screen .zoltro-game-help {
+  display:none!important;
+}
+#zoltro-game-overlay:fullscreen #zoltro-game-frame,
+#zoltro-game-overlay:-webkit-full-screen #zoltro-game-frame {
+  display:block!important;width:100vw!important;height:100vh!important;min-height:100vh!important;
+  flex:1 1 100%!important;border:0!important;margin:0!important;
+}
+</style>
+
 </head>
 <body>
 
@@ -1895,7 +1917,7 @@ body.cloak-open{overflow:hidden!important}
                     <img src="https://64.media.tumblr.com/5a09f69aa9e018ed1307f639886e5e5f/65c882b668daa021-39/s250x400/9fb4f4a7bed4fca381dca7090babff8548fc8fec.gifv" alt="Animation MakeAGif" width="400" loading="lazy">
                     <div class="game-info"><span>GTA Chinatown Wars (2009)</span></div>
 				</a>
-                <a href="https://v3.fiveplay.lol/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="GTA 5" data-cat="action">
+                <a href="https://v3.fiveplay.lol/" class="game-card" data-name="GTA 5" data-cat="action">
                     <img class="static-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBTHBwTcN6hbsWra6nlvNBrOSZx38xSWqHmwMWWsLi6AuEZ0Q3gz5ffl1&s=10" alt="GTA 5" loading="lazy">
                     <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdnNTAzMWVlMGl3djFscDYwMWR6MGFpcG5wd2x1MXJwZ2RwYm1yYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SNf41wfVbB8vS/giphy.gif" alt="Animation MakeAGif" width="400" loading="lazy">
                     <div class="game-info"><span>GTA V (2013)</span></div>
@@ -3864,17 +3886,12 @@ body.cloak-open{overflow:hidden!important}
   };
 
     function launchGame(url,name){
-        if(name==='GTA 5'){
-            window.open(url,'_blank','noopener,noreferrer');
-            return;
-        }
         openGameInZoltro(url,name);
     }
 
   document.querySelectorAll('.game-card').forEach(card=>{
     card.addEventListener('click',function(e){
       if(e.target.closest('.like-btn')) return;
-            if(this.dataset.name==='GTA 5') return;
       e.preventDefault();
       const url=this.href;
       const name=this.dataset.name || this.querySelector('.game-info span')?.textContent || 'Jeu';
