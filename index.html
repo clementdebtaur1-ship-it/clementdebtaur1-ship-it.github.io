@@ -219,7 +219,8 @@
         body.modal-open .playlist-picker-overlay,
         body.modal-open .welcome-overlay,
         body.modal-open .account-welcome-overlay,
-        body.modal-open .auth-overlay {
+        body.modal-open .auth-overlay,
+        body.modal-open .account-overlay {
             filter: none;
             pointer-events: auto;
         }
@@ -594,6 +595,48 @@
             position: absolute;
             top: 0;
             left: 0;
+        }
+
+        .nfsu2-art {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 68% 32%, rgba(255, 116, 35, 0.62), transparent 34%),
+                linear-gradient(145deg, #121b2c 4%, #263b51 48%, #11141d 49%, #7a2d32 100%);
+            color: #fff;
+            text-align: center;
+            text-shadow: 0 3px 14px rgba(0, 0, 0, 0.9);
+        }
+
+        .nfsu2-art::before {
+            position: absolute;
+            inset: 48% -15% -22%;
+            content: '';
+            transform: skewY(-12deg);
+            background: linear-gradient(180deg, rgba(7, 10, 16, 0.15), rgba(7, 10, 16, 0.92));
+        }
+
+        .nfsu2-art span,
+        .nfsu2-art strong { position: relative; }
+
+        .nfsu2-art span {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(0.65rem, 2vw, 0.95rem);
+            font-weight: 700;
+            letter-spacing: 0.22em;
+        }
+
+        .nfsu2-art strong {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.05rem, 3.8vw, 1.8rem);
+            font-style: italic;
+            letter-spacing: 0.04em;
         }
 
         .game-card .static-img {
@@ -993,6 +1036,280 @@
 
         .auth-overlay.active { display: flex; }
 
+        .account-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2147483645;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(2, 6, 23, 0.88);
+        }
+
+        .account-overlay.active { display: flex; }
+
+        .account-panel {
+            position: relative;
+            width: min(680px, 100%);
+            max-height: min(820px, calc(100vh - 40px));
+            overflow-y: auto;
+            padding: 30px;
+            border: 1px solid rgba(94, 231, 255, 0.2);
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.99), rgba(10, 17, 28, 0.99));
+            box-shadow: 0 28px 80px rgba(2, 6, 23, 0.65), 0 0 24px rgba(94, 231, 255, 0.12);
+        }
+
+        .account-hero {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 4px 42px 24px 0;
+        }
+
+        .account-avatar {
+            display: grid;
+            flex: 0 0 64px;
+            width: 64px;
+            height: 64px;
+            place-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(94, 231, 255, 0.38);
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(94, 231, 255, 0.22), rgba(124, 108, 255, 0.3));
+        }
+
+        .account-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .account-hero h2 {
+            margin: 5px 0;
+            color: var(--text-strong);
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.05rem, 3vw, 1.45rem);
+            overflow-wrap: anywhere;
+        }
+
+        .account-hero p,
+        .account-local-note {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .account-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .account-stat,
+        .account-profile {
+            padding: 17px;
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .account-stat {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .account-stat-icon {
+            display: grid;
+            flex: 0 0 42px;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border-radius: 13px;
+            background: rgba(94, 231, 255, 0.09);
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .account-stat strong {
+            display: block;
+            color: var(--text-strong);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+        }
+
+        .account-stat span {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .account-stat button,
+        .account-secondary-button {
+            margin-left: auto;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            border-radius: 10px;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--text-strong);
+            font: inherit;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .account-stat button:hover,
+        .account-secondary-button:hover {
+            border-color: rgba(94, 231, 255, 0.4);
+        }
+
+        .account-profile h3 {
+            margin-bottom: 14px;
+            color: var(--text-strong);
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+        }
+
+        .account-details {
+            display: grid;
+            grid-template-columns: minmax(100px, 0.35fr) 1fr;
+            gap: 10px 16px;
+            margin-bottom: 18px;
+            font-size: 0.92rem;
+        }
+
+        .account-details dt { color: var(--text-muted); }
+        .account-details dd { color: var(--text-strong); overflow-wrap: anywhere; }
+        .account-profile-form { display: grid; gap: 12px; }
+        .account-profile-form[hidden],
+        .account-details[hidden],
+        .account-profile-form [hidden] { display: none; }
+
+        .account-profile-form label {
+            display: grid;
+            gap: 5px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .account-profile-form input:not([type="checkbox"]),
+        .account-profile-form textarea {
+            width: 100%;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 10px;
+            padding: 10px 12px;
+            background: rgba(7, 10, 16, 0.8);
+            color: var(--text-strong);
+            font: inherit;
+        }
+
+        .account-profile-form textarea {
+            min-height: 82px;
+            resize: vertical;
+        }
+
+        .account-avatar-picker {
+            display: grid;
+            gap: 9px;
+            border: 0;
+            padding: 0;
+        }
+
+        .account-avatar-picker legend {
+            margin-bottom: 9px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .account-avatar-choices {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+            gap: 8px;
+        }
+
+        .account-avatar-choice {
+            display: grid;
+            min-width: 0;
+            aspect-ratio: 1;
+            place-items: center;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--text-strong);
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .account-avatar-choice img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            object-fit: cover;
+        }
+
+        .account-avatar-choice:hover { transform: translateY(-2px); }
+
+        .account-avatar-choice[aria-pressed="true"] {
+            border-color: var(--accent);
+            background: rgba(94, 231, 255, 0.13);
+            box-shadow: 0 0 0 2px rgba(94, 231, 255, 0.12);
+        }
+
+        .account-notifications-toggle {
+            display: flex !important;
+            align-items: flex-start;
+            gap: 9px !important;
+            line-height: 1.4;
+        }
+
+        .account-notifications-toggle input {
+            flex: 0 0 auto;
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            accent-color: var(--accent);
+        }
+
+        .account-profile-actions,
+        .account-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .account-save-button {
+            border: 0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            color: #03111c;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .account-message {
+            min-height: 18px;
+            margin-top: 10px;
+            color: #7ef7cf;
+            font-size: 0.84rem;
+        }
+
+        .account-message.error { color: #ff7ea8; }
+        .account-footer { margin-top: 18px; }
+        .account-local-note { max-width: 390px; line-height: 1.45; }
+
+        .account-logout-button {
+            border: 1px solid rgba(255, 126, 168, 0.3);
+            border-radius: 10px;
+            padding: 10px 13px;
+            background: rgba(255, 126, 168, 0.07);
+            color: #ffb8d1;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
         .auth-panel {
             position: relative;
             width: min(440px, 100%);
@@ -1190,6 +1507,11 @@
         }
 
         @media (max-width: 600px) {
+            .account-panel { padding: 24px 18px; }
+            .account-stats { grid-template-columns: 1fr; }
+            .account-stat { padding: 14px; }
+            .account-stat button { padding: 7px 8px; }
+            .account-local-note { max-width: 100%; }
             header { padding: 14px 16px; }
             main { padding: 20px 16px 40px; }
             h1 { font-size: 1.1rem; letter-spacing: 3px; }
@@ -1555,6 +1877,38 @@ body.cloak-open{overflow:hidden!important}
         'Connexion':['Log in','Iniciar sesión','Anmelden','Accedi'],
         'Créer un compte':['Create an account','Crear una cuenta','Konto erstellen','Crea un account'],
         'Créer le compte':['Create account','Crear cuenta','Konto erstellen','Crea account'],
+        'Mon espace':['My space','Mi espacio','Mein Bereich','Il mio spazio'],
+        'Retrouve ici ton profil et tes contenus sauvegardés.':['Find your profile and saved content here.','Aquí encontrarás tu perfil y el contenido guardado.','Hier findest du dein Profil und deine gespeicherten Inhalte.','Qui trovi il tuo profilo e i contenuti salvati.'],
+        'Jeux favoris':['Favorite games','Juegos favoritos','Lieblingsspiele','Giochi preferiti'],
+        'Playlists':['Playlists','Listas','Playlists','Playlist'],
+        'Voir':['View','Ver','Ansehen','Visualizza'],
+        'Mon profil':['My profile','Mi perfil','Mein Profil','Il mio profilo'],
+        'Membre depuis':['Member since','Miembro desde','Mitglied seit','Membro dal'],
+        'Bio':['Bio','Biografía','Bio','Bio'],
+        'Mon avatar':['My avatar','Mi avatar','Mein Avatar','Il mio avatar'],
+        'Choisir un avatar':['Choose an avatar','Elegir un avatar','Avatar auswählen','Scegli un avatar'],
+        'Pilote':['Racer','Piloto','Rennfahrer','Pilota'],
+        'Robot':['Robot','Robot','Roboter','Robot'],
+        'Alien':['Alien','Alienígena','Alien','Alieno'],
+        'Chat':['Cat','Gato','Katze','Gatto'],
+        'Renard':['Fox','Zorro','Fuchs','Volpe'],
+        'Dragon':['Dragon','Dragón','Drache','Drago'],
+        'Fantôme':['Ghost','Fantasma','Geist','Fantasma'],
+        'Astronaute':['Astronaut','Astronauta','Astronaut','Astronauta'],
+        'Me prévenir quand de nouveaux jeux arrivent.':['Notify me when new games are added.','Avisarme cuando se añadan nuevos juegos.','Mich benachrichtigen, wenn neue Spiele hinzugefügt werden.','Avvisami quando vengono aggiunti nuovi giochi.'],
+        'Pas encore de bio.':['No bio yet.','Sin biografía todavía.','Noch keine Bio.','Ancora nessuna bio.'],
+        'Quelques mots sur toi…':['A few words about you…','Unas palabras sobre ti…','Ein paar Worte über dich…','Qualche parola su di te…'],
+        'Enregistrer':['Save','Guardar','Speichern','Salva'],
+        'Annuler':['Cancel','Cancelar','Abbrechen','Annulla'],
+        'Modifier mon profil':['Edit my profile','Editar mi perfil','Mein Profil bearbeiten','Modifica il mio profilo'],
+        'Tes favoris, playlists et informations de compte sont enregistrés sur cet appareil.':['Your favorites, playlists, and account details are saved on this device.','Tus favoritos, listas e información de cuenta se guardan en este dispositivo.','Deine Favoriten, Playlists und Kontodaten werden auf diesem Gerät gespeichert.','I tuoi preferiti, le playlist e i dati dell’account sono salvati su questo dispositivo.'],
+        'Se déconnecter':['Log out','Cerrar sesión','Abmelden','Esci'],
+        'Non renseigné':['Not provided','No indicado','Nicht angegeben','Non specificato'],
+        'Compte déjà créé':['Existing account','Cuenta ya creada','Bestehendes Konto','Account già esistente'],
+        'Le pseudo ne peut pas être vide.':['Username cannot be empty.','El nombre de usuario no puede estar vacío.','Der Benutzername darf nicht leer sein.','Il nome utente non può essere vuoto.'],
+        'Cette adresse e-mail est déjà utilisée.':['This email address is already in use.','Esta dirección de correo ya está en uso.','Diese E-Mail-Adresse wird bereits verwendet.','Questo indirizzo email è già in uso.'],
+        'Impossible de retrouver ce compte sur cet appareil.':['Could not find this account on this device.','No se encontró esta cuenta en este dispositivo.','Dieses Konto konnte auf diesem Gerät nicht gefunden werden.','Impossibile trovare questo account su questo dispositivo.'],
+        'Ton profil a bien été mis à jour.':['Your profile has been updated.','Tu perfil se ha actualizado.','Dein Profil wurde aktualisiert.','Il tuo profilo è stato aggiornato.'],
         'Pseudo':['Username','Nombre de usuario','Benutzername','Nome utente'],
         'Choisis un pseudo':['Choose a username','Elige un nombre de usuario','Wähle einen Benutzernamen','Scegli un nome utente'],
         'Email pour les nouveautés (facultatif)':['Email for updates (optional)','Correo para novedades (opcional)','E-Mail für Neuigkeiten (optional)','Email per le novità (facoltativa)'],
@@ -1781,6 +2135,7 @@ body.cloak-open{overflow:hidden!important}
         }
         const index = uiLanguageIndexes[language];
         const templates = [
+            [/^Salut, (.+) !$/, name => [`Hi, ${name}!`,`¡Hola, ${name}!`,`Hallo, ${name}!`,`Ciao, ${name}!`][index]],
             [/^Bienvenue (.+) ! Ton compte a bien été créé\.$/, name => [`Welcome ${name}! Your account was created successfully.`,`¡Bienvenido/a ${name}! Tu cuenta se ha creado correctamente.`,`Willkommen ${name}! Dein Konto wurde erfolgreich erstellt.`,`Benvenuto/a ${name}! Il tuo account è stato creato.`][index]],
             [/^Bon retour (.+) !$/, name => [`Welcome back, ${name}!`,`¡Qué bueno verte de nuevo, ${name}!`,`Willkommen zurück, ${name}!`,`Bentornato/a, ${name}!`][index]],
             [/^Connecté en tant que (.+) \((.+)\)\. Ces informations seront jointes au signalement\.$/, (name,email) => [`Signed in as ${name} (${email}). This information will be included with your report.`,`Has iniciado sesión como ${name} (${email}). Esta información se incluirá en el informe.`,`Angemeldet als ${name} (${email}). Diese Angaben werden der Meldung beigefügt.`,`Accesso effettuato come ${name} (${email}). Queste informazioni saranno incluse nella segnalazione.`][index]],
@@ -1879,6 +2234,18 @@ body.cloak-open{overflow:hidden!important}
         accounts: 'zoltro_accounts_v1',
         session: 'zoltro_session_v1'
     };
+
+    const PROFILE_AVATARS = [
+        { id: 'racer', image: 'assets/avatars/racer.svg', label: 'Pilote' },
+        { id: 'robot', image: 'assets/avatars/robot.svg', label: 'Robot' },
+        { id: 'alien', image: 'assets/avatars/alien.svg', label: 'Alien' },
+        { id: 'fox', image: 'assets/avatars/fox.svg', label: 'Renard' },
+        { id: 'cat', image: 'assets/avatars/cat.svg', label: 'Chat' },
+        { id: 'ghost', image: 'assets/avatars/ghost.svg', label: 'Fantôme' },
+        { id: 'dragon', image: 'assets/avatars/dragon.svg', label: 'Dragon' },
+        { id: 'astronaut', image: 'assets/avatars/astronaut.svg', label: 'Astronaute' }
+    ];
+    let selectedAccountAvatar = PROFILE_AVATARS[0].id;
 
     function safeParse(value, fallback) {
         try {
@@ -1986,13 +2353,201 @@ function openWelcomeAuth(mode) {
         const button = document.getElementById('accountButton');
         if (!button) return;
         const user = getCurrentUser();
+        const label = document.createElement('span');
         if (user && user.name) {
-            button.innerHTML = `${getIconSvg('account')}<span>${user.name}</span>`;
+            button.innerHTML = getIconSvg('account');
+            label.textContent = user.name;
             button.title = 'Mon compte';
+            button.setAttribute('aria-label', `Ouvrir le compte de ${user.name}`);
         } else {
-            button.innerHTML = `${getIconSvg('account')}<span>Se connecter</span>`;
+            button.innerHTML = getIconSvg('account');
+            label.textContent = 'Se connecter';
             button.title = 'Se connecter';
+            button.setAttribute('aria-label', 'Se connecter');
         }
+        button.appendChild(label);
+    }
+
+    function renderAccountAvatarChoices(selectedAvatar) {
+        const container = document.getElementById('accountAvatarChoices');
+        if (!container) return;
+        container.replaceChildren();
+        PROFILE_AVATARS.forEach(avatar => {
+            const choice = document.createElement('button');
+            choice.type = 'button';
+            choice.className = 'account-avatar-choice';
+            const image = document.createElement('img');
+            image.src = avatar.image;
+            image.alt = '';
+            image.loading = 'lazy';
+            choice.appendChild(image);
+            choice.title = window.translateZoltroUiText(avatar.label);
+            choice.setAttribute('aria-label', window.translateZoltroUiText(avatar.label));
+            choice.setAttribute('aria-pressed', String(avatar.id === selectedAvatar));
+            choice.addEventListener('click', () => {
+                selectedAccountAvatar = avatar.id;
+                container.querySelectorAll('.account-avatar-choice').forEach(button => {
+                    button.setAttribute('aria-pressed', String(button === choice));
+                });
+                renderCurrentAccountAvatar(avatar);
+            });
+            container.appendChild(choice);
+        });
+    }
+
+    function renderCurrentAccountAvatar(avatar) {
+        const container = document.getElementById('accountAvatar');
+        const image = document.createElement('img');
+        image.src = avatar.image;
+        image.alt = window.translateZoltroUiText(avatar.label);
+        container.replaceChildren(image);
+    }
+
+    function renderAccountPanel() {
+        const user = getCurrentUser();
+        if (!user) return;
+
+        const accounts = getAccounts();
+        const accountEntry = Object.entries(accounts).find(([, account]) => account && account.id === user.id);
+        const account = accountEntry?.[1] || {};
+        const name = user.name || user.username || 'Joueur';
+        const avatar = PROFILE_AVATARS.find(item => item.id === (account.avatar || user.avatar)) || PROFILE_AVATARS[0];
+        const favoriteCount = [...document.querySelectorAll('.game-card, .music-card')].filter(isFavorite).length;
+        const playlistCount = Object.keys(customPlaylists || {}).length;
+        const createdAt = account.createdAt || user.createdAt;
+        const date = createdAt ? new Date(createdAt) : null;
+        const memberSince = date && !Number.isNaN(date.getTime())
+            ? new Intl.DateTimeFormat(activeUiLanguage, { dateStyle: 'long' }).format(date)
+            : 'Compte déjà créé';
+
+        selectedAccountAvatar = avatar.id;
+        renderCurrentAccountAvatar(avatar);
+        document.getElementById('accountWelcomeName').textContent = `Salut, ${name} !`;
+        document.getElementById('accountFavoriteCount').textContent = favoriteCount;
+        document.getElementById('accountPlaylistCount').textContent = playlistCount;
+        document.getElementById('accountProfileName').textContent = name;
+        document.getElementById('accountProfileEmail').textContent = user.email || 'Non renseigné';
+        document.getElementById('accountProfileBio').textContent = account.bio || user.bio || 'Pas encore de bio.';
+        document.getElementById('accountMemberSince').textContent = memberSince;
+        document.getElementById('accountEditName').value = name;
+        document.getElementById('accountEditEmail').value = user.email || '';
+        document.getElementById('accountEditBio').value = account.bio || user.bio || '';
+        document.getElementById('accountEditNotifications').checked = typeof account.notifications === 'boolean'
+            ? account.notifications
+            : Boolean(user.notifications);
+        renderAccountAvatarChoices(avatar.id);
+        document.getElementById('accountProfileMessage').textContent = '';
+        document.getElementById('accountProfileMessage').className = 'account-message';
+        toggleAccountEditor(false);
+    }
+
+    function openAccountModal() {
+        if (!getCurrentUser()) {
+            openAuthModal('login');
+            return;
+        }
+        renderAccountPanel();
+        const overlay = document.getElementById('accountOverlay');
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeAccountModal() {
+        const overlay = document.getElementById('accountOverlay');
+        if (!overlay) return;
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        if (!document.getElementById('authOverlay')?.classList.contains('active')
+            && !document.getElementById('accountWelcomeOverlay')?.classList.contains('active')) {
+            document.body.classList.remove('modal-open');
+        }
+    }
+
+    function toggleAccountEditor(show) {
+        document.getElementById('accountDetails').hidden = show;
+        document.getElementById('accountProfileForm').hidden = !show;
+        document.getElementById('accountEditProfileButton').hidden = show;
+        if (show) document.getElementById('accountEditName').focus();
+    }
+
+    function saveAccountProfile(event) {
+        event.preventDefault();
+        const user = getCurrentUser();
+        const message = document.getElementById('accountProfileMessage');
+        if (!user) {
+            closeAccountModal();
+            openAuthModal('login');
+            return;
+        }
+
+        const name = document.getElementById('accountEditName').value.trim();
+        const email = document.getElementById('accountEditEmail').value.trim().toLowerCase();
+        const bio = document.getElementById('accountEditBio').value.trim();
+        const notifications = document.getElementById('accountEditNotifications').checked;
+        const accounts = getAccounts();
+        const accountEntry = Object.entries(accounts).find(([, account]) => account && account.id === user.id);
+        if (!name) {
+            message.textContent = 'Le pseudo ne peut pas être vide.';
+            message.className = 'account-message error';
+            return;
+        }
+        if (!accountEntry) {
+            message.textContent = 'Impossible de retrouver ce compte sur cet appareil.';
+            message.className = 'account-message error';
+            return;
+        }
+
+        const usernameKey = `username:${name.toLowerCase()}`;
+        const duplicate = Object.values(accounts).some(account =>
+            account && account.id !== user.id
+            && String(account.username || account.name || '').trim().toLowerCase() === name.toLowerCase()
+        );
+        if (duplicate || (accounts[usernameKey] && accounts[usernameKey].id !== user.id)) {
+            message.textContent = 'Ce pseudo est déjà utilisé.';
+            message.className = 'account-message error';
+            return;
+        }
+
+        const [oldKey, account] = accountEntry;
+        const duplicateEmail = email && Object.values(accounts).some(existingAccount =>
+            existingAccount && existingAccount.id !== user.id
+            && String(existingAccount.email || '').trim().toLowerCase() === email
+        );
+        if (duplicateEmail) {
+            message.textContent = 'Cette adresse e-mail est déjà utilisée.';
+            message.className = 'account-message error';
+            return;
+        }
+
+        const updatedAccount = {
+            ...account,
+            name,
+            username: name,
+            email,
+            bio,
+            avatar: selectedAccountAvatar,
+            notifications
+        };
+        if (oldKey !== usernameKey) delete accounts[oldKey];
+        accounts[usernameKey] = updatedAccount;
+        saveAccounts(accounts);
+        setCurrentUser({ ...user, name, username: name, email, bio, avatar: selectedAccountAvatar, notifications });
+        renderAccountPanel();
+        message.textContent = 'Ton profil a bien été mis à jour.';
+        message.className = 'account-message';
+    }
+
+    function openAccountSection(category) {
+        closeAccountModal();
+        document.querySelector(`#categoryTabs [data-cat="${category}"]`)?.click();
+    }
+
+    function logoutFromAccount() {
+        if (!window.confirm(window.translateZoltroUiText('Tu veux te déconnecter ?'))) return;
+        closeAccountModal();
+        clearCurrentUser();
+        syncUserData();
     }
 
     function openAuthModal(mode = 'login') {
@@ -2098,8 +2653,15 @@ function openWelcomeAuth(mode) {
                 if (usernameExists) {
                     throw new Error('Ce pseudo est déjà utilisé.');
                 }
+                const emailExists = email && Object.values(accounts).some(account =>
+                    account && String(account.email || '').trim().toLowerCase() === email
+                );
+                if (emailExists) {
+                    throw new Error('Cette adresse e-mail est déjà utilisée.');
+                }
                 const hashed = await hashPassword(password);
                 const id = `user_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+                const createdAt = new Date().toISOString();
                 const key = `username:${usernameKey}`;
                 accounts[key] = {
                     id,
@@ -2107,10 +2669,22 @@ function openWelcomeAuth(mode) {
                     username: name,
                     email,
                     notifications: wantsNotifications,
+                    avatar: PROFILE_AVATARS[0].id,
+                    bio: '',
+                    createdAt,
                     passwordHash: hashed
                 };
                 saveAccounts(accounts);
-                setCurrentUser({ id, name, username: name, email, notifications: wantsNotifications });
+                setCurrentUser({
+                    id,
+                    name,
+                    username: name,
+                    email,
+                    notifications: wantsNotifications,
+                    avatar: PROFILE_AVATARS[0].id,
+                    bio: '',
+                    createdAt
+                });
                 if (message) {
                     message.textContent = `Bienvenue ${name} ! Ton compte a bien été créé.`;
                     message.className = 'auth-message success';
@@ -2139,7 +2713,10 @@ function openWelcomeAuth(mode) {
                 name: user.name,
                 username: user.username || user.name,
                 email: user.email || '',
-                notifications: Boolean(user.notifications)
+                notifications: Boolean(user.notifications),
+                avatar: user.avatar || PROFILE_AVATARS[0].id,
+                bio: user.bio || '',
+                createdAt: user.createdAt || ''
             });
             if (message) {
                 message.textContent = `Bon retour ${user.name} !`;
@@ -2332,18 +2909,16 @@ function openWelcomeAuth(mode) {
         if (accountButton) {
             accountButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                const user = getCurrentUser();
-                if (user) {
-                    const confirmLogout = window.confirm(window.translateZoltroUiText('Tu veux te déconnecter ?'));
-                    if (confirmLogout) {
-                        clearCurrentUser();
-                        syncUserData();
-                    }
-                } else {
-                    openAuthModal('login');
-                }
+                openAccountModal();
             });
         }
+
+        document.getElementById('accountProfileForm')?.addEventListener('submit', saveAccountProfile);
+        document.getElementById('accountEditProfileButton')?.addEventListener('click', () => toggleAccountEditor(true));
+        document.getElementById('accountCancelEditButton')?.addEventListener('click', () => toggleAccountEditor(false));
+        document.getElementById('accountOverlay')?.addEventListener('click', event => {
+            if (event.target === event.currentTarget) closeAccountModal();
+        });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -2355,6 +2930,70 @@ function openWelcomeAuth(mode) {
         showAccountWelcome();
     });
 </script>
+
+<div id="accountOverlay" class="account-overlay" aria-hidden="true">
+    <section class="account-panel" role="dialog" aria-modal="true" aria-labelledby="accountWelcomeName">
+        <button type="button" class="auth-close" onclick="closeAccountModal()" aria-label="Fermer">✕</button>
+        <div class="account-hero">
+            <div class="account-avatar" id="accountAvatar" aria-hidden="true">Z</div>
+            <div>
+                <span class="eyebrow">Mon espace</span>
+                <h2 id="accountWelcomeName">Salut !</h2>
+                <p>Retrouve ici ton profil et tes contenus sauvegardés.</p>
+            </div>
+        </div>
+        <div class="account-stats">
+            <article class="account-stat">
+                <div class="account-stat-icon" aria-hidden="true">♥</div>
+                <div><strong id="accountFavoriteCount">0</strong><span>Jeux favoris</span></div>
+                <button type="button" onclick="openAccountSection('favoris')">Voir</button>
+            </article>
+            <article class="account-stat">
+                <div class="account-stat-icon" aria-hidden="true">♫</div>
+                <div><strong id="accountPlaylistCount">0</strong><span>Playlists</span></div>
+                <button type="button" onclick="openAccountSection('musique')">Voir</button>
+            </article>
+        </div>
+        <section class="account-profile" aria-labelledby="accountProfileTitle">
+            <h3 id="accountProfileTitle">Mon profil</h3>
+            <dl class="account-details" id="accountDetails">
+                <dt>Pseudo</dt><dd id="accountProfileName"></dd>
+                <dt>Email</dt><dd id="accountProfileEmail"></dd>
+                <dt>Bio</dt><dd id="accountProfileBio"></dd>
+                <dt>Membre depuis</dt><dd id="accountMemberSince"></dd>
+            </dl>
+            <form class="account-profile-form" id="accountProfileForm" hidden>
+                <fieldset class="account-avatar-picker">
+                    <legend>Mon avatar</legend>
+                    <div class="account-avatar-choices" id="accountAvatarChoices" role="group" aria-label="Choisir un avatar"></div>
+                </fieldset>
+                <label for="accountEditName">Pseudo
+                    <input id="accountEditName" type="text" autocomplete="username" required>
+                </label>
+                <label for="accountEditEmail">Email
+                    <input id="accountEditEmail" type="email" autocomplete="email">
+                </label>
+                <label for="accountEditBio">Bio
+                    <textarea id="accountEditBio" maxlength="160" placeholder="Quelques mots sur toi…"></textarea>
+                </label>
+                <label class="account-notifications-toggle" for="accountEditNotifications">
+                    <input id="accountEditNotifications" type="checkbox">
+                    <span>Me prévenir quand de nouveaux jeux arrivent.</span>
+                </label>
+                <div class="account-profile-actions">
+                    <button class="account-save-button" type="submit">Enregistrer</button>
+                    <button class="account-secondary-button" type="button" id="accountCancelEditButton">Annuler</button>
+                </div>
+            </form>
+            <button class="account-secondary-button" type="button" id="accountEditProfileButton">Modifier mon profil</button>
+            <p class="account-message" id="accountProfileMessage" aria-live="polite"></p>
+        </section>
+        <div class="account-footer">
+            <p class="account-local-note">Tes favoris, playlists et informations de compte sont enregistrés sur cet appareil.</p>
+            <button type="button" class="account-logout-button" onclick="logoutFromAccount()">Se déconnecter</button>
+        </div>
+    </section>
+</div>
 
 <div id="authOverlay" class="auth-overlay" aria-hidden="true">
     <div class="auth-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
@@ -2413,7 +3052,7 @@ function openWelcomeAuth(mode) {
         <div class="action-buttons">
             <button class="action-btn" onclick="toggleFullScreen()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/><path d="M9 15l-6 6M15 9l6-6"/></svg><span>Plein Écran</span></button>
             <button class="action-btn" onclick="playRandomGame()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="8.5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="8.5" cy="15.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/></svg><span>Jeu Aléatoire</span></button>
-            <button type="button" id="accountButton" class="account-pill" onclick="openAuthModal()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg><span>Se connecter</span></button>
+            <button type="button" id="accountButton" class="account-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg><span>Se connecter</span></button>
             <label class="language-control" for="languageSwitcher"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg>
                 <input id="languageSearch" type="search" placeholder="Rechercher une langue..." aria-label="Rechercher une langue">
                 <div id="languageSuggestions" class="language-suggestions" role="listbox"></div>
@@ -2609,6 +3248,10 @@ function openWelcomeAuth(mode) {
                 <a href="https://drift.io/?room=S3Xe3q" target="_blank" class="game-card" data-name="Drift.io" data-cat="course">
                     <img class="game-poster" src="https://drift.io/571ab7e39e787232ba46.png" alt="Drift.io" loading="eager" decoding="async">
                     <div class="game-info"><span>Drift.io</span></div>
+                </a>
+                <a href="https://nfsu2.xyz/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Need for Speed Underground 2" data-cat="course">
+                    <div class="nfsu2-art" aria-hidden="true"><span>NEED FOR SPEED</span><strong>UNDERGROUND 2</strong></div>
+                    <div class="game-info"><span>Need for Speed Underground 2</span></div>
                 </a>
                 <a href="https://slowroads.io/" target="_blank" class="game-card" data-name="Slowroads.io" data-cat="course">
                     <img class="static-img" src="https://i.ytimg.com/vi/lCkZbdVmLHA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLASqZfOBsoeO_HDxfxbHhgzv6O51g" alt="slowroads.io" loading="eager" decoding="async">
