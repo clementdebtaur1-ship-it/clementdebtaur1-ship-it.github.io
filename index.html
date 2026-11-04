@@ -869,37 +869,65 @@
         .like-btn.liked { color:#ff3c6e; border-color:#ff3c6e; box-shadow:0 0 12px rgba(255,60,110,.3); }
         .music-card .like-btn { bottom:14px; right:14px; }
 
-        .music-player { position:fixed; left:10px; right:10px; bottom:7px; z-index:9998; height:50px; border:1px solid rgba(255,255,255,.10); border-radius:10px; background:rgba(18,18,18,.96); backdrop-filter:blur(14px); box-shadow:0 4px 22px rgba(0,0,0,.38); display:grid; grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr); align-items:center; gap:18px; padding:5px 10px; transition:height .22s ease, opacity .22s ease, box-shadow .22s ease; }
-        .music-player.compact { height:50px; opacity:.96; }
-        .music-player:hover, .music-player:focus-within { height:62px; opacity:1; box-shadow:0 8px 28px rgba(0,0,0,.48); }
+        .music-player { position:fixed; left:50%; right:auto; bottom:12px; z-index:9998; width:min(960px,calc(100vw - 28px)); min-height:76px; border:1px solid rgba(191,211,239,.16); border-radius:22px; background:linear-gradient(115deg,rgba(18,24,34,.97),rgba(10,14,23,.94)); backdrop-filter:blur(24px) saturate(145%); -webkit-backdrop-filter:blur(24px) saturate(145%); box-shadow:0 18px 55px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.07); display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,1.2fr) minmax(0,1fr); align-items:center; gap:18px; padding:10px 18px; transform:translateX(-50%); transition:height .28s ease, min-height .28s ease, opacity .28s ease, box-shadow .28s ease, transform .38s cubic-bezier(.2,.8,.2,1); }
+        .music-player::before { content:""; position:absolute; top:-1px; left:12%; right:12%; height:1px; background:linear-gradient(90deg,transparent,rgba(142,204,255,.65),rgba(188,188,255,.5),transparent); pointer-events:none; }
+        .music-player.compact { min-height:68px; }
+        .music-player:hover, .music-player:focus-within { min-height:88px; box-shadow:0 22px 65px rgba(0,0,0,.56),0 0 34px rgba(117,166,255,.10),inset 0 1px 0 rgba(255,255,255,.09); }
+        .music-player.auto-hidden { opacity:0; pointer-events:none; transform:translate(-50%,calc(100% + 30px)); }
+        .music-player.game-hidden, .music-player.game-hidden + .music-player-reveal { display:none !important; }
         .music-player.compact .progress-row { opacity:0; pointer-events:none; height:0; overflow:hidden; }
         .music-player:hover .progress-row, .music-player:focus-within .progress-row { opacity:1; pointer-events:auto; height:auto; }
-        .music-player.compact .player-cover { width:34px; height:34px; }
-        .music-player:hover .player-cover, .music-player:focus-within .player-cover { width:38px; height:38px; }
+        .music-player.compact .player-cover { width:46px; height:46px; }
+        .music-player:hover .player-cover, .music-player:focus-within .player-cover { width:52px; height:52px; }
         .music-player.compact .player-right { opacity:.72; }
         .music-player:hover .player-right, .music-player:focus-within .player-right { opacity:1; }
-        .player-track { min-width:0; display:flex; align-items:center; gap:10px; }
-        .player-cover { width:38px; height:38px; border-radius:9px; object-fit:cover; box-shadow:0 4px 15px rgba(0,0,0,.4); }
+        .player-track { min-width:0; display:flex; align-items:center; gap:12px; }
+        .player-cover { width:52px; height:52px; flex:0 0 auto; border-radius:14px; object-fit:cover; background:rgba(255,255,255,.06); box-shadow:0 5px 18px rgba(0,0,0,.42); transition:width .25s ease,height .25s ease,box-shadow .25s ease; }
+        .music-player.playing .player-cover { box-shadow:0 0 0 1px rgba(137,196,255,.25),0 0 22px rgba(104,168,255,.2); }
         .player-text { min-width:0; }
-        .player-title { color:#fff; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .player-artist { color:var(--text-muted); font-size:.75rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .player-center { display:flex; flex-direction:column; align-items:center; gap:2px; min-width:210px; }
-        .player-controls { display:flex; align-items:center; gap:6px; }
-        .player-controls button { width:26px; height:26px; border:0; background:transparent; color:#dce6f5; cursor:pointer; border-radius:50%; font-size:1rem; }
-        .player-controls button:hover { color:var(--accent); background:rgba(0,212,255,.08); }
-        .player-controls .main-play { width:30px; height:30px; background:#fff; color:#070a10; font-size:.9rem; }
-        .player-controls .main-play:hover { background:var(--accent); color:#070a10; }
-        .progress-row { width:min(460px,100%); display:flex; align-items:center; gap:7px; font-size:.62rem; color:var(--text-muted); }
-        .progress-row input { flex:1; accent-color:var(--accent); }
-        .player-right { display:flex; align-items:center; justify-content:flex-end; gap:8px; }
-        .player-right input { width:70px; accent-color:var(--accent); }
-        .player-right button { background:transparent; border:0; color:#b9c5d6; cursor:pointer; font-size:1rem; }
+        .player-title { color:#f7f9ff; font-weight:800; font-size:.88rem; letter-spacing:.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .player-artist { color:#9eacc2; font-size:.73rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .player-equalizer { display:none; align-items:flex-end; gap:2px; height:12px; margin-top:4px; }
+        .music-player.playing .player-equalizer { display:flex; }
+        .player-equalizer i { width:3px; height:35%; border-radius:3px; background:linear-gradient(#bcbcff,#75ccff); animation:player-eq .72s ease-in-out infinite alternate; }
+        .player-equalizer i:nth-child(2) { height:85%; animation-delay:.18s; }
+        .player-equalizer i:nth-child(3) { height:55%; animation-delay:.34s; }
+        .player-equalizer i:nth-child(4) { height:100%; animation-delay:.1s; }
+        @keyframes player-eq { to { transform:scaleY(.28); opacity:.58; } }
+        .player-center { display:flex; flex-direction:column; align-items:center; gap:5px; min-width:0; }
+        .player-controls { display:flex; align-items:center; gap:10px; }
+        .player-controls button { display:grid; place-items:center; width:34px; height:34px; border:1px solid transparent; background:transparent; color:#b9c8df; cursor:pointer; border-radius:50%; transition:background .18s ease,color .18s ease,transform .18s ease; }
+        .player-controls button svg { width:17px; height:17px; fill:currentColor; }
+        .player-controls button:hover { color:#fff; background:rgba(164,196,255,.12); transform:scale(1.06); }
+        .player-controls .main-play { width:40px; height:40px; border:0; background:linear-gradient(145deg,#f8fbff,#cbdaf0); color:#101724; font-size:.9rem; box-shadow:0 4px 15px rgba(140,184,255,.22); }
+        .player-controls .main-play:hover { background:#fff; color:#101724; transform:scale(1.08); }
+        .progress-row { width:min(460px,100%); display:flex; align-items:center; gap:9px; font-size:.65rem; color:#91a0b7; }
+        .progress-row input { flex:1; min-width:30px; height:4px; accent-color:#a9c8ff; cursor:pointer; }
+        .player-right { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
+        .player-right input { width:82px; height:4px; accent-color:#a9c8ff; cursor:pointer; }
+        .player-right button { display:grid; place-items:center; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.08); color:#c8d4e7; cursor:pointer; }
+        .player-right button svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+        .player-right button:hover { background:rgba(164,196,255,.12); color:#fff; }
+        .music-player-reveal { position:fixed; left:0; right:0; bottom:0; z-index:9999; height:18px; padding:0; border:0; background:transparent; cursor:pointer; opacity:0; pointer-events:none; transition:opacity .2s ease; }
+        .music-player.auto-hidden + .music-player-reveal { opacity:1; pointer-events:auto; }
+        .music-player-reveal::after { content:""; position:absolute; left:50%; top:5px; width:66px; height:4px; border-radius:99px; background:linear-gradient(90deg,#91b9ff,#c1c2ff); box-shadow:0 0 16px rgba(145,185,255,.42); transform:translateX(-50%); transition:width .2s ease,box-shadow .2s ease; }
+        .music-player-reveal:hover::after, .music-player-reveal:focus-visible::after { width:96px; box-shadow:0 0 22px rgba(145,185,255,.7); }
+        .music-player-reveal:focus-visible { outline:none; }
         #yt-player { width:1px; height:1px; position:absolute; left:-9999px; top:-9999px; }
         body { padding-bottom:95px; }
-        @media (max-width:700px) { .music-player { left:5px; right:5px; bottom:5px; grid-template-columns:1fr auto; height:48px; padding:4px 7px; } .music-player:hover,.music-player:focus-within { height:58px; } .player-center { min-width:0; } .player-right { display:none; } .player-track { max-width:55vw; } .player-cover { width:34px;height:34px; } body{padding-bottom:76px;} }
+        @media (max-width:700px) { .music-player { left:8px; right:8px; bottom:8px; width:auto; min-height:68px; grid-template-columns:minmax(0,1fr) auto; gap:8px; padding:8px 11px; border-radius:18px; transform:none; } .music-player.compact { min-height:62px; } .music-player:hover,.music-player:focus-within { min-height:78px; } .music-player.auto-hidden { transform:translateY(calc(100% + 30px)); } .music-player.game-hidden { transform:translateY(calc(100% + 30px)) !important; } .player-center { min-width:0; } .player-right { display:none; } .player-track { max-width:none; gap:9px; } .player-cover,.music-player.compact .player-cover { width:42px;height:42px; } .player-title { max-width:40vw; font-size:.8rem; } .player-artist { max-width:40vw; font-size:.68rem; } .player-controls { gap:3px; } .player-controls button { width:28px;height:28px; } .player-controls .main-play { width:36px;height:36px; } .progress-row { gap:5px; font-size:.58rem; } body{padding-bottom:76px;} }
+        @media (prefers-reduced-motion: reduce) { .music-player,.music-player-reveal,.player-cover,.player-equalizer i { transition:none; animation:none; } }
 
         #noResults { display: none; text-align: center; padding: 80px 20px; color: var(--text-muted); font-family: 'Orbitron', monospace; font-size: 0.9rem; letter-spacing: 2px; }
         #noResults::before { content: '404'; display: block; font-size: 4rem; color: var(--border); margin-bottom: 16px; }
+        .creator-support-footer { width:min(100% - 40px,1100px); margin:28px auto 34px; padding:22px 26px; border:1px solid var(--border); border-radius:16px; background:linear-gradient(135deg,rgba(13,20,36,.94),rgba(22,31,53,.9)); color:var(--text-muted); text-align:center; line-height:1.75; box-shadow:0 12px 35px rgba(0,0,0,.16); }
+        .creator-support-footer p { margin:0; }
+        .creator-support-footer .creator-support-message { color:var(--text); }
+        .creator-support-footer .creator-share-message { margin-top:10px; font-size:.92rem; }
+        .creator-support-footer strong { color:var(--text); }
+        .creator-support-footer a { color:var(--accent); font-weight:700; text-decoration:none; text-underline-offset:3px; }
+        .creator-support-footer a:hover,.creator-support-footer a:focus-visible { color:#fff; text-decoration:underline; }
+        @media(max-width:600px) { .creator-support-footer { width:calc(100% - 24px); margin:22px auto 28px; padding:18px 16px; font-size:.92rem; } .creator-support-footer .creator-share-message { font-size:.86rem; } }
 
         .game-card.hidden { display: none; }
         .music-card.hidden { display: none; }
@@ -1275,8 +1303,6 @@ body.cloak-open{overflow:hidden!important}
 #cloak-overlay.level-terminale{--theme-art:'🎓  📈  🧠  🌐';}
 #cloak-overlay .cloak-slide{position:relative;overflow:hidden}
 #cloak-overlay .cloak-slide::after{content:var(--theme-art);position:absolute;right:34px;bottom:22px;font-size:28px;letter-spacing:8px;opacity:.16;pointer-events:none;white-space:nowrap}
-#cloak-overlay.level-6e .cloak-slide::before{content:'EXPLORATION DE L’ESPACE';position:absolute;top:24px;right:34px;font-size:11px;font-weight:800;letter-spacing:2px;opacity:.35}
-#cloak-overlay.level-terminale .cloak-slide::before{content:'PRÉPARATION • APPROFONDISSEMENT';position:absolute;top:24px;right:34px;font-size:11px;font-weight:800;letter-spacing:2px;opacity:.35}
 #cloak-overlay .level-theme-card{margin:22px 0;padding:18px 20px;border-radius:18px;background:var(--theme-soft);border:1px solid var(--theme-border);font-weight:600}
 #cloak-overlay .level-theme-card .theme-symbols{font-size:30px;margin-bottom:8px;letter-spacing:7px}
 
@@ -1306,18 +1332,90 @@ body.cloak-open{overflow:hidden!important}
 .ppt-file-tab{background:#a8321a;font-weight:700}
 .ppt-ribbon-tab:hover,.ppt-ribbon-tab.active{background:#fff;color:#a8321a}
 .ppt-ribbon-tools{display:flex;align-items:stretch;gap:0;width:100%;height:62px;margin:0 -18px 2px;padding:4px 18px;background:#fff;border-bottom:1px solid #c5c5c5}
+.ppt-file-menu{display:grid;grid-template-columns:minmax(230px,1fr) minmax(280px,1.3fr);gap:10px 18px;width:100%;padding:13px 15px;background:#f8f8f8;border:1px solid #d5d5d5;box-shadow:0 3px 8px rgba(0,0,0,.08);font:12px Arial,sans-serif}
+.ppt-file-menu[hidden]{display:none!important}
+.ppt-file-menu h3{grid-column:1/-1;margin:0;color:#333;font-size:14px}
+.ppt-file-import,.ppt-file-link{display:flex;flex-direction:column;align-items:stretch;gap:7px;padding:10px;border:1px solid #ddd;background:#fff}
+.ppt-file-import label,.ppt-file-link label{display:block;color:#444;font-weight:700}
+.ppt-file-menu p{margin:4px 0;color:#666;line-height:1.45}
+.ppt-file-menu input[type=file],.ppt-file-menu input[type=url]{width:100%;padding:8px;border:1px solid #bbb;border-radius:3px;background:#fff;color:#222;font:12px Arial,sans-serif}
+.ppt-file-menu .ppt-file-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ppt-file-menu .ppt-file-status{grid-column:1/-1;min-height:16px;color:#444}
+.ppt-file-menu .ppt-file-status.error{color:#a12622}
+.ppt-file-menu .ppt-file-status.success{color:#23733b}
+.ppt-file-notice{grid-column:1/-1;margin:0;color:#666;font-size:11px;line-height:1.45}
+.ppt-imported-stage{position:absolute;inset:10px 18px 36px;display:grid;place-items:center;overflow:auto}
+.ppt-imported-canvas{position:relative;flex:0 0 auto;overflow:hidden;background:#fff;box-shadow:0 3px 15px rgba(0,0,0,.23)}
+.ppt-imported-element{position:absolute;box-sizing:border-box;overflow:hidden}
+.ppt-imported-text{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.2}
+.ppt-imported-image{object-fit:fill}
+.ppt-external-view{position:absolute;inset:62px 0 0;z-index:12;background:#f4f4f4}
+.ppt-external-view[hidden]{display:none!important}
+.ppt-external-view iframe{width:100%;height:100%;border:0;background:#fff}
+.ppt-external-close{position:absolute;right:16px;top:10px;z-index:2;padding:7px 12px;border:1px solid #bbb;border-radius:4px;background:#fff;color:#222;font:12px Arial,sans-serif;cursor:pointer}
+.ppt-external-newtab{right:185px;text-decoration:none}
+#cloak-overlay.external-ppt-open .cloak-controls,#cloak-overlay.external-ppt-open .cloak-sidebar,#cloak-overlay.external-ppt-open .cloak-slide,#cloak-overlay.external-ppt-open .cloak-footer{visibility:hidden}
+#cloak-overlay .cloak-slide.ppt-import-active{position:relative}
+#cloak-overlay .cloak-slide.ppt-import-active .ppt-notes{display:none!important}
+#cloak-overlay .ppt-imported-canvas{width:min(100%,1200px,calc((100vh - 230px)*1.7778));max-height:100%;aspect-ratio:16/9}
+#cloak-overlay .ppt-imported-element.ppt-imported-text{padding:0;white-space:pre-wrap;font-family:Arial,sans-serif}
+@media(max-width:700px){.ppt-file-menu{grid-template-columns:1fr}.ppt-file-menu h3,.ppt-file-notice,.ppt-file-menu .ppt-file-status{grid-column:1}}
 .ppt-tool-group{display:flex;align-items:center;gap:5px;padding:3px 14px;border-right:1px solid #ddd;color:#555;font:11px Arial,sans-serif}
 .ppt-tool-group button{border:0;background:transparent;color:#444;font:11px Arial,sans-serif;text-align:left;cursor:pointer}
 .ppt-tool-group span{font-size:22px;color:#d24726}
 #cloak-overlay .cloak-controls{align-content:flex-start;gap:7px!important}
+#cloak-overlay .ppt-editor-panel{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:8px 12px;width:100%;padding:12px 0 4px;border-top:1px solid #dedede;font:12px Arial,sans-serif}
+#cloak-overlay .ppt-editor-panel[hidden]{display:none!important}
+#cloak-overlay .ppt-editor-heading{grid-column:1/-1;display:flex;align-items:baseline;gap:12px}
+#cloak-overlay .ppt-editor-heading strong{font-size:13px;color:#242424}
+#cloak-overlay .ppt-editor-heading span,#cloak-overlay #ppt-editor-status{color:#666;font-size:11px}
+#cloak-overlay .ppt-editor-panel label{display:flex;flex-direction:column;align-items:stretch;gap:4px}
+#cloak-overlay .ppt-editor-panel input,#cloak-overlay .ppt-editor-panel textarea{width:100%;min-width:0;padding:7px;border:1px solid #b7b7b7;border-radius:3px;background:#fff;color:#222;font:12px Arial,sans-serif;resize:vertical}
+#cloak-overlay .ppt-editor-actions{grid-column:1/-1;display:flex;align-items:center;gap:8px}
+#cloak-overlay .cloak-controls>.cloak-btn,#cloak-overlay .ppt-editor-actions .cloak-btn{height:auto!important;min-height:30px;padding:7px 11px!important;border:1px solid #aaa!important;border-radius:3px!important;background:#fff!important;color:#333!important}
+#cloak-overlay .cloak-controls>.cloak-btn:hover,#cloak-overlay .ppt-editor-actions .cloak-btn:hover{background:#e8edf5!important;border-color:#78879b!important;color:#222!important}
 #cloak-overlay .cloak-sidebar-title{font-weight:700;color:#555}
 #cloak-overlay .cloak-thumbnail{position:relative;min-height:78px;padding:12px 8px 8px;text-align:center}
 #cloak-overlay .cloak-thumbnail::before{content:'';position:absolute;top:10px;left:25%;right:25%;height:32px;background:linear-gradient(#f4f4f4 0 35%,#d24726 36% 43%,#f4f4f4 44%);border:1px solid #ddd}
 #cloak-overlay .cloak-thumbnail{padding-top:52px}
+#cloak-overlay .cloak-thumbnail.active{border-color:var(--theme-main)!important;color:var(--theme-main)!important}
+#cloak-overlay .cloak-thumbnail-title{display:block;max-width:100%;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}
+#cloak-overlay .cloak-thumbnail{flex-direction:column}
+#cloak-overlay .ppt-slide-cover{display:flex;min-height:440px;flex-direction:column;justify-content:center}
+#cloak-overlay .ppt-slide-cover .slide-kicker{padding-bottom:10px;border-bottom:3px solid var(--theme-main)}
+#cloak-overlay .ppt-slide-cover h1{max-width:820px}
+#cloak-overlay .ppt-slide-cover .title-sub{font-size:clamp(20px,2.4vw,30px)!important}
+#cloak-overlay .ppt-slide-content{display:flex;flex-direction:column;justify-content:center;min-height:430px}
+#cloak-overlay .ppt-slide-content ul{margin:8px 0}
+#cloak-overlay .ppt-slide-content .problem{margin-top:14px!important}
+#cloak-overlay .cloak-slide-number{pointer-events:none}
+#cloak-overlay .cloak-footer{justify-content:space-between}
+@media(max-width:850px){#cloak-overlay .ppt-editor-panel{grid-template-columns:repeat(2,minmax(120px,1fr))}}
 #cloak-overlay .cloak-slide{display:flex!important;flex-direction:column!important;align-items:center!important;gap:10px!important}
 #cloak-overlay .ppt-notes{width:min(1050px,88vw);padding:7px 10px;border-top:1px solid #aaa;background:#fff;color:#888;font:12px Arial,sans-serif}
 #cloak-overlay .slide-number{z-index:3}
 #cloak-overlay.level-6e .cloak-topbar,#cloak-overlay.level-5e .cloak-topbar,#cloak-overlay.level-4e .cloak-topbar,#cloak-overlay.level-3e .cloak-topbar,#cloak-overlay.level-2nde .cloak-topbar,#cloak-overlay.level-1ere .cloak-topbar,#cloak-overlay.level-terminale .cloak-topbar{background:#d24726!important;border-bottom-color:#a8321a!important}
+#cloak-overlay[data-subject="francais"]{--theme-main:#a83250;--theme-soft:#faeef1;--theme-border:#e8c4cc;--theme-art:'“ ” • …'}
+#cloak-overlay[data-subject="maths"]{--theme-main:#2563a6;--theme-soft:#edf4fc;--theme-border:#c4d7ed;--theme-art:'∑  π  √  ∫'}
+#cloak-overlay[data-subject="histoire"]{--theme-main:#9a6428;--theme-soft:#fbf4e9;--theme-border:#e9d4b5;--theme-art:'⌛  ◇  ◇  ◇'}
+#cloak-overlay[data-subject="svt"]{--theme-main:#31804c;--theme-soft:#edf7ef;--theme-border:#c9e2ce;--theme-art:'♧  ❋  ♧  ❋'}
+#cloak-overlay[data-subject="physique"]{--theme-main:#6a4fa3;--theme-soft:#f2effa;--theme-border:#d7cdeb;--theme-art:'⚡  ◉  ⚙  △'}
+#cloak-overlay[data-subject="anglais"]{--theme-main:#3d5f9a;--theme-soft:#eef2f8;--theme-border:#cbd6e8;--theme-art:'A  B  C  …'}
+#cloak-overlay[data-subject="espagnol"]{--theme-main:#b24c36;--theme-soft:#fbf0ec;--theme-border:#eccbc2;--theme-art:'¡  ¿  Ñ  Á'}
+#cloak-overlay[data-subject="emc"]{--theme-main:#247c78;--theme-soft:#edf7f6;--theme-border:#c6e2e0;--theme-art:'§  ⚖  ◇  ◇'}
+#cloak-overlay[data-subject="technologie"]{--theme-main:#51616d;--theme-soft:#f0f3f5;--theme-border:#d0d9de;--theme-art:'⚙  ▣  ⌘  ▤'}
+#cloak-overlay[data-subject="powerpoint"]{--theme-main:#c5462f;--theme-soft:#fbefec;--theme-border:#ebc8c0;--theme-art:'▤  ▣  ▤  ▣'}
+#cloak-overlay[data-subject] .cloak-topbar{background:var(--theme-main)!important;border-bottom-color:var(--theme-border)!important}
+#cloak-overlay[data-subject] .cloak-slide::before{content:none!important}
+.ppt-ribbon-tabs{background:var(--theme-main)!important}
+.ppt-file-tab{background:rgba(0,0,0,.2)!important}
+.ppt-ribbon-tab:hover,.ppt-ribbon-tab.active{color:var(--theme-main)!important}
+.ppt-tool-group span{color:var(--theme-main)!important}
+#cloak-overlay .cloak-thumbnail::before{background:linear-gradient(#f4f4f4 0 35%,var(--theme-main) 36% 43%,#f4f4f4 44%)}
+#cloak-overlay.presentation-classique .ppt-slide-content h2{font-family:Georgia,serif!important;border-left:5px solid var(--theme-main);padding-left:16px}
+#cloak-overlay.presentation-classique .ppt-slide-cover{border-bottom:5px solid var(--theme-main)}
+#cloak-overlay.presentation-cours .ppt-slide-content .problem{font-size:clamp(20px,2.2vw,28px)!important;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+#cloak-overlay.presentation-cours .ppt-slide-content li{margin:10px 0}
 @media(max-width:700px){.cloak-topbar{padding:0 12px!important}.cloak-brand{font-size:13px!important}.cloak-btn{padding:6px 9px!important}.cloak-slide{padding:50px 24px 40px!important}.cloak-controls{flex-wrap:wrap}.cloak-controls label{font-size:11px}}
 
 /* --- LECTEUR DE JEUX INTÉGRÉ STYLE POKI --- */
@@ -1442,12 +1540,340 @@ body.cloak-open{overflow:hidden!important}
 
 <script>
     const siteTranslations = {
-        fr: { title: 'Bienvenue sur Zoltrogame !', search: 'Rechercher un jeu...', fullscreen: 'Plein Écran', random: 'Jeu Aléatoire', all: 'Tous', action: 'Action / FPS', course: 'Course / Conduite', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Imagination', exploration: 'Exploration / Horreur', emulateur: 'Émulateur', strategie: 'Stratégie', combat: 'Combat', io: '.IO / Survie', party: 'Party Games', gestion: 'Gestion / Économie', puzzle: 'Radio / Réparation / Utile', favoris: 'Mes favoris', musique: 'Musique' },
-        en: { title: 'Welcome to Zoltrogame!', search: 'Search for a game...', fullscreen: 'Fullscreen', random: 'Random Game', all: 'All', action: 'Action / FPS', course: 'Racing / Driving', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Imagination', exploration: 'Exploration / Horror', emulateur: 'Emulator', strategie: 'Strategy', combat: 'Combat', io: '.IO / Survival', party: 'Party Games', gestion: 'Management / Economy', puzzle: 'Radio / Repair / Useful', favoris: 'My favorites', musique: 'Music' },
-        es: { title: '¡Bienvenido a Zoltrogame!', search: 'Buscar un juego...', fullscreen: 'Pantalla completa', random: 'Juego aleatorio', all: 'Todos', action: 'Acción / FPS', course: 'Carreras / Conducción', simulation: 'Simulación', sandbox: 'Sandbox', imagination: 'Imaginación', exploration: 'Exploración / Terror', emulateur: 'Emulador', strategie: 'Estrategia', combat: 'Combate', io: '.IO / Supervivencia', party: 'Juegos de fiesta', gestion: 'Gestión / Economía', puzzle: 'Radio / Reparación / Útil', favoris: 'Mis favoritos', musique: 'Música' },
-        de: { title: 'Willkommen bei Zoltrogame!', search: 'Spiel suchen...', fullscreen: 'Vollbild', random: 'Zufälliges Spiel', all: 'Alle', action: 'Action / FPS', course: 'Rennen / Fahren', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Fantasie', exploration: 'Erdkundung / Horror', emulateur: 'Emulator', strategie: 'Strategie', combat: 'Kampf', io: '.IO / Überleben', party: 'Partyspiele', gestion: 'Management / Wirtschaft', puzzle: 'Radio / Reparatur / Nützlich', favoris: 'Meine Favoriten', musique: 'Musik' },
-        it: { title: 'Benvenuto su Zoltrogame!', search: 'Cerca un gioco...', fullscreen: 'Schermo intero', random: 'Gioco casuale', all: 'Tutti', action: 'Azione / FPS', course: 'Corse / Guida', simulation: 'Simulazione', sandbox: 'Sandbox', imagination: 'Immaginazione', exploration: 'Esplorazione / Horror', emulateur: 'Emulatore', strategie: 'Strategia', combat: 'Combattimento', io: '.IO / Sopravvivenza', party: 'Giochi di gruppo', gestion: 'Gestione / Economia', puzzle: 'Radio / Riparazione / Utile', favoris: 'I miei preferiti', musique: 'Musica' }
+        fr: { pageTitle: 'Zoltrogame - Le site de mini-jeux en ligne', title: 'Bienvenue sur Zoltrogame !', search: 'Rechercher un jeu...', fullscreen: 'Plein Écran', random: 'Jeu Aléatoire', all: 'Tous', action: 'Action / FPS', course: 'Course / Conduite', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Imagination', exploration: 'Exploration / Horreur', emulateur: 'Émulateur', strategie: 'Stratégie', combat: 'Combat', io: '.IO / Survie', party: 'Party Games', gestion: 'Gestion / Économie', puzzle: 'Radio / Réparation / Utile', favoris: 'Mes favoris', musique: 'Musique' },
+        en: { pageTitle: 'Zoltrogame - Online Minigame Site', title: 'Welcome to Zoltrogame!', search: 'Search for a game...', fullscreen: 'Fullscreen', random: 'Random Game', all: 'All', action: 'Action / FPS', course: 'Racing / Driving', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Imagination', exploration: 'Exploration / Horror', emulateur: 'Emulator', strategie: 'Strategy', combat: 'Combat', io: '.IO / Survival', party: 'Party Games', gestion: 'Management / Economy', puzzle: 'Radio / Repair / Useful', favoris: 'My favorites', musique: 'Music' },
+        es: { pageTitle: 'Zoltrogame - Sitio de minijuegos en línea', title: '¡Bienvenido a Zoltrogame!', search: 'Buscar un juego...', fullscreen: 'Pantalla completa', random: 'Juego aleatorio', all: 'Todos', action: 'Acción / FPS', course: 'Carreras / Conducción', simulation: 'Simulación', sandbox: 'Sandbox', imagination: 'Imaginación', exploration: 'Exploración / Terror', emulateur: 'Emulador', strategie: 'Estrategia', combat: 'Combate', io: '.IO / Supervivencia', party: 'Juegos de fiesta', gestion: 'Gestión / Economía', puzzle: 'Radio / Reparación / Útil', favoris: 'Mis favoritos', musique: 'Música' },
+        de: { pageTitle: 'Zoltrogame - Website für Online-Minispiele', title: 'Willkommen bei Zoltrogame!', search: 'Spiel suchen...', fullscreen: 'Vollbild', random: 'Zufälliges Spiel', all: 'Alle', action: 'Action / FPS', course: 'Rennen / Fahren', simulation: 'Simulation', sandbox: 'Sandbox', imagination: 'Fantasie', exploration: 'Erdkundung / Horror', emulateur: 'Emulator', strategie: 'Strategie', combat: 'Kampf', io: '.IO / Überleben', party: 'Partyspiele', gestion: 'Management / Wirtschaft', puzzle: 'Radio / Reparatur / Nützlich', favoris: 'Meine Favoriten', musique: 'Musik' },
+        it: { pageTitle: 'Zoltrogame - Sito di minigiochi online', title: 'Benvenuto su Zoltrogame!', search: 'Cerca un gioco...', fullscreen: 'Schermo intero', random: 'Gioco casuale', all: 'Tutti', action: 'Azione / FPS', course: 'Corse / Guida', simulation: 'Simulazione', sandbox: 'Sandbox', imagination: 'Immaginazione', exploration: 'Esplorazione / Horror', emulateur: 'Emulatore', strategie: 'Strategia', combat: 'Combattimento', io: '.IO / Sopravvivenza', party: 'Giochi di gruppo', gestion: 'Gestione / Economia', puzzle: 'Radio / Riparazione / Utile', favoris: 'I miei preferiti', musique: 'Musica' }
     };
+
+    const uiPhraseRows = {
+        'Proposer un jeu / Bug / Réclamation':['Suggest a game / Bug / Feedback','Sugerir un juego / Error / Comentario','Spiel vorschlagen / Fehler / Feedback','Proponi un gioco / Bug / Segnalazione'],
+        'Soutenir Zoltrogame':['Support Zoltrogame','Apoya a Zoltrogame','Zoltrogame unterstützen','Sostieni Zoltrogame'],
+        'Fermer':['Close','Cerrar','Schließen','Chiudi'],
+        'Se connecter':['Log in','Iniciar sesión','Anmelden','Accedi'],
+        'Connexion':['Log in','Iniciar sesión','Anmelden','Accedi'],
+        'Créer un compte':['Create an account','Crear una cuenta','Konto erstellen','Crea un account'],
+        'Créer le compte':['Create account','Crear cuenta','Konto erstellen','Crea account'],
+        'Pseudo':['Username','Nombre de usuario','Benutzername','Nome utente'],
+        'Choisis un pseudo':['Choose a username','Elige un nombre de usuario','Wähle einen Benutzernamen','Scegli un nome utente'],
+        'Email pour les nouveautés (facultatif)':['Email for updates (optional)','Correo para novedades (opcional)','E-Mail für Neuigkeiten (optional)','Email per le novità (facoltativa)'],
+        'M’envoyer un email quand de nouveaux jeux arrivent.':['Email me when new games are added.','Enviarme un correo cuando se añadan juegos.','Mich per E-Mail informieren, wenn neue Spiele hinzugefügt werden.','Inviami un’email quando vengono aggiunti nuovi giochi.'],
+        'Mot de passe':['Password','Contraseña','Passwort','Password'],
+        'Compte requis':['Account required','Se requiere una cuenta','Konto erforderlich','Account richiesto'],
+        'Les signalements sont réservés aux membres. Connecte-toi ou crée un compte pour continuer.':['Feedback is available to members. Log in or create an account to continue.','Los comentarios están reservados a los miembros. Inicia sesión o crea una cuenta para continuar.','Feedback ist Mitgliedern vorbehalten. Melde dich an oder erstelle ein Konto.','Le segnalazioni sono riservate ai membri. Accedi o crea un account per continuare.'],
+        'Le centre de signalement est réservé aux membres. Connecte-toi ou crée un compte : le formulaire s’ouvrira ensuite automatiquement.':['The feedback center is for members. Log in or create an account and the form will open automatically.','El centro de comentarios es para miembros. Inicia sesión o crea una cuenta y el formulario se abrirá automáticamente.','Das Feedback-Center ist Mitgliedern vorbehalten. Melde dich an oder erstelle ein Konto; das Formular öffnet sich anschließend automatisch.','Il centro segnalazioni è riservato ai membri. Accedi o crea un account: il modulo si aprirà automaticamente.'],
+        'Tu dois créer un compte ou te connecter pour liker un jeu, sauvegarder un favori ou créer une playlist.':['Create an account or log in to like a game, save a favorite, or create a playlist.','Crea una cuenta o inicia sesión para dar me gusta a un juego, guardar favoritos o crear una lista.','Erstelle ein Konto oder melde dich an, um Spiele zu liken, Favoriten zu speichern oder Playlists zu erstellen.','Crea un account o accedi per mettere mi piace a un gioco, salvare un preferito o creare una playlist.'],
+        'Continuer':['Continue','Continuar','Weiter','Continua'],
+        'Rechercher une langue...':['Search for a language...','Buscar un idioma...','Sprache suchen...','Cerca una lingua...'],
+        'Choisir la langue':['Choose language','Elegir idioma','Sprache auswählen','Scegli la lingua'],
+        'Rechercher une musique sur YouTube...':['Search for music on YouTube...','Buscar música en YouTube...','Musik auf YouTube suchen...','Cerca musica su YouTube...'],
+        'Rechercher':['Search','Buscar','Suchen','Cerca'],
+        'Tous':['All','Todos','Alle','Tutti'],
+        'Hits & Chill':['Hits & Chill','Éxitos y relax','Hits & Chill','Hit e relax'],
+        'Gaming & Tryhard':['Gaming & Tryhard','Gaming y competitivo','Gaming & Tryhard','Gaming e tryhard'],
+        'Nouvelle Playlist':['New playlist','Nueva lista','Neue Playlist','Nuova playlist'],
+        'Tes recherches YouTube':['Your YouTube searches','Tus búsquedas de YouTube','Deine YouTube-Suchen','Le tue ricerche YouTube'],
+        'Playlist : Hits & Chill':['Playlist: Hits & Chill','Lista: Éxitos y relax','Playlist: Hits & Chill','Playlist: Hit e relax'],
+        'Playlist : Gaming & Tryhard':['Playlist: Gaming & Tryhard','Lista: Gaming y competitivo','Playlist: Gaming & Tryhard','Playlist: Gaming e tryhard'],
+        'J’ai créé Zoltrogame pour partager ce projet avec vous ! Pour m’aider à le faire grandir et à continuer, tu peux suivre ma ':['I created Zoltrogame to share this project with you! To help it grow and keep it going, follow my ','¡Creé Zoltrogame para compartir este proyecto contigo! Para ayudarlo a crecer y continuar, puedes seguir mi ','Ich habe Zoltrogame erstellt, um dieses Projekt mit euch zu teilen! Folge meinem Kanal, um das Projekt zu unterstützen: ','Ho creato Zoltrogame per condividere questo progetto con voi! Per aiutarmi a farlo crescere e continuare, segui il mio '],
+        'J’ai créé Zoltrogame pour partager ce projet avec vous !':['I created Zoltrogame to share this project with you!','¡Creé Zoltrogame para compartir este proyecto contigo!','Ich habe Zoltrogame erstellt, um dieses Projekt mit euch zu teilen!','Ho creato Zoltrogame per condividere questo progetto con voi!'],
+        'Pour m’aider à le faire grandir et à continuer, tu peux suivre ma':['To help it grow and keep it going, follow my','Para ayudarlo a crecer y continuar, puedes seguir mi','Folge meinem Kanal, um das Projekt zu unterstützen:','Per aiutarmi a farlo crescere e continuare, segui il mio'],
+        'chaîne YouTube Zoltrogame':['Zoltrogame YouTube channel','canal de YouTube Zoltrogame','YouTube-Kanal Zoltrogame','canale YouTube Zoltrogame'],
+        '. Tu peux aussi découvrir ma chaîne perso, ':['. You can also check out my personal channel, ','. También puedes descubrir mi canal personal, ','. Entdecke auch meinen persönlichen Kanal, ','. Puoi anche scoprire il mio canale personale, '],
+        'où je publie mes vidéos et mes edits.':['where I post my videos and edits.','donde publico mis vídeos y edits.','auf dem ich meine Videos und Edits veröffentliche.','dove pubblico i miei video e i miei edit.'],
+        ', où je publie mes vidéos et mes edits.':[', where I post my videos and edits.',', donde publico mis vídeos y edits.',', auf dem ich meine Videos und Edits veröffentliche.',', dove pubblico i miei video e i miei edit.'],
+        'Si le site te plaît, n’hésite pas à le partager avec tes proches, tes amis… et même ChatGPT ! Chaque partage me donne de la force pour continuer le projet. Merci pour ton soutien !':['If you enjoy the site, share it with family, friends… and even ChatGPT! Every share gives me the motivation to keep this project going. Thanks for your support!','Si te gusta el sitio, compártelo con tus familiares, amigos… ¡e incluso con ChatGPT! Cada vez que lo compartes me das fuerzas para continuar. ¡Gracias por tu apoyo!','Wenn dir die Seite gefällt, teile sie mit Familie, Freunden … und sogar ChatGPT! Jede Weiterempfehlung motiviert mich, das Projekt fortzuführen. Danke für deine Unterstützung!','Se ti piace il sito, condividilo con familiari, amici… e anche con ChatGPT! Ogni condivisione mi dà la forza per continuare il progetto. Grazie per il supporto!'],
+        'Ajouter à une playlist':['Add to playlist','Añadir a una lista','Zur Playlist hinzufügen','Aggiungi alla playlist'],
+        'Clique sur la playlist dans laquelle tu veux mettre cette musique.':['Choose the playlist where you want to add this music.','Elige la lista a la que quieres añadir esta música.','Wähle die Playlist, zu der du diese Musik hinzufügen möchtest.','Scegli la playlist in cui vuoi aggiungere questa musica.'],
+        'Piste précédente':['Previous track','Pista anterior','Vorheriger Titel','Traccia precedente'],
+        'Piste suivante':['Next track','Pista siguiente','Nächster Titel','Traccia successiva'],
+        'Couper le son':['Mute','Silenciar','Stummschalten','Disattiva audio'],
+        'Activer le son':['Unmute','Activar sonido','Ton einschalten','Attiva audio'],
+        'Volume':['Volume','Volumen','Lautstärke','Volume'],
+        'Sélectionne une musique':['Select a track','Elige una canción','Titel auswählen','Seleziona un brano'],
+        'Ajouter aux favoris':['Add to favorites','Añadir a favoritos','Zu Favoriten hinzufügen','Aggiungi ai preferiti'],
+        'Retirer des favoris':['Remove from favorites','Quitar de favoritos','Aus Favoriten entfernen','Rimuovi dai preferiti'],
+        'Afficher le lecteur musical':['Show music player','Mostrar reproductor de música','Musikplayer anzeigen','Mostra il lettore musicale'],
+        'Retour':['Back','Volver','Zurück','Indietro'],
+        'Mode présentation':['Presentation mode','Modo presentación','Präsentationsmodus','Modalità presentazione'],
+        'Plein écran':['Fullscreen','Pantalla completa','Vollbild','Schermo intero'],
+        'Ouvrir':['Open','Abrir','Öffnen','Apri'],
+        'Ce jeu ne peut pas être intégré ici':['This game cannot be embedded here','Este juego no se puede insertar aquí','Dieses Spiel kann hier nicht eingebettet werden','Questo gioco non può essere incorporato qui'],
+        'Certains sites refusent l’affichage intégré. Clique sur « Ouvrir le jeu » pour jouer directement sur le site d’origine.':['Some sites block embedded play. Click “Open game” to play on the original site.','Algunos sitios bloquean la reproducción integrada. Pulsa «Abrir juego» para jugar en el sitio original.','Einige Websites blockieren eingebettete Spiele. Klicke auf „Spiel öffnen“, um auf der Originalseite zu spielen.','Alcuni siti bloccano la riproduzione incorporata. Clicca su «Apri gioco» per giocare sul sito originale.'],
+        "Certains sites refusent l'affichage intégré. Clique sur « Ouvrir le jeu » pour jouer directement sur le site d'origine.":['Some sites block embedded play. Click “Open game” to play on the original site.','Algunos sitios bloquean la reproducción integrada. Pulsa «Abrir juego» para jugar en el sitio original.','Einige Websites blockieren eingebettete Spiele. Klicke auf „Spiel öffnen“, um auf der Originalseite zu spielen.','Alcuni siti bloccano la riproduzione incorporata. Clicca su «Apri gioco» per giocare sul sito originale.'],
+        'WASM Arcade interdit à Zoltrogame d’afficher GTA III dans une fenêtre intégrée. Clique sur « Ouvrir le jeu » pour le lancer sur son site.':['WASM Arcade does not allow Zoltrogame to show GTA III in an embedded window. Click “Open game” to launch it on their site.','WASM Arcade no permite que Zoltrogame muestre GTA III en una ventana integrada. Pulsa «Abrir juego» para abrirlo en su sitio.','WASM Arcade erlaubt Zoltrogame nicht, GTA III in einem eingebetteten Fenster anzuzeigen. Klicke auf „Spiel öffnen“, um es dort zu starten.','WASM Arcade non consente a Zoltrogame di mostrare GTA III in una finestra incorporata. Clicca su «Apri gioco» per avviarlo sul loro sito.'],
+        'Réessayer':['Retry','Reintentar','Erneut versuchen','Riprova'],
+        'Ouvrir le jeu':['Open game','Abrir juego','Spiel öffnen','Apri gioco'],
+        'Si le jeu ne se charge pas ici, clique sur « Ouvrir » pour le lancer sur le site d’origine.':['If the game does not load here, click “Open” to launch it on the original site.','Si el juego no carga aquí, pulsa «Abrir» para iniciarlo en el sitio original.','Wenn das Spiel hier nicht lädt, klicke auf „Öffnen“, um es auf der Originalseite zu starten.','Se il gioco non si carica qui, clicca su «Apri» per avviarlo sul sito originale.'],
+        'Centre de signalement':['Feedback center','Centro de comentarios','Feedback-Center','Centro segnalazioni'],
+        'Choisis le sujet et décris précisément ta demande. Elle sera transmise à l’équipe Zoltrogame.':['Choose a topic and describe your request. It will be sent to the Zoltrogame team.','Elige un tema y describe tu solicitud. Se enviará al equipo de Zoltrogame.','Wähle ein Thema und beschreibe dein Anliegen. Es wird an das Zoltrogame-Team gesendet.','Scegli un argomento e descrivi la richiesta. Verrà inviata al team Zoltrogame.'],
+        'Catégorie :':['Category:','Categoría:','Kategorie:','Categoria:'],
+        'Proposer un nouveau jeu':['Suggest a new game','Sugerir un juego nuevo','Neues Spiel vorschlagen','Proponi un nuovo gioco'],
+        'Signaler un bug sur le site ou un jeu':['Report a bug on the site or a game','Informar de un error del sitio o de un juego','Fehler auf der Website oder in einem Spiel melden','Segnala un bug del sito o di un gioco'],
+        'Plainte / Réclamation':['Complaint / Feedback','Queja / Reclamación','Beschwerde / Feedback','Reclamo / Segnalazione'],
+        'Autre idée / Suggestion':['Other idea / Suggestion','Otra idea / Sugerencia','Andere Idee / Vorschlag','Altra idea / Suggerimento'],
+        'Autre moyen de contact (facultatif) :':['Other way to contact you (optional):','Otra forma de contacto (opcional):','Weitere Kontaktmöglichkeit (optional):','Altro modo per contattarti (facoltativo):'],
+        'Ex. : un pseudo ou un autre email':['e.g. a username or another email','P. ej.: un nombre de usuario u otro correo','z. B. Benutzername oder andere E-Mail','Es.: un nome utente o un’altra email'],
+        'Détails de ta demande :':['Request details:','Detalles de tu solicitud:','Details deines Anliegens:','Dettagli della richiesta:'],
+        'Décris ta demande...':['Describe your request...','Describe tu solicitud...','Beschreibe dein Anliegen...','Descrivi la tua richiesta...'],
+        'Envoyer le message':['Send message','Enviar mensaje','Nachricht senden','Invia messaggio'],
+        'Ouverture de la présentation':['Opening presentation','Abriendo la presentación','Präsentation wird geöffnet','Apertura della presentazione'],
+        'Fichier':['File','Archivo','Datei','File'],
+        'Accueil':['Home','Inicio','Start','Home'],
+        'Insertion':['Insert','Insertar','Einfügen','Inserisci'],
+        'Création':['Design','Diseño','Entwurf','Progettazione'],
+        'Transitions':['Transitions','Transiciones','Übergänge','Transizioni'],
+        'Animations':['Animations','Animaciones','Animationen','Animazioni'],
+        'Diaporama':['Slide show','Presentación','Bildschirmpräsentation','Presentazione'],
+        'Révision':['Review','Revisar','Überprüfen','Revisione'],
+        'Affichage':['View','Vista','Ansicht','Visualizza'],
+        'Onglets du ruban':['Ribbon tabs','Pestañas de la cinta','Menübandregister','Schede della barra multifunzione'],
+        'Outils des diapositives':['Slide tools','Herramientas de diapositiva','Folienwerkzeuge','Strumenti diapositiva'],
+        'Précédente':['Previous','Anterior','Zurück','Precedente'],
+        'Nouvelle':['New','Nueva','Neu','Nuova'],
+        'diapositive':['slide','diapositiva','Folie','diapositiva'],
+        'Modifier':['Edit','Editar','Bearbeiten','Modifica'],
+        'Supprimer':['Delete','Eliminar','Löschen','Elimina'],
+        'Suivante':['Next','Siguiente','Weiter','Successiva'],
+        'Ouvrir une présentation':['Open a presentation','Abrir una presentación','Präsentation öffnen','Apri una presentazione'],
+        'Ouvrir une présentation PowerPoint':['Open a PowerPoint presentation','Abrir una presentación de PowerPoint','PowerPoint-Präsentation öffnen','Apri una presentazione PowerPoint'],
+        'Importer un fichier .pptx depuis cet appareil':['Import a .pptx file from this device','Importar un archivo .pptx desde este dispositivo','Eine .pptx-Datei von diesem Gerät importieren','Importa un file .pptx da questo dispositivo'],
+        'Le fichier est lu directement dans ce navigateur et n’est pas envoyé.':['The file is read directly in this browser and is not uploaded.','El archivo se lee directamente en este navegador y no se envía.','Die Datei wird direkt in diesem Browser gelesen und nicht hochgeladen.','Il file viene letto direttamente nel browser e non viene caricato.'],
+        'Ouvrir un lien public OneDrive / PowerPoint Online ou Google Slides':['Open a public OneDrive / PowerPoint Online or Google Slides link','Abrir un enlace público de OneDrive / PowerPoint Online o Google Slides','Öffentlichen OneDrive- / PowerPoint-Online- oder Google-Slides-Link öffnen','Apri un link pubblico OneDrive / PowerPoint Online o Google Slides'],
+        'Ouvrir le lien':['Open link','Abrir enlace','Link öffnen','Apri link'],
+        'Revenir à ma présentation':['Back to my presentation','Volver a mi presentación','Zurück zu meiner Präsentation','Torna alla mia presentazione'],
+        'Ouvrir dans un nouvel onglet':['Open in a new tab','Abrir en una pestaña nueva','In neuem Tab öffnen','Apri in una nuova scheda'],
+        'Les fichiers .pptx sont affichés en mode compatibilité : la mise en page, les polices, animations et transitions complexes peuvent différer. Pour les liens, l’accès doit être public et l’intégration autorisée par le service.':['.pptx files are shown in compatibility mode: layouts, fonts, animations and complex transitions may differ. Links must be public and embedding must be allowed by the service.','Los archivos .pptx se muestran en modo de compatibilidad: el diseño, las fuentes, las animaciones y las transiciones complejas pueden variar. Los enlaces deben ser públicos y permitir la inserción.','.pptx-Dateien werden im Kompatibilitätsmodus angezeigt: Layouts, Schriftarten, Animationen und komplexe Übergänge können abweichen. Links müssen öffentlich sein und Einbettung erlauben.','I file .pptx vengono mostrati in modalità compatibilità: layout, caratteri, animazioni e transizioni complesse possono differire. I link devono essere pubblici e consentire l’incorporamento.'],
+        'Matière':['Subject','Asignatura','Fach','Materia'],
+        'Niveau':['Grade','Nivel','Klassenstufe','Livello'],
+        'Présentation':['Presentation','Presentación','Präsentation','Presentazione'],
+        'Sobre':['Simple','Sencillo','Schlicht','Semplice'],
+        'Classique':['Classic','Clásico','Klassisch','Classico'],
+        'Cours':['Lesson','Clase','Unterricht','Lezione'],
+        'Modifications enregistrées.':['Changes saved.','Cambios guardados.','Änderungen gespeichert.','Modifiche salvate.'],
+        'Enregistrement impossible dans ce navigateur.':['Unable to save in this browser.','No se pudo guardar en este navegador.','Speichern in diesem Browser nicht möglich.','Impossibile salvare in questo browser.'],
+        'Sauvegarde invalide : le contenu d’origine a été chargé.':['Invalid save data: the original content was loaded.','Guardado no válido: se cargó el contenido original.','Ungültiger Speicherstand: Der ursprüngliche Inhalt wurde geladen.','Salvataggio non valido: è stato caricato il contenuto originale.'],
+        'Lecture de la sauvegarde impossible.':['Unable to read the saved data.','No se pudo leer el guardado.','Gespeicherte Daten konnten nicht gelesen werden.','Impossibile leggere il salvataggio.'],
+        'Le titre de la diapositive ne peut pas être vide.':['The slide title cannot be empty.','El título de la diapositiva no puede estar vacío.','Der Folientitel darf nicht leer sein.','Il titolo della diapositiva non può essere vuoto.'],
+        'Une présentation doit garder au moins une diapositive.':['A presentation must contain at least one slide.','Una presentación debe tener al menos una diapositiva.','Eine Präsentation muss mindestens eine Folie enthalten.','Una presentazione deve contenere almeno una diapositiva.'],
+        'Si le lecteur est bloqué par les autorisations du lien, ouvre-le directement dans le service d’origine.':['If link permissions block the viewer, open it directly in the original service.','Si los permisos del enlace bloquean el visor, ábrelo directamente en el servicio original.','Wenn die Linkberechtigungen die Anzeige blockieren, öffne sie direkt im ursprünglichen Dienst.','Se i permessi del link bloccano il visualizzatore, aprilo direttamente nel servizio originale.'],
+        'Choisis un fichier .pptx. Les anciens fichiers .ppt ne sont pas pris en charge.':['Choose a .pptx file. Older .ppt files are not supported.','Elige un archivo .pptx. No se admiten archivos .ppt antiguos.','Wähle eine .pptx-Datei. Ältere .ppt-Dateien werden nicht unterstützt.','Scegli un file .pptx. I vecchi file .ppt non sono supportati.'],
+        'Lecture du fichier PowerPoint…':['Reading the PowerPoint file…','Leyendo el archivo de PowerPoint…','PowerPoint-Datei wird gelesen…','Lettura del file PowerPoint…'],
+        'Une erreur inconnue a empêché la lecture du fichier.':['An unknown error prevented the file from being read.','Un error desconocido impidió leer el archivo.','Ein unbekannter Fehler hat das Lesen der Datei verhindert.','Un errore sconosciuto ha impedito la lettura del file.'],
+        'Impossible d’ouvrir ce lien.':['Unable to open this link.','No se pudo abrir este enlace.','Dieser Link kann nicht geöffnet werden.','Impossibile aprire questo link.'],
+        'Le fichier dépasse la limite de 50 Mo.':['The file exceeds the 50 MB limit.','El archivo supera el límite de 50 MB.','Die Datei überschreitet die Grenze von 50 MB.','Il file supera il limite di 50 MB.'],
+        'L’archive .pptx est invalide ou incomplète.':['The .pptx archive is invalid or incomplete.','El archivo .pptx no es válido o está incompleto.','Das .pptx-Archiv ist ungültig oder unvollständig.','L’archivio .pptx non è valido o è incompleto.'],
+        'Ce fichier PowerPoint utilise un format ZIP64 non pris en charge.':['This PowerPoint file uses an unsupported ZIP64 format.','Este archivo de PowerPoint usa un formato ZIP64 no compatible.','Diese PowerPoint-Datei verwendet ein nicht unterstütztes ZIP64-Format.','Questo file PowerPoint usa un formato ZIP64 non supportato.'],
+        'Le nombre de fichiers dans cette présentation est invalide.':['The number of files in this presentation is invalid.','El número de archivos de esta presentación no es válido.','Die Anzahl der Dateien in dieser Präsentation ist ungültig.','Il numero di file in questa presentazione non è valido.'],
+        'La structure du fichier .pptx est invalide.':['The .pptx file structure is invalid.','La estructura del archivo .pptx no es válida.','Die .pptx-Dateistruktur ist ungültig.','La struttura del file .pptx non è valida.'],
+        'Ce fichier est chiffré. Déverrouille-le puis enregistre-le en .pptx.':['This file is encrypted. Unlock it and save it as .pptx.','Este archivo está cifrado. Desbloquéalo y guárdalo como .pptx.','Diese Datei ist verschlüsselt. Entsperre sie und speichere sie als .pptx.','Questo file è crittografato. Sbloccalo e salvalo come .pptx.'],
+        'Les archives ZIP64 ne sont pas prises en charge.':['ZIP64 archives are not supported.','No se admiten archivos ZIP64.','ZIP64-Archive werden nicht unterstützt.','Gli archivi ZIP64 non sono supportati.'],
+        'La présentation est trop volumineuse à décompresser dans le navigateur.':['The presentation is too large to decompress in the browser.','La presentación es demasiado grande para descomprimirla en el navegador.','Die Präsentation ist zu groß, um sie im Browser zu entpacken.','La presentazione è troppo grande per essere decompressa nel browser.'],
+        'Un élément de la présentation dépasse la limite de 64 Mo.':['A presentation item exceeds the 64 MB limit.','Un elemento de la presentación supera el límite de 64 MB.','Ein Präsentationselement überschreitet die Grenze von 64 MB.','Un elemento della presentazione supera il limite di 64 MB.'],
+        'Une partie du fichier .pptx est endommagée.':['Part of the .pptx file is damaged.','Una parte del archivo .pptx está dañada.','Ein Teil der .pptx-Datei ist beschädigt.','Una parte del file .pptx è danneggiata.'],
+        'Une partie du fichier .pptx est tronquée.':['Part of the .pptx file is truncated.','Una parte del archivo .pptx está truncada.','Ein Teil der .pptx-Datei ist abgeschnitten.','Una parte del file .pptx è troncata.'],
+        'Ce navigateur ne permet pas de décompresser les fichiers .pptx. Essaie un navigateur récent.':['This browser cannot decompress .pptx files. Try a recent browser.','Este navegador no puede descomprimir archivos .pptx. Prueba con un navegador actualizado.','Dieser Browser kann keine .pptx-Dateien entpacken. Verwende einen aktuellen Browser.','Questo browser non può decomprimere file .pptx. Prova con un browser aggiornato.'],
+        'Les données décompressées dépassent la taille annoncée.':['The decompressed data exceeds the stated size.','Los datos descomprimidos superan el tamaño indicado.','Die entpackten Daten überschreiten die angegebene Größe.','I dati decompressi superano la dimensione dichiarata.'],
+        'Impossible de décompresser ce fichier .pptx.':['Unable to decompress this .pptx file.','No se pudo descomprimir este archivo .pptx.','Diese .pptx-Datei kann nicht entpackt werden.','Impossibile decomprimere questo file .pptx.'],
+        'Une partie du fichier .pptx est invalide.':['Part of the .pptx file is invalid.','Una parte del archivo .pptx no es válida.','Ein Teil der .pptx-Datei ist ungültig.','Una parte del file .pptx non è valida.'],
+        'La taille des diapositives est absente ou invalide.':['The slide dimensions are missing or invalid.','Las dimensiones de las diapositivas faltan o no son válidas.','Die Foliengröße fehlt oder ist ungültig.','Le dimensioni delle diapositive sono assenti o non valide.'],
+        'Aucune diapositive lisible trouvée (maximum : 200).':['No readable slides found (maximum: 200).','No se encontraron diapositivas legibles (máximo: 200).','Keine lesbaren Folien gefunden (maximal: 200).','Nessuna diapositiva leggibile trovata (massimo: 200).'],
+        'Entre un lien valide commençant par https://.':['Enter a valid link starting with https://.','Introduce un enlace válido que empiece por https://.','Gib einen gültigen Link ein, der mit https:// beginnt.','Inserisci un link valido che inizi con https://.'],
+        'Pour ta sécurité, seuls les liens https:// sont acceptés.':['For your security, only https:// links are accepted.','Por seguridad, solo se aceptan enlaces https://.','Zu deiner Sicherheit werden nur https://-Links akzeptiert.','Per la tua sicurezza, sono accettati solo link https://.'],
+        'Les liens contenant un nom d’utilisateur ou un mot de passe ne sont pas acceptés.':['Links containing a username or password are not accepted.','No se aceptan enlaces que contengan un nombre de usuario o una contraseña.','Links mit Benutzername oder Passwort werden nicht akzeptiert.','I link contenenti un nome utente o una password non sono accettati.'],
+        'Utilise un lien de partage OneDrive, PowerPoint Online ou Google Slides.':['Use a OneDrive, PowerPoint Online, or Google Slides sharing link.','Usa un enlace compartido de OneDrive, PowerPoint Online o Google Slides.','Verwende einen Freigabelink von OneDrive, PowerPoint Online oder Google Slides.','Usa un link di condivisione OneDrive, PowerPoint Online o Google Slides.'],
+        'Logo onglet':['Tab icon','Icono de pestaña','Registersymbol','Icona scheda'],
+        'Document':['Document','Documento','Dokument','Documento'],
+        'Livre':['Book','Libro','Buch','Libro'],
+        'Note':['Note','Nota','Notiz','Nota'],
+        'Histoire':['History','Historia','Geschichte','Storia'],
+        'Français':['French','Francés','Französisch','Francese'],
+        'Mathématiques':['Mathematics','Matemáticas','Mathematik','Matematica'],
+        'Histoire-Géo':['History & Geography','Historia y Geografía','Geschichte & Geografie','Storia e geografia'],
+        'Physique-Chimie':['Physics & Chemistry','Física y Química','Physik & Chemie','Fisica e chimica'],
+        'Anglais':['English','Inglés','Englisch','Inglese'],
+        'Espagnol':['Spanish','Español','Spanisch','Spagnolo'],
+        'Technologie':['Technology','Tecnología','Technik','Tecnologia'],
+        '6e':['6th grade','6.º grado','6. Klasse','1ª media'],
+        '5e':['7th grade','1.º ESO','7. Klasse','2ª media'],
+        '4e':['8th grade','2.º ESO','8. Klasse','3ª media'],
+        '3e':['9th grade','3.º ESO','9. Klasse','3ª media'],
+        '2nde':['10th grade','4.º ESO','10. Klasse','1º superiore'],
+        '1ère':['11th grade','1.º Bachillerato','11. Klasse','2º superiore'],
+        'Terminale':['12th grade','2.º Bachillerato','12. Klasse','3º superiore'],
+        'Modifier l’exposé':['Edit presentation','Editar presentación','Präsentation bearbeiten','Modifica presentazione'],
+        "Modifier l'exposé":['Edit presentation','Editar presentación','Präsentation bearbeiten','Modifica presentazione'],
+        'Modifier la diapositive active':['Edit the current slide','Editar la diapositiva actual','Aktuelle Folie bearbeiten','Modifica la diapositiva corrente'],
+        'Les changements sont enregistrés dans ce navigateur.':['Changes are saved in this browser.','Los cambios se guardan en este navegador.','Änderungen werden in diesem Browser gespeichert.','Le modifiche vengono salvate in questo browser.'],
+        'Titre':['Title','Título','Titel','Titolo'],
+        'Texte':['Text','Texto','Text','Testo'],
+        'Un paragraphe par ligne':['One paragraph per line','Un párrafo por línea','Ein Absatz pro Zeile','Un paragrafo per riga'],
+        'Points clés':['Key points','Puntos clave','Kernpunkte','Punti chiave'],
+        'Un point par ligne':['One point per line','Un punto por línea','Ein Punkt pro Zeile','Un punto per riga'],
+        'Encadré':['Callout','Recuadro','Infokasten','Riquadro'],
+        'Facultatif':['Optional','Opcional','Optional','Facoltativo'],
+        'Appliquer':['Apply','Aplicar','Übernehmen','Applica'],
+        'Diapositives':['Slides','Diapositivas','Folien','Diapositive'],
+        'Cliquez pour ajouter des notes':['Click to add notes','Haz clic para añadir notas','Klicken, um Notizen hinzuzufügen','Clicca per aggiungere note'],
+        '← → pour changer de diapositive • Échap pour fermer':['← → to change slides • Esc to close','← → para cambiar de diapositiva • Esc para cerrar','← → zum Wechseln der Folien • Esc zum Schließen','← → per cambiare diapositiva • Esc per chiudere'],
+        'Échap':['Esc','Esc','Esc','Esc'],
+        'Bienvenue sur Zoltrogame':['Welcome to Zoltrogame','Te damos la bienvenida a Zoltrogame','Willkommen bei Zoltrogame','Benvenuto su Zoltrogame'],
+        'Choisis comment profiter de Zoltrogame.':['Choose how you want to enjoy Zoltrogame.','Elige cómo quieres disfrutar de Zoltrogame.','Wähle, wie du Zoltrogame nutzen möchtest.','Scegli come usare Zoltrogame.'],
+        'Ne plus demander':['Don’t ask again','No volver a preguntar','Nicht erneut fragen','Non chiedermelo più'],
+        'Mon compte':['My account','Mi cuenta','Mein Konto','Il mio account'],
+        'Aucune musique dans cette playlist. Clique sur le \'+\' d’une musique pour l’ajouter ici !':['No music in this playlist. Click a music card’s “+” to add it here!','No hay música en esta lista. ¡Pulsa el «+» de una canción para añadirla!','Diese Playlist ist leer. Klicke auf das „+“ bei einem Titel, um ihn hinzuzufügen!','Nessuna musica in questa playlist. Clicca su «+» su un brano per aggiungerlo!'],
+        "Aucune musique dans cette playlist. Clique sur le '+' d'une musique pour l'ajouter ici !":['No music in this playlist. Click a music card’s “+” to add it here!','No hay música en esta lista. ¡Pulsa el «+» de una canción para añadirla!','Diese Playlist ist leer. Klicke auf das „+“ bei einem Titel, um ihn hinzuzufügen!','Nessuna musica in questa playlist. Clicca su «+» su un brano per aggiungerlo!'],
+        'Supprimer de la playlist':['Remove from playlist','Quitar de la lista','Aus Playlist entfernen','Rimuovi dalla playlist'],
+        'Une playlist avec ce nom existe déjà !':['A playlist with this name already exists!','¡Ya existe una lista con ese nombre!','Eine Playlist mit diesem Namen gibt es bereits!','Esiste già una playlist con questo nome!'],
+        'Tu n’as encore aucune playlist. Crée-en une avec « Nouvelle Playlist ».':['You don’t have any playlists yet. Create one with “New playlist”.','Aún no tienes listas. Crea una con «Nueva lista».','Du hast noch keine Playlists. Erstelle eine mit „Neue Playlist“.','Non hai ancora playlist. Creane una con «Nuova playlist».'],
+        "Tu n'as encore aucune playlist. Crée-en une avec « Nouvelle Playlist ».":['You don’t have any playlists yet. Create one with “New playlist”.','Aún no tienes listas. Crea una con «Nueva lista».','Du hast noch keine Playlists. Erstelle eine mit „Neue Playlist“.','Non hai ancora playlist. Creane una con «Nuova playlist».'],
+        'Tu veux vraiment supprimer la playlist':['Do you really want to delete the playlist','¿De verdad quieres eliminar la lista','Möchtest du die Playlist wirklich löschen','Vuoi davvero eliminare la playlist'],
+        'Aucun jeu ne correspond à votre recherche.':['No games match your search.','No hay juegos que coincidan con tu búsqueda.','Keine Spiele entsprechen deiner Suche.','Nessun gioco corrisponde alla ricerca.'],
+        'Aucun jeu n’est actuellement visible !': ['No games are currently visible!','¡No hay juegos visibles en este momento!','Zurzeit sind keine Spiele sichtbar!','Nessun gioco è attualmente visibile!'],
+        "Aucun jeu n'est actuellement visible !": ['No games are currently visible!','¡No hay juegos visibles en este momento!','Zurzeit sind keine Spiele sichtbar!','Nessun gioco è attualmente visibile!'],
+        'Aucun résultat ne correspond à votre recherche.':['No results match your search.','Ningún resultado coincide con tu búsqueda.','Keine Ergebnisse entsprechen deiner Suche.','Nessun risultato corrisponde alla ricerca.'],
+        'Chargement...':['Loading...','Cargando...','Wird geladen...','Caricamento...'],
+        '🔎 Recherche sur YouTube...':['🔎 Searching YouTube...','🔎 Buscando en YouTube...','🔎 YouTube-Suche...','🔎 Ricerca su YouTube...'],
+        'Erreur de recherche YouTube.':['YouTube search error.','Error en la búsqueda de YouTube.','Fehler bei der YouTube-Suche.','Errore di ricerca YouTube.'],
+        'Pseudo et mot de passe requis.':['Username and password are required.','El nombre de usuario y la contraseña son obligatorios.','Benutzername und Passwort sind erforderlich.','Nome utente e password sono obbligatori.'],
+        'Ce pseudo est déjà utilisé.':['This username is already taken.','Este nombre de usuario ya está en uso.','Dieser Benutzername ist bereits vergeben.','Questo nome utente è già in uso.'],
+        'Aucun compte trouvé pour ce pseudo.':['No account found for this username.','No se encontró ninguna cuenta con este nombre de usuario.','Kein Konto mit diesem Benutzernamen gefunden.','Nessun account trovato per questo nome utente.'],
+        'Mot de passe incorrect.':['Incorrect password.','Contraseña incorrecta.','Falsches Passwort.','Password errata.'],
+        'Ajoute ton email pour recevoir les nouveautés.':['Add your email to receive updates.','Añade tu correo para recibir novedades.','Gib deine E-Mail-Adresse ein, um Neuigkeiten zu erhalten.','Aggiungi la tua email per ricevere le novità.'],
+        'Création du compte…':['Creating account…','Creando la cuenta…','Konto wird erstellt…','Creazione account…'],
+        'Connexion…':['Logging in…','Iniciando sesión…','Anmeldung läuft…','Accesso in corso…'],
+        'Tu veux te déconnecter ?':['Do you want to log out?','¿Quieres cerrar sesión?','Möchtest du dich abmelden?','Vuoi uscire?'],
+        'Le nom du jeu est obligatoire.':['A game name is required.','El nombre del juego es obligatorio.','Ein Spielname ist erforderlich.','Il nome del gioco è obbligatorio.'],
+        'Une playlist doit garder au moins une diapositive.':['A presentation must keep at least one slide.','Una presentación debe conservar al menos una diapositiva.','Eine Präsentation muss mindestens eine Folie behalten.','Una presentazione deve mantenere almeno una diapositiva.'],
+        'Les modifications sont enregistrées dans ce navigateur.':['Changes are saved in this browser.','Los cambios se guardan en este navegador.','Änderungen werden in diesem Browser gespeichert.','Le modifiche vengono salvate in questo browser.'],
+        'Le jeu ne peut pas être affiché dans cette fenêtre.':['This game cannot be displayed in this window.','Este juego no se puede mostrar en esta ventana.','Dieses Spiel kann in diesem Fenster nicht angezeigt werden.','Questo gioco non può essere visualizzato in questa finestra.']
+    };
+    const uiPhraseTranslations = Object.fromEntries(Object.entries(uiPhraseRows).map(([phrase,values])=>[phrase.trim(),values]));
+    const uiLanguageIndexes = { en:0, es:1, de:2, it:3 };
+    const uiSourceText = new WeakMap();
+    const uiSourceAttributes = new WeakMap();
+    let activeUiLanguage = 'fr';
+
+    function translateUiValue(value, language) {
+        const leadingWhitespace = value.match(/^\s*/)?.[0] || '';
+        const trailingWhitespace = value.match(/\s*$/)?.[0] || '';
+        const key = value.trim().replace(/\s+/g,' ');
+        if (!key) return value;
+        const categoryKey = Object.keys(siteTranslations.fr).find(item => siteTranslations.fr[item] === key);
+        if (categoryKey && siteTranslations[language]?.[categoryKey]) {
+            return `${leadingWhitespace}${siteTranslations[language][categoryKey]}${trailingWhitespace}`;
+        }
+        if (/^\d+\s+jeux?$/.test(key)) {
+            const count = Number(key.match(/^\d+/)[0]);
+            const labels = {
+                en: `${count} ${count === 1 ? 'game' : 'games'}`,
+                es: `${count} ${count === 1 ? 'juego' : 'juegos'}`,
+                de: `${count} ${count === 1 ? 'Spiel' : 'Spiele'}`,
+                it: `${count} ${count === 1 ? 'gioco' : 'giochi'}`
+            };
+            if (labels[language]) return labels[language];
+        }
+        if (/^\d+\s+titres?$/.test(key)) {
+            const count = Number(key.match(/^\d+/)[0]);
+            const labels = { en:`${count} ${count === 1 ? 'track' : 'tracks'}`, es:`${count} ${count === 1 ? 'canción' : 'canciones'}`, de:`${count} ${count === 1 ? 'Titel' : 'Titel'}`, it:`${count} ${count === 1 ? 'brano' : 'brani'}` };
+            if (labels[language]) return labels[language];
+        }
+        const index = uiLanguageIndexes[language];
+        const templates = [
+            [/^Bienvenue (.+) ! Ton compte a bien été créé\.$/, name => [`Welcome ${name}! Your account was created successfully.`,`¡Bienvenido/a ${name}! Tu cuenta se ha creado correctamente.`,`Willkommen ${name}! Dein Konto wurde erfolgreich erstellt.`,`Benvenuto/a ${name}! Il tuo account è stato creato.`][index]],
+            [/^Bon retour (.+) !$/, name => [`Welcome back, ${name}!`,`¡Qué bueno verte de nuevo, ${name}!`,`Willkommen zurück, ${name}!`,`Bentornato/a, ${name}!`][index]],
+            [/^Connecté en tant que (.+) \((.+)\)\. Ces informations seront jointes au signalement\.$/, (name,email) => [`Signed in as ${name} (${email}). This information will be included with your report.`,`Has iniciado sesión como ${name} (${email}). Esta información se incluirá en el informe.`,`Angemeldet als ${name} (${email}). Diese Angaben werden der Meldung beigefügt.`,`Accesso effettuato come ${name} (${email}). Queste informazioni saranno incluse nella segnalazione.`][index]],
+            [/^« (.+) » est déjà dans « (.+) » !$/, (track,playlist) => [`“${track}” is already in “${playlist}”!`,`¡«${track}» ya está en «${playlist}»!`,`„${track}“ ist bereits in „${playlist}“!`,`«${track}» è già in «${playlist}»!`][index]],
+            [/^« (.+) » a été ajouté à « (.+) » !$/, (track,playlist) => [`“${track}” was added to “${playlist}”!`,`¡Se añadió «${track}» a «${playlist}»!`,`„${track}“ wurde zu „${playlist}“ hinzugefügt!`,`«${track}» è stato aggiunto a «${playlist}»!`][index]],
+            [/^Veux-tu vraiment supprimer la playlist "(.+)" \?$/, name => [`Do you really want to delete the “${name}” playlist?`,`¿Seguro que quieres eliminar la lista «${name}»?`,`Möchtest du die Playlist „${name}“ wirklich löschen?`,`Vuoi davvero eliminare la playlist «${name}»?`][index]],
+            [/^(.+) résultat\(s\) pour "(.+)"\.$/, (count,query) => [`${count} result(s) for “${query}”.`,`${count} resultado(s) para «${query}».`,`${count} Ergebnis(se) für „${query}“.`,`${count} risultato/i per «${query}».`][index]],
+            [/^(\d+) diapositive(s?) importée(s?)\.$/, count => [`${count} slide${count === '1' ? '' : 's'} imported.`,`${count} diapositiva${count === '1' ? '' : 's'} importada${count === '1' ? '' : 's'}.`,`${count} Folie${count === '1' ? '' : 'n'} importiert.`,`${count} diapositiva${count === '1' ? '' : 'e'} importata${count === '1' ? '' : 'e'}.`][index]],
+            [/^Élément PowerPoint manquant : (.+)$/, path => [`Missing PowerPoint item: ${path}`,`Falta un elemento de PowerPoint: ${path}`,`Fehlendes PowerPoint-Element: ${path}`,`Elemento PowerPoint mancante: ${path}`][index]],
+            [/^Méthode de compression ZIP non prise en charge \((.+)\)\.$/, method => [`Unsupported ZIP compression method (${method}).`,`Método de compresión ZIP no compatible (${method}).`,`Nicht unterstützte ZIP-Komprimierungsmethode (${method}).`,`Metodo di compressione ZIP non supportato (${method}).`][index]],
+            [/^Le fichier contient un XML PowerPoint invalide \((.+)\)\.$/, label => [`The file contains invalid PowerPoint XML (${label}).`,`El archivo contiene XML de PowerPoint no válido (${label}).`,`Die Datei enthält ungültiges PowerPoint-XML (${label}).`,`Il file contiene XML PowerPoint non valido (${label}).`][index]],
+            [/^Le lien vers la diapositive (\d+) est manquant\.$/, slide => [`The link to slide ${slide} is missing.`,`Falta el enlace a la diapositiva ${slide}.`,`Der Link zu Folie ${slide} fehlt.`,`Manca il link alla diapositiva ${slide}.`][index]]
+        ];
+        if (index !== undefined) {
+            for (const [pattern, render] of templates) {
+                const match = key.match(pattern);
+                if (match) return `${leadingWhitespace}${render(...match.slice(1))}${trailingWhitespace}`;
+            }
+        }
+        const translated = uiPhraseTranslations[key];
+        if (index === undefined || !translated) return value;
+        return `${leadingWhitespace}${translated[index]}${trailingWhitespace}`;
+    }
+
+    function canTranslateUiText(node) {
+        const parent = node.parentElement;
+        return parent && !parent.closest('.game-info,.music-card,.music-title,.music-artist,#zoltro-game-title,#cloak-slide-content,.ppt-imported-element');
+    }
+
+    function translateUiSubtree(root = document.body) {
+        if (!root || !activeUiLanguage) return;
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+            if (!canTranslateUiText(node)) continue;
+            if (!uiSourceText.has(node)) uiSourceText.set(node, node.data);
+            const original = uiSourceText.get(node);
+            const translated = translateUiValue(original, activeUiLanguage);
+            if (translated !== node.data) node.data = translated;
+        }
+        const elements = root.nodeType === Node.ELEMENT_NODE ? [root, ...root.querySelectorAll('*')] : [...root.querySelectorAll('*')];
+        elements.forEach(element => {
+            if (element.closest('.game-info,.music-title,.music-artist,#zoltro-game-title') || element.classList?.contains('game-card')) return;
+            ['placeholder','aria-label','title'].forEach(attribute => {
+                if (!element.hasAttribute(attribute)) return;
+                let source = uiSourceAttributes.get(element);
+                if (!source) {
+                    source = {};
+                    uiSourceAttributes.set(element, source);
+                }
+                if (!(attribute in source)) source[attribute] = element.getAttribute(attribute);
+                const translated = translateUiValue(source[attribute], activeUiLanguage);
+                if (translated !== element.getAttribute(attribute)) element.setAttribute(attribute, translated);
+            });
+        });
+    }
+
+    const uiTranslationObserver = new MutationObserver(records => {
+        if (!activeUiLanguage || activeUiLanguage === 'fr') return;
+        records.forEach(record => {
+            if (record.type === 'characterData') {
+                const node = record.target;
+                if (!canTranslateUiText(node)) return;
+                const previousSource = uiSourceText.get(node);
+                if (!previousSource || node.data !== translateUiValue(previousSource, activeUiLanguage)) uiSourceText.set(node, node.data);
+                const translated = translateUiValue(uiSourceText.get(node), activeUiLanguage);
+                if (translated !== node.data) node.data = translated;
+            } else if (record.type === 'attributes') {
+                const element = record.target;
+                if (element.closest('.game-info,.music-title,.music-artist,#zoltro-game-title') || element.classList?.contains('game-card')) return;
+                const attribute = record.attributeName;
+                const current = element.getAttribute(attribute);
+                let source = uiSourceAttributes.get(element);
+                if (!source) {
+                    source = {};
+                    uiSourceAttributes.set(element, source);
+                }
+                const previousSource = source[attribute];
+                if (previousSource && current === translateUiValue(previousSource, activeUiLanguage)) return;
+                source[attribute] = current;
+                if (source[attribute]) {
+                    const translated = translateUiValue(source[attribute], activeUiLanguage);
+                    if (translated !== current) element.setAttribute(attribute, translated);
+                }
+            } else {
+                record.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) translateUiSubtree(node.nodeType === Node.TEXT_NODE ? node.parentElement : node);
+                });
+            }
+        });
+    });
+    if (document.body) uiTranslationObserver.observe(document.body, { childList:true, subtree:true, characterData:true, attributes:true, attributeFilter:['placeholder','aria-label','title'] });
+    window.translateZoltroUiText = value => translateUiValue(value,activeUiLanguage);
 
     const STORAGE_KEYS = {
         accounts: 'zoltro_accounts_v1',
@@ -1815,7 +2241,7 @@ function openWelcomeAuth(mode) {
         refreshMusicTracks();
     }
 
-    const allLanguageCodes = 'ar bg ca cs da de el en es fi fr he hi hu id it ja ko nl no pl pt ro ru sk sv th tr uk vi zh'.split(' ');
+    const allLanguageCodes = ['fr','en','es','de','it'];
 
     function populateLanguageSwitcher() {
         const selector = document.getElementById('languageSwitcher');
@@ -1865,7 +2291,9 @@ function openWelcomeAuth(mode) {
 
     function applySiteLanguage(language) {
         const text = siteTranslations[language] || siteTranslations.fr;
+        activeUiLanguage = uiLanguageIndexes[language] === undefined && language !== 'fr' ? 'fr' : language;
         document.documentElement.lang = language;
+        document.title = text.pageTitle;
         document.querySelector('header h1').textContent = text.title;
         document.getElementById('searchInput').placeholder = text.search;
         const fsBtn = document.querySelector('.action-btn[onclick*="toggleFullScreen"]');
@@ -1888,6 +2316,7 @@ function openWelcomeAuth(mode) {
         });
         const selector = document.getElementById('languageSwitcher');
         if (selector) selector.value = language;
+        translateUiSubtree();
     }
 
     const initialLanguage = localStorage.getItem('zoltro-language') || (navigator.language || 'fr').slice(0, 2).toLowerCase();
@@ -1905,7 +2334,7 @@ function openWelcomeAuth(mode) {
                 event.preventDefault();
                 const user = getCurrentUser();
                 if (user) {
-                    const confirmLogout = window.confirm('Tu veux te déconnecter ?');
+                    const confirmLogout = window.confirm(window.translateZoltroUiText('Tu veux te déconnecter ?'));
                     if (confirmLogout) {
                         clearCurrentUser();
                         syncUserData();
@@ -2062,10 +2491,6 @@ function openWelcomeAuth(mode) {
 				<a href="https://wasm.rip/files/lethal/index.html" class="game-card no-gif" data-name="Lethal company" data-cat="action">
                     <img class="game-poster" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1966720/capsule_616x353.jpg?t=1775380053" alt="Lethal company" loading="eager" decoding="async">
                     <div class="game-info"><span>Lethal company</span></div>
-                </a>
-                <a href="https://vel.gg/bo1z" class="game-card" data-name="BO1 Zombies" data-cat="action">
-                    <img class="game-poster" src="https://upload.wikimedia.org/wikipedia/en/0/02/CoD_Black_Ops_cover.png" alt="Call of Duty: Black Ops Zombies" loading="eager" decoding="async">
-                    <div class="game-info"><span>BO1 Zombies</span></div>
                 </a>
                 <a href="https://surfd.net/" class="game-card" data-name="CS Surf" data-cat="action">
                     <img class="game-poster" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/10/header.jpg" alt="Counter-Strike" loading="eager" decoding="async">
@@ -2767,6 +3192,21 @@ function openWelcomeAuth(mode) {
 
     </main>
 
+    <footer class="creator-support-footer">
+        <p class="creator-support-message">
+            <strong>J’ai créé Zoltrogame pour partager ce projet avec vous !</strong>
+            Pour m’aider à le faire grandir et à continuer, tu peux suivre ma
+            <a href="https://www.youtube.com/@zoltrogame" target="_blank" rel="noopener noreferrer">chaîne YouTube Zoltrogame</a>.
+            Tu peux aussi découvrir ma chaîne perso,
+            <a href="https://www.youtube.com/@Clmt_edit" target="_blank" rel="noopener noreferrer">Clmt_edit</a>,
+            où je publie mes vidéos et mes edits.
+        </p>
+        <p class="creator-share-message">
+            Si le site te plaît, n’hésite pas à le partager avec tes proches, tes amis… et même ChatGPT !
+            Chaque partage me donne de la force pour continuer le projet. Merci pour ton soutien !
+        </p>
+    </footer>
+
     <div class="playlist-picker-overlay" id="playlistPickerOverlay" onclick="if(event.target === this) closeAddToPlaylistModal()">
         <div class="playlist-picker" role="dialog" aria-modal="true" aria-labelledby="playlistPickerTitle">
             <button type="button" class="playlist-picker-close" onclick="closeAddToPlaylistModal()" aria-label="Fermer">✕</button>
@@ -2779,18 +3219,19 @@ function openWelcomeAuth(mode) {
     <div class="music-player compact" id="musicPlayer" onmouseenter="expandMusicPlayer()" onmouseleave="collapseMusicPlayer()">
         <div class="player-track">
             <img id="playerCover" class="player-cover" src="https://i.ytimg.com/vi/D5d5xinZI3E/hqdefault.jpg" alt="Pochette" loading="eager" decoding="async">
-            <div class="player-text"><div id="playerTitle" class="player-title">Sélectionne une musique</div><div id="playerArtist" class="player-artist">Zoltrogame</div></div>
+            <div class="player-text"><div id="playerTitle" class="player-title">Sélectionne une musique</div><div id="playerArtist" class="player-artist">Zoltrogame</div><span class="player-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
         </div>
         <div class="player-center">
             <div class="player-controls">
-                <button onclick="previousTrack()" title="Précédent">◀</button>
+                <button type="button" onclick="previousTrack()" title="Précédent" aria-label="Piste précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM19 6v12l-9-6z"/></svg></button>
                 <button class="main-play" id="playerPlay" onclick="toggleMusic()">▶</button>
-                <button onclick="nextTrack()" title="Suivant">▶</button>
+                <button type="button" onclick="nextTrack()" title="Suivant" aria-label="Piste suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM5 6v12l9-6z"/></svg></button>
             </div>
             <div class="progress-row"><span id="currentTime">0:00</span><input id="progressBar" type="range" min="0" max="100" value="0" step="0.1" oninput="seekMusic(this.value)"><span id="duration">0:00</span></div>
         </div>
-        <div class="player-right"><button onclick="toggleMute()" id="volumeIcon">◉</button><input id="volumeBar" type="range" min="0" max="100" value="80" oninput="setVolume(this.value)"></div>
+        <div class="player-right"><button type="button" onclick="toggleMute()" id="volumeIcon" title="Couper le son" aria-label="Couper le son"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4z"/><path d="M16 9a5 5 0 0 1 0 6M18.5 6.5a9 9 0 0 1 0 11"/></svg></button><input id="volumeBar" type="range" min="0" max="100" value="80" oninput="setVolume(this.value)" aria-label="Volume"></div>
     </div>
+    <button type="button" class="music-player-reveal" id="musicPlayerReveal" onclick="toggleMusicPlayerVisibility()" aria-label="Afficher le lecteur musical" aria-controls="musicPlayer" aria-expanded="true"></button>
 </div>
 
 <div id="audio-container"><div id="yt-player"></div></div>
@@ -2805,13 +3246,13 @@ function openWelcomeAuth(mode) {
     <button class="zoltro-game-btn" type="button" onclick="toggleZoltroGameFullscreen()">Plein écran</button>
     <button class="zoltro-game-btn" type="button" onclick="openCurrentGameNewTab()">Ouvrir</button>
   </div>
-  <div class="zoltro-game-help">Le mode présentation permet d’ouvrir la vue de démonstration Zoltrogame.</div>
+  <div class="zoltro-game-help">Si le jeu ne se charge pas ici, clique sur « Ouvrir » pour le lancer sur le site d'origine.</div>
   <iframe id="zoltro-game-frame" title="Jeu ZoltroGame" allow="autoplay; fullscreen; gamepad; pointer-lock" allowfullscreen></iframe>
   <div id="zoltro-game-fallback" class="zoltro-game-fallback" hidden>
     <div class="zoltro-game-fallback-box">
       <div class="zoltro-game-fallback-icon">⟡</div>
       <h2>Ce jeu ne peut pas être intégré ici</h2>
-      <p>Le site du jeu bloque l'affichage dans une fenêtre intégrée. Tu peux quand même le lancer normalement.</p>
+      <p id="zoltro-game-fallback-message">Certains sites refusent l'affichage intégré. Clique sur « Ouvrir le jeu » pour jouer directement sur le site d'origine.</p>
       <div class="zoltro-game-fallback-actions">
         <button type="button" class="zoltro-game-btn" onclick="reloadCurrentGame()">Réessayer</button>
         <button type="button" class="zoltro-game-btn zoltro-game-open-btn" onclick="openCurrentGameNewTab()">Ouvrir le jeu</button>
@@ -2879,7 +3320,7 @@ function openWelcomeAuth(mode) {
 
     <div class="cloak-controls">
             <div class="ppt-ribbon-tabs" aria-label="Onglets du ruban">
-                <button class="ppt-file-tab" type="button" onclick="toggleStealthCloak()">Fichier</button>
+                <button class="ppt-file-tab" type="button" aria-expanded="false" aria-controls="ppt-file-menu" onclick="togglePptFileMenu()">Fichier</button>
                 <button class="ppt-ribbon-tab active" type="button" data-ribbon-tab="accueil">Accueil</button>
                 <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="insertion">Insertion</button>
                 <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="creation">Création</button>
@@ -2889,17 +3330,34 @@ function openWelcomeAuth(mode) {
                 <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="revision">Révision</button>
                 <button class="ppt-ribbon-tab" type="button" data-ribbon-tab="affichage">Affichage</button>
             </div>
-            <div class="ppt-ribbon-tools" aria-hidden="true">
+            <div class="ppt-ribbon-tools" aria-label="Outils des diapositives">
                 <div class="ppt-tool-group"><button type="button" onclick="previousStealthSlide()">Précédente</button><span>◀</span></div>
-                <div class="ppt-tool-group"><button type="button" onclick="nextStealthSlide()">Nouvelle<br>diapositive</button><span>▣</span></div>
-                <div class="ppt-tool-group"><button type="button" onclick="updateStealthPresentation()">Disposition</button><span>▤</span></div>
+                <div class="ppt-tool-group"><button type="button" onclick="addStealthSlide()">Nouvelle<br>diapositive</button><span>▣</span></div>
                 <div class="ppt-tool-group"><button type="button" onclick="editCurrentPresentation()">Modifier</button><span>A</span></div>
+                <div class="ppt-tool-group"><button type="button" onclick="deleteStealthSlide()">Supprimer</button><span>⌫</span></div>
                 <div class="ppt-tool-group"><button type="button" onclick="nextStealthSlide()">Suivante</button><span>▶</span></div>
-                <div class="ppt-tool-group"><button type="button" onclick="toggleStealthCloak()">Fermer</button><span>✕</span></div>
             </div>
+      <section class="ppt-file-menu" id="ppt-file-menu" aria-label="Ouvrir une présentation" hidden>
+        <h3>Ouvrir une présentation PowerPoint</h3>
+        <div class="ppt-file-import">
+          <label for="pptx-file-input">Importer un fichier .pptx depuis cet appareil</label>
+          <input id="pptx-file-input" type="file" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation">
+          <p>Le fichier est lu directement dans ce navigateur et n’est pas envoyé.</p>
+        </div>
+        <form class="ppt-file-link" id="pptx-link-form">
+          <label for="pptx-link-input">Ouvrir un lien public OneDrive / PowerPoint Online ou Google Slides</label>
+          <input id="pptx-link-input" type="url" inputmode="url" placeholder="https://..." autocomplete="url" required>
+          <div class="ppt-file-actions">
+            <button type="submit" class="cloak-btn">Ouvrir le lien</button>
+            <button type="button" class="cloak-btn" onclick="closeExternalPpt()">Revenir à ma présentation</button>
+          </div>
+        </form>
+        <p class="ppt-file-notice">Les fichiers .pptx sont affichés en mode compatibilité : la mise en page, les polices, animations et transitions complexes peuvent différer. Pour les liens, l’accès doit être public et l’intégration autorisée par le service.</p>
+        <div class="ppt-file-status" id="ppt-file-status" role="status" aria-live="polite"></div>
+      </section>
       <label>Matière
         <select id="cloak-subject-select" onchange="updateStealthPresentation()">
-          <option value="francais">Français</option>
+          <option value="francais" selected>Français</option>
           <option value="maths">Mathématiques</option>
           <option value="histoire">Histoire-Géo</option>
           <option value="svt">SVT</option>
@@ -2908,7 +3366,7 @@ function openWelcomeAuth(mode) {
           <option value="espagnol">Espagnol</option>
           <option value="emc">EMC</option>
           <option value="technologie">Technologie</option>
-          <option value="powerpoint" selected>PowerPoint</option>
+          <option value="powerpoint">PowerPoint</option>
         </select>
       </label>
       <label>Niveau
@@ -2927,7 +3385,22 @@ function openWelcomeAuth(mode) {
           <option value="paper">Document</option><option value="book">Livre</option><option value="note">Note</option><option value="math">Maths</option><option value="history">Histoire</option>
         </select>
       </label>
-      <button class="cloak-btn" type="button" onclick="editCurrentPresentation()">Modifier l'exposé</button>
+      <button class="cloak-btn" id="ppt-edit-presentation-button" type="button" onclick="editCurrentPresentation()">Modifier l'exposé</button>
+      <div class="ppt-editor-panel" id="ppt-editor-panel" hidden>
+        <div class="ppt-editor-heading">
+          <strong>Modifier la diapositive active</strong>
+          <span>Les changements sont enregistrés dans ce navigateur.</span>
+        </div>
+        <label>Titre<input id="ppt-slide-title" type="text" maxlength="160" autocomplete="off"></label>
+        <label>Texte<textarea id="ppt-slide-paragraphs" rows="2" placeholder="Un paragraphe par ligne"></textarea></label>
+        <label>Points clés<textarea id="ppt-slide-bullets" rows="2" placeholder="Un point par ligne"></textarea></label>
+        <label>Encadré<textarea id="ppt-slide-callout" rows="2" placeholder="Facultatif"></textarea></label>
+        <div class="ppt-editor-actions">
+          <button type="button" class="cloak-btn" onclick="saveStealthSlideEdits()">Appliquer</button>
+          <button type="button" class="cloak-btn" onclick="closeStealthEditor()">Fermer</button>
+          <span id="ppt-editor-status" role="status" aria-live="polite"></span>
+        </div>
+      </div>
     </div>
 
         <aside class="cloak-sidebar" aria-label="Miniatures des diapositives">
@@ -2939,6 +3412,11 @@ function openWelcomeAuth(mode) {
       <div id="cloak-slide-content"></div>
             <div class="ppt-notes">Cliquez pour ajouter des notes</div>
       <div class="slide-number" id="cloak-slide-number">1 / 4</div>
+    </div>
+    <div class="ppt-external-view" id="ppt-external-view" hidden>
+      <button class="ppt-external-close" type="button" onclick="closeExternalPpt()">Revenir à ma présentation</button>
+      <a class="ppt-external-close ppt-external-newtab" id="ppt-external-newtab" target="_blank" rel="noopener noreferrer">Ouvrir dans un nouvel onglet</a>
+      <iframe id="ppt-external-frame" title="Présentation PowerPoint en ligne" referrerpolicy="no-referrer" allowfullscreen></iframe>
     </div>
     <div class="cloak-footer">← → pour changer de diapositive • Échap pour fermer</div>
   </div>
@@ -2955,6 +3433,10 @@ function openWelcomeAuth(mode) {
   const originalFavicon=favicon ? favicon.getAttribute('href') : 'favicon.png';
   let currentSlide=0;
   let slides=[];
+  let currentDeck=[];
+  let currentDeckKey='';
+  let importedPptMode=false;
+  let pptObjectUrls=[];
   let controlsTimer=null;
   const controls=document.querySelector('.cloak-controls');
   const topbar=document.querySelector('.cloak-topbar');
@@ -3010,30 +3492,12 @@ function openWelcomeAuth(mode) {
     '6e':'niveau 6e','5e':'niveau 5e','4e':'niveau 4e','3e':'niveau 3e','2nde':'niveau seconde','1ere':'niveau première','terminale':'niveau terminale'
   };
 
-  // Les exposés ne sont PAS sauvegardés dans localStorage.
-  // Une modification est valable uniquement pendant la session actuelle.
-  // Ainsi, si un élève écrit par exemple « caca », le texte revient aux
-  // contenus d'origine au prochain rechargement de la page.
-
   window.editCurrentPresentation=function(){
-    const subject=document.getElementById('cloak-subject-select').value;
-    const level=document.getElementById('cloak-level-select').value;
-    const data=subjectLevelDetails[subject]?.[level];
-    if(!data) return;
-    const title=prompt('Titre de l’exposé :',data[0]);
-    if(title===null) return;
-    const question=prompt('Question / problématique :',data[1]);
-    if(question===null) return;
-    const intro=prompt('Introduction :',data[2]);
-    if(intro===null) return;
-    const points=prompt('Idées du sujet (séparées par |) :',data[3].join(' | '));
-    if(points===null) return;
-    data[0]=title.trim()||data[0];
-    data[1]=question.trim()||data[1];
-    data[2]=intro.trim()||data[2];
-    data[3]=points.split('|').map(x=>x.trim()).filter(Boolean);
-    currentSlide=0;
-    renderSlides();
+    if(importedPptMode) return;
+    const editor=document.getElementById('ppt-editor-panel');
+    if(!editor) return;
+    editor.hidden=!editor.hidden;
+    if(!editor.hidden) populateSlideEditor();
   };
 
   const levelThemeDetails={
@@ -3046,10 +3510,16 @@ function openWelcomeAuth(mode) {
     'terminale':{label:'Grand oral & expertise',symbols:'🎓 📈 🧠 🌐',text:'Une ambiance universitaire : problématique, argumentation, données, synthèse et préparation aux épreuves.',title:'Construire une réflexion d’expert',question:'Comment défendre une problématique avec des connaissances, des preuves et une argumentation claire ?',intro:'Au lycée, une présentation réussie doit transformer des connaissances en raisonnement. Il faut poser une problématique, sélectionner des preuves, expliquer les liens entre les idées et construire une conclusion convaincante.',points:['Formuler une problématique précise et intéressante.','Sélectionner des données ou exemples réellement pertinents.','Développer une argumentation logique et personnelle.','Conclure en répondant clairement à la problématique.'],conclusion:'Une présentation experte ne consiste pas seulement à réciter : elle montre que l’on comprend, que l’on sait argumenter et que l’on peut défendre une idée avec précision.'}
   };
 
-  function applyLevelTheme(level){
+  function applyLevelTheme(level,subject){
     const levels=['6e','5e','4e','3e','2nde','1ere','terminale'];
     levels.forEach(l=>cloak.classList.remove('level-'+l));
     cloak.classList.add('level-'+(levels.includes(level)?level:'6e'));
+    cloak.dataset.subject=subject;
+  }
+
+  function applyDeckStyle(style){
+    cloak.classList.remove('presentation-sobre','presentation-classique','presentation-cours');
+    cloak.classList.add(`presentation-${['sobre','classique','cours'].includes(style)?style:'sobre'}`);
   }
 
   const subjectLevelDetails={
@@ -3155,37 +3625,562 @@ function openWelcomeAuth(mode) {
     return {title:data[0],question:data[1],intro:data[2],points:data[3]};
   }
 
+  function setEditorStatus(message){
+    const status=document.getElementById('ppt-editor-status');
+    if(status) status.textContent=message;
+  }
+
+  function currentPresentationKey(){
+    return `zoltro-presentation-v2-${document.getElementById('cloak-subject-select').value}-${document.getElementById('cloak-level-select').value}`;
+  }
+
+  function setPptFileStatus(message,type=''){
+    const status=document.getElementById('ppt-file-status');
+    if(!status) return;
+    status.textContent=message;
+    status.className=`ppt-file-status${type?' '+type:''}`;
+  }
+
+  window.togglePptFileMenu=function(){
+    const menu=document.getElementById('ppt-file-menu');
+    const button=document.querySelector('.ppt-file-tab');
+    if(!menu) return;
+    menu.hidden=!menu.hidden;
+    if(button) button.setAttribute('aria-expanded',String(!menu.hidden));
+    if(!menu.hidden) document.getElementById('pptx-link-input')?.focus();
+  };
+
+  function releasePptObjectUrls(){
+    pptObjectUrls.forEach(url=>URL.revokeObjectURL(url));
+    pptObjectUrls=[];
+  }
+
+  function normalizeZipPath(base,target){
+    const parts=(target.startsWith('/')?target.slice(1):`${base.slice(0,base.lastIndexOf('/')+1)}${target}`).split('/');
+    const normalized=[];
+    for(const part of parts){
+      if(!part || part==='.') continue;
+      if(part==='..') normalized.pop();
+      else normalized.push(part);
+    }
+    return normalized.join('/');
+  }
+
+  async function readPptxEntries(file){
+    if(file.size>50*1024*1024) throw new Error('Le fichier dépasse la limite de 50 Mo.');
+    const buffer=await file.arrayBuffer();
+    const bytes=new DataView(buffer);
+    const lowerBound=Math.max(0,buffer.byteLength-65557);
+    let eocd=-1;
+    for(let i=buffer.byteLength-22;i>=lowerBound;i--){
+      if(bytes.getUint32(i,true)===0x06054b50){ eocd=i; break; }
+    }
+    if(eocd<0) throw new Error('L’archive .pptx est invalide ou incomplète.');
+    const entriesCount=bytes.getUint16(eocd+10,true);
+    const centralOffset=bytes.getUint32(eocd+16,true);
+    if(entriesCount===0xffff || centralOffset===0xffffffff) throw new Error('Ce fichier PowerPoint utilise un format ZIP64 non pris en charge.');
+    if(!entriesCount || entriesCount>5000) throw new Error('Le nombre de fichiers dans cette présentation est invalide.');
+    const decoder=new TextDecoder('utf-8');
+    const entries=new Map();
+    let offset=centralOffset;
+    let totalSize=0;
+    for(let index=0;index<entriesCount;index++){
+      if(offset+46>buffer.byteLength || bytes.getUint32(offset,true)!==0x02014b50) throw new Error('La structure du fichier .pptx est invalide.');
+      const flags=bytes.getUint16(offset+8,true);
+      const method=bytes.getUint16(offset+10,true);
+      const compressedSize=bytes.getUint32(offset+20,true);
+      const uncompressedSize=bytes.getUint32(offset+24,true);
+      const nameLength=bytes.getUint16(offset+28,true);
+      const extraLength=bytes.getUint16(offset+30,true);
+      const commentLength=bytes.getUint16(offset+32,true);
+      const localOffset=bytes.getUint32(offset+42,true);
+      const path=decoder.decode(new Uint8Array(buffer,offset+46,nameLength));
+      offset+=46+nameLength+extraLength+commentLength;
+      if(path.endsWith('/')) continue;
+      if(flags&1) throw new Error('Ce fichier est chiffré. Déverrouille-le puis enregistre-le en .pptx.');
+      if(uncompressedSize===0xffffffff || compressedSize===0xffffffff) throw new Error('Les archives ZIP64 ne sont pas prises en charge.');
+      totalSize+=uncompressedSize;
+      if(totalSize>150*1024*1024) throw new Error('La présentation est trop volumineuse à décompresser dans le navigateur.');
+      entries.set(path,{method,compressedSize,uncompressedSize,localOffset});
+    }
+    async function readEntry(path){
+      const entry=entries.get(path);
+      if(!entry) throw new Error(`Élément PowerPoint manquant : ${path}`);
+      if(entry.uncompressedSize>64*1024*1024) throw new Error('Un élément de la présentation dépasse la limite de 64 Mo.');
+      const start=entry.localOffset;
+      if(start+30>buffer.byteLength || bytes.getUint32(start,true)!==0x04034b50) throw new Error('Une partie du fichier .pptx est endommagée.');
+      const nameLength=bytes.getUint16(start+26,true);
+      const extraLength=bytes.getUint16(start+28,true);
+      const dataStart=start+30+nameLength+extraLength;
+      const end=dataStart+entry.compressedSize;
+      if(end>buffer.byteLength) throw new Error('Une partie du fichier .pptx est tronquée.');
+      const data=new Uint8Array(buffer,dataStart,entry.compressedSize);
+      let output;
+      if(entry.method===0) output=data.slice();
+      else if(entry.method===8){
+        if(typeof DecompressionStream==='undefined') throw new Error('Ce navigateur ne permet pas de décompresser les fichiers .pptx. Essaie un navigateur récent.');
+        try {
+          const stream=new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+          const reader=stream.getReader();
+          const chunks=[];
+          let outputSize=0;
+          while(true){
+            const result=await reader.read();
+            if(result.done) break;
+            outputSize+=result.value.byteLength;
+            if(outputSize>entry.uncompressedSize||outputSize>64*1024*1024){
+              await reader.cancel();
+              throw new Error('Les données décompressées dépassent la taille annoncée.');
+            }
+            chunks.push(result.value);
+          }
+          output=new Uint8Array(outputSize);
+          let position=0;
+          chunks.forEach(chunk=>{output.set(chunk,position);position+=chunk.byteLength;});
+        } catch(error) {
+          console.error('Erreur de décompression du fichier PowerPoint.',error);
+          if(error instanceof Error&&error.message.includes('dépassent la taille annoncée')) throw error;
+          throw new Error('Impossible de décompresser ce fichier .pptx.');
+        }
+      } else throw new Error(`Méthode de compression ZIP non prise en charge (${entry.method}).`);
+      if(output.byteLength!==entry.uncompressedSize) throw new Error('Une partie du fichier .pptx est invalide.');
+      return output;
+    }
+    return {entries,readEntry};
+  }
+
+  function parsePptXml(text,label){
+    const xml=new DOMParser().parseFromString(text,'application/xml');
+    if(xml.querySelector('parsererror')) throw new Error(`Le fichier contient un XML PowerPoint invalide (${label}).`);
+    return xml;
+  }
+
+  function xmlText(element,localName){
+    return element?.getElementsByTagNameNS('*',localName)[0]?.textContent?.trim()||'';
+  }
+
+  function firstColor(element){
+    const color=element?.getElementsByTagNameNS('*','srgbClr')[0]?.getAttribute('val');
+    return color && /^[0-9a-f]{6}$/i.test(color)?`#${color}`:'';
+  }
+
+  async function parsePptx(file){
+    const zip=await readPptxEntries(file);
+    const readXml=async path=>parsePptXml(new TextDecoder().decode(await zip.readEntry(path)),path);
+    const presentation=await readXml('ppt/presentation.xml');
+    const slideSize=presentation.getElementsByTagNameNS('*','sldSz')[0];
+    const slideWidth=Number(slideSize?.getAttribute('cx'));
+    const slideHeight=Number(slideSize?.getAttribute('cy'));
+    if(!slideWidth || !slideHeight) throw new Error('La taille des diapositives est absente ou invalide.');
+    const presentationRels=await readXml('ppt/_rels/presentation.xml.rels');
+    const relationMap=new Map();
+    Array.from(presentationRels.getElementsByTagNameNS('*','Relationship')).forEach(rel=>{
+      relationMap.set(rel.getAttribute('Id'),rel.getAttribute('Target'));
+    });
+    const slideIds=Array.from(presentation.getElementsByTagNameNS('*','sldId'));
+    if(!slideIds.length || slideIds.length>200) throw new Error('Aucune diapositive lisible trouvée (maximum : 200).');
+    const slides=[];
+    for(let index=0;index<slideIds.length;index++){
+      const relId=slideIds[index].getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','id')||slideIds[index].getAttribute('r:id');
+      const target=relationMap.get(relId);
+      if(!target) throw new Error(`Le lien vers la diapositive ${index+1} est manquant.`);
+      const slidePath=normalizeZipPath('ppt/presentation.xml',target);
+      const xml=await readXml(slidePath);
+      const relsPath=normalizeZipPath(slidePath,`_rels/${slidePath.split('/').pop()}.rels`);
+      const rels=zip.entries.has(relsPath)?await readXml(relsPath):null;
+      const slideRels=new Map();
+      if(rels) Array.from(rels.getElementsByTagNameNS('*','Relationship')).forEach(rel=>{
+        slideRels.set(rel.getAttribute('Id'),rel.getAttribute('Target'));
+      });
+      const shapeTree=xml.getElementsByTagNameNS('*','spTree')[0];
+      const elements=[];
+      let title='';
+      const background=firstColor(xml.getElementsByTagNameNS('*','bg')[0])||'#ffffff';
+      for(const shape of Array.from(shapeTree?.children||[])){
+        const kind=shape.localName;
+        if(kind!=='sp' && kind!=='pic') continue;
+        const transform=shape.getElementsByTagNameNS('*','xfrm')[0];
+        const position=transform?.getElementsByTagNameNS('*','off')[0];
+        const extent=transform?.getElementsByTagNameNS('*','ext')[0];
+        const x=Number(position?.getAttribute('x'));
+        const y=Number(position?.getAttribute('y'));
+        const cx=Number(extent?.getAttribute('cx'));
+        const cy=Number(extent?.getAttribute('cy'));
+        if(![x,y,cx,cy].every(Number.isFinite)||cx<=0||cy<=0) continue;
+        const geometry={x:x/slideWidth*100,y:y/slideHeight*100,width:cx/slideWidth*100,height:cy/slideHeight*100};
+        if(kind==='pic'){
+          const blip=shape.getElementsByTagNameNS('*','blip')[0];
+          const relId=blip?.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','embed')||blip?.getAttribute('r:embed');
+          const imageTarget=slideRels.get(relId);
+          if(!imageTarget) continue;
+          const imagePath=normalizeZipPath(slidePath,imageTarget);
+          if(!zip.entries.has(imagePath)) continue;
+          const imageBytes=await zip.readEntry(imagePath);
+          const ext=imagePath.split('.').pop().toLowerCase();
+          const mime={png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',gif:'image/gif',bmp:'image/bmp'}[ext];
+          if(!mime) continue;
+          const objectUrl=URL.createObjectURL(new Blob([imageBytes],{type:mime}));
+          pptObjectUrls.push(objectUrl);
+          elements.push({kind:'image',src:objectUrl,...geometry});
+          continue;
+        }
+        const paragraphs=Array.from(shape.getElementsByTagNameNS('*','txBody')[0]?.getElementsByTagNameNS('*','p')||[]);
+        const text=paragraphs.map(paragraph=>{
+          const value=Array.from(paragraph.getElementsByTagNameNS('*','t')).map(node=>node.textContent||'').join('');
+          return value;
+        }).filter(value=>value.length);
+        if(!text.length) continue;
+        if(!title) title=text[0].slice(0,100);
+        const runProps=shape.getElementsByTagNameNS('*','rPr')[0]||shape.getElementsByTagNameNS('*','defRPr')[0];
+        const fontSize=Number(runProps?.getAttribute('sz'))/100;
+        const color=firstColor(shape.getElementsByTagNameNS('*','txBody')[0])||'#222222';
+        const shapeFill=firstColor(shape.getElementsByTagNameNS('*','spPr')[0])||'';
+        const alignment=paragraphs[0]?.getElementsByTagNameNS('*','pPr')[0]?.getAttribute('algn');
+        const bold=runProps?.getAttribute('b')==='1'||runProps?.getAttribute('b')==='true';
+        elements.push({kind:'text',text:text.join('\n'),fontSize:Number.isFinite(fontSize)&&fontSize>0?fontSize:18,color,fill:shapeFill,bold,align:alignment==='ctr'?'center':alignment==='r'?'right':'left',...geometry});
+      }
+      slides.push({title:title||`Diapositive ${index+1}`,elements,background,width:slideWidth,height:slideHeight});
+    }
+    return slides;
+  }
+
+  function resizeImportedCanvas(){
+    if(!importedPptMode) return;
+    const canvas=document.querySelector('.ppt-imported-canvas');
+    const stage=document.querySelector('.ppt-imported-stage');
+    const slide=slides[currentSlide];
+    if(!canvas||!stage||!slide) return;
+    const ratio=slide.width/slide.height;
+    const width=Math.max(100,Math.min(stage.clientWidth,1200,stage.clientHeight*ratio));
+    canvas.style.width=`${width}px`;
+    canvas.style.height=`${width/ratio}px`;
+  }
+
+  function showImportedSlideDeck(deck,fileName){
+    closeExternalPpt();
+    importedPptMode=true;
+    currentDeck=[];
+    currentDeckKey='';
+    slides=deck;
+    currentSlide=0;
+    document.getElementById('cloak-brand').textContent=fileName;
+    document.getElementById('ppt-editor-panel').hidden=true;
+    document.getElementById('ppt-edit-presentation-button').hidden=true;
+    document.getElementById('cloak-slide').classList.add('ppt-import-active');
+    document.querySelectorAll('.ppt-tool-group').forEach(group=>{
+      group.hidden=group.textContent.includes('Nouvelle')||group.textContent.includes('Modifier')||group.textContent.includes('Supprimer');
+    });
+    renderCurrentSlide();
+    setPptFileStatus(`${deck.length} diapositive${deck.length>1?'s':''} importée${deck.length>1?'s':''}.`, 'success');
+    document.getElementById('ppt-file-menu').hidden=true;
+    document.querySelector('.ppt-file-tab')?.setAttribute('aria-expanded','false');
+  }
+
+  window.closeExternalPpt=function(){
+    const view=document.getElementById('ppt-external-view');
+    const frame=document.getElementById('ppt-external-frame');
+    if(frame) frame.src='about:blank';
+    if(view) view.hidden=true;
+    cloak.classList.remove('external-ppt-open');
+  };
+
+  function externalPptEmbedUrl(value){
+    let url;
+    try { url=new URL(value); } catch { throw new Error('Entre un lien valide commençant par https://.'); }
+    if(url.protocol!=='https:') throw new Error('Pour ta sécurité, seuls les liens https:// sont acceptés.');
+    const host=url.hostname.toLowerCase();
+    if(host==='docs.google.com' && /^\/presentation\/d\/[^/]+/.test(url.pathname)){
+      const id=url.pathname.match(/^\/presentation\/d\/([^/]+)/)[1];
+      return `https://docs.google.com/presentation/d/${encodeURIComponent(id)}/embed?start=false&loop=false&delayms=3000`;
+    }
+    if(url.username||url.password) throw new Error('Les liens contenant un nom d’utilisateur ou un mot de passe ne sont pas acceptés.');
+    const trusted=host==='1drv.ms'||host==='onedrive.live.com'||host==='office.com'||host.endsWith('.office.com')||host==='microsoft365.com'||host.endsWith('.microsoft365.com')||host==='sharepoint.com'||host.endsWith('.sharepoint.com')||host==='view.officeapps.live.com';
+    if(!trusted) throw new Error('Utilise un lien de partage OneDrive, PowerPoint Online ou Google Slides.');
+    if(host==='view.officeapps.live.com' && url.pathname.startsWith('/op/embed.aspx')) return url.href;
+    if(host==='onedrive.live.com' && url.pathname.includes('/embed')) return url.href;
+    return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url.href)}`;
+  }
+
+  function openExternalPptLink(value){
+    const embedUrl=externalPptEmbedUrl(value);
+    const view=document.getElementById('ppt-external-view');
+    const frame=document.getElementById('ppt-external-frame');
+    const newTab=document.getElementById('ppt-external-newtab');
+    newTab.href=value;
+    frame.src=embedUrl;
+    view.hidden=false;
+    cloak.classList.add('external-ppt-open');
+    document.getElementById('ppt-file-menu').hidden=true;
+    document.querySelector('.ppt-file-tab')?.setAttribute('aria-expanded','false');
+    setPptFileStatus('Si le lecteur est bloqué par les autorisations du lien, ouvre-le directement dans le service d’origine.');
+  }
+
+  document.getElementById('pptx-file-input').addEventListener('change',async event=>{
+    const file=event.target.files?.[0];
+    if(!file) return;
+    if(!/\.pptx$/i.test(file.name)){
+      setPptFileStatus('Choisis un fichier .pptx. Les anciens fichiers .ppt ne sont pas pris en charge.','error');
+      event.target.value='';
+      return;
+    }
+    setPptFileStatus('Lecture du fichier PowerPoint…');
+    const previousObjectUrls=pptObjectUrls;
+    pptObjectUrls=[];
+    try {
+      const deck=await parsePptx(file);
+      previousObjectUrls.forEach(url=>URL.revokeObjectURL(url));
+      showImportedSlideDeck(deck,file.name);
+    } catch(error) {
+      console.error('Impossible d’importer ce fichier PowerPoint.',error);
+      releasePptObjectUrls();
+      pptObjectUrls=previousObjectUrls;
+      setPptFileStatus(error instanceof Error?error.message:'Une erreur inconnue a empêché la lecture du fichier.','error');
+    } finally {
+      event.target.value='';
+    }
+  });
+
+  document.getElementById('pptx-link-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    try {
+      openExternalPptLink(document.getElementById('pptx-link-input').value.trim());
+    } catch(error) {
+      setPptFileStatus(error instanceof Error?error.message:'Impossible d’ouvrir ce lien.','error');
+    }
+  });
+
+  window.addEventListener('resize',resizeImportedCanvas);
+
+  function createDefaultSlides(subject,level,data){
+    const subjectName=document.getElementById('cloak-subject-select').selectedOptions[0].textContent;
+    const levelName=levelDetails[level]||level;
+    const points=Array.isArray(data.points)?data.points:[];
+    return [
+      {type:'cover',kicker:`${subjectName} • ${levelName}`,title:data.title,subtitle:data.question,paragraphs:[],bullets:[],callout:`Présentation de ${subjectName} — ${levelName}`},
+      {kicker:'Introduction',title:'Comprendre le sujet',subtitle:'Point de départ',paragraphs:[data.intro],bullets:[],callout:`Problématique : ${data.question}`},
+      {kicker:'Notions essentielles',title:'Les idées principales',subtitle:'Les premières notions à maîtriser',paragraphs:[],bullets:points.slice(0,2),callout:`Repères de ${subjectName} • ${levelName}`},
+      {kicker:'Approfondissement',title:'Analyser et relier les idées',subtitle:'Construire une compréhension complète',paragraphs:['Ces notions se complètent. Il faut les relier à la question de départ et expliquer leur rôle dans le sujet.'],bullets:points.slice(2),callout:'Explique le lien entre chaque idée et la problématique.'},
+      {kicker:'Application',title:'Un exemple pour comprendre',subtitle:'Passer des notions à leur application',paragraphs:[`Pour traiter la question « ${data.question} », appuie-toi sur les éléments du cours et explique ton raisonnement.`],bullets:points.slice(0,2),callout:points[2]||'Ajoute ici un exemple vu en cours.'},
+      {kicker:'Méthode',title:'Construire une réponse claire',subtitle:'Une démarche en quatre temps',paragraphs:[],bullets:['Reformuler la question avec ses propres mots.','Choisir les notions utiles parmi les points clés.','Justifier chaque idée par une explication ou un exemple.','Terminer par une réponse qui traite toute la problématique.'],callout:`Méthode de travail • ${levelName}`},
+      {kicker:'Synthèse',title:'Les points à retenir',subtitle:'L’essentiel du chapitre',paragraphs:[data.intro],bullets:points,callout:`Idée centrale : ${data.title}`},
+      {kicker:'Conclusion',title:'Répondre à la problématique',subtitle:'Bilan',paragraphs:[`Les notions de ${subjectName} étudiées dans cette présentation permettent de répondre à la question : ${data.question}`],bullets:[],callout:`À retenir : ${data.title}`}
+    ];
+  }
+
+  function isValidSlideDeck(value){
+    return Array.isArray(value) && value.length > 0 && value.every(slide =>
+      slide && typeof slide === 'object' &&
+      typeof slide.title === 'string' &&
+      typeof slide.kicker === 'string' &&
+      typeof slide.subtitle === 'string' &&
+      typeof slide.callout === 'string' &&
+      Array.isArray(slide.paragraphs) && slide.paragraphs.every(item=>typeof item==='string') &&
+      Array.isArray(slide.bullets) && slide.bullets.every(item=>typeof item==='string')
+    );
+  }
+
+  function saveCurrentDeck(){
+    if(!currentDeckKey || !currentDeck.length) return false;
+    try {
+      localStorage.setItem(currentDeckKey,JSON.stringify(currentDeck));
+      setEditorStatus('Modifications enregistrées.');
+      return true;
+    } catch(error) {
+      console.error('Impossible d’enregistrer la présentation.',error);
+      setEditorStatus('Enregistrement impossible dans ce navigateur.');
+      return false;
+    }
+  }
+
+  function loadCurrentDeck(defaultSlides){
+    currentDeckKey=currentPresentationKey();
+    try {
+      const saved=localStorage.getItem(currentDeckKey);
+      if(saved){
+        const parsed=JSON.parse(saved);
+        if(isValidSlideDeck(parsed)) return parsed;
+        console.error('La présentation enregistrée est invalide. Les diapositives d’origine sont affichées.');
+        setEditorStatus('Sauvegarde invalide : le contenu d’origine a été chargé.');
+      }
+    } catch(error) {
+      console.error('Impossible de lire la présentation enregistrée.',error);
+      setEditorStatus('Lecture de la sauvegarde impossible.');
+    }
+    return defaultSlides;
+  }
+
+  function populateSlideEditor(){
+    const slide=currentDeck[currentSlide];
+    if(!slide) return;
+    document.getElementById('ppt-slide-title').value=slide.title;
+    document.getElementById('ppt-slide-paragraphs').value=slide.paragraphs.join('\n');
+    document.getElementById('ppt-slide-bullets').value=slide.bullets.join('\n');
+    document.getElementById('ppt-slide-callout').value=slide.callout;
+    setEditorStatus('');
+  }
+
+  function applySlideEditorValues(){
+    const editor=document.getElementById('ppt-editor-panel');
+    if(editor?.hidden) return true;
+    const slide=currentDeck[currentSlide];
+    if(!slide) return false;
+    const title=document.getElementById('ppt-slide-title').value.trim();
+    if(!title){
+      setEditorStatus('Le titre de la diapositive ne peut pas être vide.');
+      return false;
+    }
+    slide.title=title;
+    slide.paragraphs=document.getElementById('ppt-slide-paragraphs').value.split('\n').map(line=>line.trim()).filter(Boolean);
+    slide.bullets=document.getElementById('ppt-slide-bullets').value.split('\n').map(line=>line.trim()).filter(Boolean);
+    slide.callout=document.getElementById('ppt-slide-callout').value.trim();
+    return true;
+  }
+
+  window.saveStealthSlideEdits=function(){
+    if(importedPptMode) return;
+    if(!applySlideEditorValues()) return;
+    renderCurrentSlide();
+    populateSlideEditor();
+    saveCurrentDeck();
+  };
+
+  window.closeStealthEditor=function(){
+    const editor=document.getElementById('ppt-editor-panel');
+    if(editor) editor.hidden=true;
+    setEditorStatus('');
+  };
+
+  window.addStealthSlide=function(){
+    if(importedPptMode) return;
+    if(!applySlideEditorValues()) return;
+    currentDeck.splice(currentSlide+1,0,{
+      kicker:'Nouvelle diapositive',
+      title:'Titre de la diapositive',
+      subtitle:'',
+      paragraphs:['Écris ici le contenu de ta diapositive.'],
+      bullets:[],
+      callout:''
+    });
+    currentSlide++;
+    saveCurrentDeck();
+    renderCurrentSlide();
+    const editor=document.getElementById('ppt-editor-panel');
+    if(editor) editor.hidden=false;
+    populateSlideEditor();
+  };
+
+  window.deleteStealthSlide=function(){
+    if(importedPptMode) return;
+    if(currentDeck.length<=1){
+      setEditorStatus('Une présentation doit garder au moins une diapositive.');
+      return;
+    }
+    currentDeck.splice(currentSlide,1);
+    currentSlide=Math.min(currentSlide,currentDeck.length-1);
+    saveCurrentDeck();
+    renderCurrentSlide();
+    populateSlideEditor();
+  };
+
   function renderSlides(){
+    if(importedPptMode){
+      releasePptObjectUrls();
+      importedPptMode=false;
+      document.getElementById('cloak-slide').classList.remove('ppt-import-active');
+      document.querySelectorAll('.ppt-tool-group').forEach(group=>group.hidden=false);
+      document.getElementById('ppt-edit-presentation-button').hidden=false;
+    }
+    closeExternalPpt();
     const subject=document.getElementById('cloak-subject-select').value;
     const level=document.getElementById('cloak-level-select').value;
-    applyLevelTheme(level);
-    const style=document.getElementById('cloak-style-select').value;
-    const levelTheme=levelThemeDetails[level]||levelThemeDetails['6e'];
+    applyLevelTheme(level,subject);
+    applyDeckStyle(document.getElementById('cloak-style-select').value);
     const specific=getSubjectLevelTheme(subject,level)||getSubjectLevelTheme('francais',level);
-    const theme={...levelTheme,...specific, label:specific.title, text:specific.intro, symbols:levelTheme.symbols};
-    const question=theme.question;
-    const intro=theme.intro;
-    const bullets=theme.points;
-    const extra=style==='cours' ? '<p class="problem"><strong>Question directrice :</strong> '+question+'</p>' : (style==='classique' ? '<p class="problem">'+question+'</p>' : '');
-    const method=bullets.map((x,i)=>`<li><strong>Étape ${i+1} :</strong> ${x}</li>`);
-    const subjectName=document.getElementById('cloak-subject-select').selectedOptions[0].textContent;
-    slides=[
-      `<div class="slide-kicker">${levelDetails[level]} • ${subjectName} • exposé</div><h1>${theme.title}</h1><p class="title-sub">${question}</p><div class="level-theme-card"><div class="theme-symbols">${levelTheme.symbols}</div><strong>${levelTheme.label} — ${subjectName}</strong><br><span>${levelTheme.text}</span></div>${extra}<div class="title-meta"><span class="badge">${levelDetails[level]}</span><span class="badge">${subjectName}</span><span class="badge">8 diapositives</span></div>`,
-      `<div class="slide-kicker">1 • Introduction</div><h2>Entrer dans le sujet</h2><p>${intro}</p><p>Le contenu est adapté à la <strong>${levelDetails[level]}</strong> : le vocabulaire, les exemples et le niveau de détail changent avec la classe.</p><div class="problem"><strong>Question à retenir :</strong> ${question}</div>`,
-      `<div class="slide-kicker">2 • Objectifs du niveau</div><h2>Ce qu’il faut savoir faire</h2><ul>${bullets.map(x=>`<li>${x}</li>`).join('')}</ul><div class="problem"><strong>Niveau :</strong> ${levelDetails[level]} — ${levelTheme.label}.</div>`,
-      `<div class="slide-kicker">3 • Notions essentielles</div><h2>Les notions à connaître</h2><p>${intro}</p><div class="level-theme-card"><div class="theme-symbols">${levelTheme.symbols}</div><strong>Compétences visées</strong><br><span>${bullets.slice(0,2).join(' • ')}</span></div>`,
-      `<div class="slide-kicker">4 • Méthode</div><h2>Comment travailler ce sujet ?</h2><ul>${method.join('')}</ul><p class="title-sub">La méthode est adaptée aux attendus de la ${levelDetails[level]}.</p>`,
-      `<div class="slide-kicker">5 • Exemple</div><h2>Une situation concrète</h2><p>On peut appliquer ces notions à la question : <strong>${question}</strong></p><div class="problem"><strong>Exemple :</strong> ${bullets[2]||bullets[0]}</div><p>${bullets[3]||'Cet exemple permet de relier les connaissances à une situation concrète.'}</p>`,
-      `<div class="slide-kicker">6 • Repères</div><h2>Les points à retenir</h2><ul>${bullets.map((x,i)=>`<li><strong>${i+1}.</strong> ${x}</li>`).join('')}</ul><div class="problem"><strong>Progression :</strong> ce contenu correspond au niveau ${levelDetails[level]}.</div>`,
-      `<div class="slide-kicker">7 • Synthèse</div><h2>Résumé</h2><p>${theme.title} se construit autour de <strong>${bullets[0]}</strong>, <strong>${bullets[1]||'notions essentielles'}</strong> et d’exemples adaptés au niveau.</p><div class="level-theme-card"><strong>Conseil pour ce niveau</strong><br><span>${levelTheme.text}</span></div>`,
-      `<div class="slide-kicker">8 • Conclusion</div><h2>Conclusion</h2><p>${intro}</p><p>La présentation répond à la problématique <strong>${question}</strong> en mobilisant les notions de <strong>${subjectName}</strong> au niveau <strong>${levelDetails[level]}</strong>.</p><p class="title-sub">Fin de l’exposé — merci.</p>`
-    ];
+    const defaults=createDefaultSlides(subject,level,specific);
+    currentDeck=loadCurrentDeck(defaults);
+    slides=currentDeck;
     currentSlide=Math.min(currentSlide,slides.length-1);
-    document.getElementById('cloak-brand').textContent='Présentation - PowerPoint';
+    const subjectName=document.getElementById('cloak-subject-select').selectedOptions[0].textContent;
+    document.getElementById('cloak-brand').textContent=`${specific.title} — ${subjectName} (${levelDetails[level]})`;
     renderCurrentSlide();
   }
   function renderCurrentSlide(){
-    document.getElementById('cloak-slide-content').innerHTML=slides[currentSlide]||'';
+    const slide=slides[currentSlide];
+    const content=document.getElementById('cloak-slide-content');
+    content.replaceChildren();
+    if(importedPptMode && slide){
+      content.className='ppt-import-active';
+      const stage=document.createElement('div');
+      stage.className='ppt-imported-stage';
+      const canvas=document.createElement('div');
+      canvas.className='ppt-imported-canvas';
+      canvas.style.aspectRatio=`${slide.width}/${slide.height}`;
+      canvas.style.backgroundColor=slide.background;
+      slide.elements.forEach(element=>{
+        let node;
+        if(element.kind==='image'){
+          node=document.createElement('img');
+          node.src=element.src;
+          node.alt='';
+          node.className='ppt-imported-element ppt-imported-image';
+        } else {
+          node=document.createElement('div');
+          node.className='ppt-imported-element ppt-imported-text';
+          node.textContent=element.text;
+          node.style.color=element.color;
+          node.style.fontSize=`${Math.max(6,Math.min(96,element.fontSize*4/3))}px`;
+          node.style.textAlign=element.align;
+          node.style.backgroundColor=element.fill;
+          node.style.fontWeight=element.bold?'700':'400';
+        }
+        node.style.left=`${element.x}%`;
+        node.style.top=`${element.y}%`;
+        node.style.width=`${element.width}%`;
+        node.style.height=`${element.height}%`;
+        canvas.appendChild(node);
+      });
+      stage.appendChild(canvas);
+      content.appendChild(stage);
+      resizeImportedCanvas();
+      requestAnimationFrame(resizeImportedCanvas);
+    } else {
+    content.className=slide?.type==='cover'?'ppt-slide-cover':'ppt-slide-content';
+    if(slide){
+      const kicker=document.createElement('div');
+      kicker.className='slide-kicker';
+      kicker.textContent=slide.kicker;
+      content.appendChild(kicker);
+      const heading=document.createElement(slide.type==='cover'?'h1':'h2');
+      heading.textContent=slide.title;
+      content.appendChild(heading);
+      if(slide.subtitle){
+        const subtitle=document.createElement('p');
+        subtitle.className='title-sub';
+        subtitle.textContent=slide.subtitle;
+        content.appendChild(subtitle);
+      }
+      slide.paragraphs.forEach(text=>{
+        const paragraph=document.createElement('p');
+        paragraph.textContent=text;
+        content.appendChild(paragraph);
+      });
+      if(slide.bullets.length){
+        const list=document.createElement('ul');
+        slide.bullets.forEach(text=>{
+          const item=document.createElement('li');
+          item.textContent=text;
+          list.appendChild(item);
+        });
+        content.appendChild(list);
+      }
+      if(slide.callout){
+        const callout=document.createElement('div');
+        callout.className='problem';
+        callout.textContent=slide.callout;
+        content.appendChild(callout);
+      }
+    }
+    }
     document.getElementById('cloak-slide-number').textContent=`${currentSlide+1} / ${slides.length||1}`;
         const thumbnails=document.getElementById('cloak-thumbnails');
         if(thumbnails){
@@ -3194,15 +4189,46 @@ function openWelcomeAuth(mode) {
                 button.type='button';
                 button.className='cloak-thumbnail'+(index===currentSlide?' active':'');
                 button.textContent=String(index+1);
-                button.title=`Diapositive ${index+1}`;
-                button.addEventListener('click',()=>{ currentSlide=index; renderCurrentSlide(); });
+                const title=document.createElement('span');
+                title.className='cloak-thumbnail-title';
+                title.textContent=slide.title;
+                button.appendChild(title);
+                button.title=`Diapositive ${index+1} : ${slide.title}`;
+                button.addEventListener('click',()=>{
+                  if(!applySlideEditorValues()) return;
+                  saveCurrentDeck();
+                  currentSlide=index;
+                  renderCurrentSlide();
+                  if(!document.getElementById('ppt-editor-panel').hidden) populateSlideEditor();
+                });
                 return button;
             }));
         }
   }
-  window.updateStealthPresentation=function(){ currentSlide=0; renderSlides(); };
-  window.nextStealthSlide=function(){ if(!slides.length) renderSlides(); currentSlide=Math.min(currentSlide+1,slides.length-1); renderCurrentSlide(); };
-  window.previousStealthSlide=function(){ if(!slides.length) renderSlides(); currentSlide=Math.max(currentSlide-1,0); renderCurrentSlide(); };
+  window.updateStealthPresentation=function(){
+    if(currentDeck.length && currentDeckKey) {
+      if(applySlideEditorValues()) saveCurrentDeck();
+    }
+    currentSlide=0;
+    renderSlides();
+    if(!document.getElementById('ppt-editor-panel').hidden) populateSlideEditor();
+  };
+  window.nextStealthSlide=function(){
+    if(!slides.length) renderSlides();
+    if(!applySlideEditorValues()) return;
+    saveCurrentDeck();
+    currentSlide=Math.min(currentSlide+1,slides.length-1);
+    renderCurrentSlide();
+    if(!document.getElementById('ppt-editor-panel').hidden) populateSlideEditor();
+  };
+  window.previousStealthSlide=function(){
+    if(!slides.length) renderSlides();
+    if(!applySlideEditorValues()) return;
+    saveCurrentDeck();
+    currentSlide=Math.max(currentSlide-1,0);
+    renderCurrentSlide();
+    if(!document.getElementById('ppt-editor-panel').hidden) populateSlideEditor();
+  };
 
   function setVisible(v){
     cloak.classList.toggle('is-visible',v);
@@ -3216,6 +4242,17 @@ function openWelcomeAuth(mode) {
       if(controls) controls.classList.remove('is-revealed');
       if(topbar) topbar.classList.add('is-faded');
     } else {
+      closeExternalPpt();
+      if(importedPptMode){
+        releasePptObjectUrls();
+        importedPptMode=false;
+        document.getElementById('cloak-slide').classList.remove('ppt-import-active');
+        document.querySelectorAll('.ppt-tool-group').forEach(group=>group.hidden=false);
+        document.getElementById('ppt-edit-presentation-button').hidden=false;
+      }
+      const menu=document.getElementById('ppt-file-menu');
+      if(menu) menu.hidden=true;
+      document.querySelector('.ppt-file-tab')?.setAttribute('aria-expanded','false');
       if(controls) controls.classList.remove('is-revealed');
       if(topbar) topbar.classList.remove('is-faded');
       if(favicon) favicon.setAttribute('href',originalFavicon);
@@ -3297,7 +4334,7 @@ function openWelcomeAuth(mode) {
         if (!name || !name.trim()) return;
         const cleanName = name.trim();
         if (customPlaylists[cleanName]) {
-            alert("Une playlist avec ce nom existe déjà !");
+            alert(window.translateZoltroUiText("Une playlist avec ce nom existe déjà !"));
             return;
         }
         customPlaylists[cleanName] = [];
@@ -3306,7 +4343,7 @@ function openWelcomeAuth(mode) {
 
     function deletePlaylist(name) {
         if (!requireAuth()) return;
-        if (confirm(`Veux-tu vraiment supprimer la playlist "${name}" ?`)) {
+        if (confirm(window.translateZoltroUiText(`Veux-tu vraiment supprimer la playlist "${name}" ?`))) {
             delete customPlaylists[name];
             saveCustomPlaylists();
         }
@@ -3370,14 +4407,14 @@ function openWelcomeAuth(mode) {
         const exists = customPlaylists[playlistName].some(t => t.id === id);
         if (exists) {
             closeAddToPlaylistModal();
-            alert(`« ${title} » est déjà dans « ${playlistName} » !`);
+            alert(window.translateZoltroUiText(`« ${title} » est déjà dans « ${playlistName} » !`));
             return;
         }
 
         customPlaylists[playlistName].push({ id, title, artist, cover });
         saveCustomPlaylists();
         closeAddToPlaylistModal();
-        alert(`« ${title} » a été ajouté à « ${playlistName} » !`);
+        alert(window.translateZoltroUiText(`« ${title} » a été ajouté à « ${playlistName} » !`));
     }
 
     function renderUserPlaylists() {
@@ -3565,7 +4602,7 @@ function openWelcomeAuth(mode) {
             const randomGameUrl = visibleGames[randomIndex].href;
             window.open(randomGameUrl, '_blank');
         } else {
-            alert("Aucun jeu n'est actuellement visible !");
+            alert(window.translateZoltroUiText("Aucun jeu n'est actuellement visible !"));
         }
     }
 
@@ -3577,6 +4614,7 @@ function openWelcomeAuth(mode) {
     let currentTrackIndex = 0;
     let shouldAutoPlay = false;
     let collapseTimer = null;
+    let musicPointerAtRevealEdge = false;
 
     let musicTracks = [];
 
@@ -3886,7 +4924,14 @@ function openWelcomeAuth(mode) {
     function setVolume(v){ 
         if(ytPlayer&&playerReady) ytPlayer.setVolume(parseInt(v,10)); 
         const volIcon = document.getElementById('volumeIcon');
-        if(volIcon) volIcon.textContent = parseInt(v, 10) === 0 ? '◌' : '◉';
+        const isMuted = parseInt(v, 10) === 0;
+        if (volIcon) {
+            volIcon.innerHTML = isMuted
+                ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4z"/><path d="m16 9 5 6m0-6-5 6"/></svg>'
+                : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4z"/><path d="M16 9a5 5 0 0 1 0 6M18.5 6.5a9 9 0 0 1 0 11"/></svg>';
+            volIcon.title = isMuted ? 'Activer le son' : 'Couper le son';
+            volIcon.setAttribute('aria-label', volIcon.title);
+        }
     }
 
     function toggleMute() {
@@ -3928,27 +4973,59 @@ function openWelcomeAuth(mode) {
         const player = document.getElementById('musicPlayer');
         if (player) {
             if (isPlaying) player.classList.add('playing');
-            else player.classList.remove('playing');
+            else {
+                player.classList.remove('playing', 'auto-hidden');
+            }
         }
+        const revealButton = document.getElementById('musicPlayerReveal');
+        if (revealButton) revealButton.setAttribute('aria-expanded', String(!player?.classList.contains('auto-hidden')));
         document.querySelectorAll('.music-card').forEach(c => {
             const trackId = c.id.replace('track-', '').replace('yt-search-track-', '');
             c.classList.toggle('playing', trackId === currentVideoId && isPlaying);
         });
+        collapseMusicPlayer();
     }
 
     function expandMusicPlayer() {
         clearTimeout(collapseTimer);
         const player = document.getElementById('musicPlayer');
-        if (player) player.classList.remove('compact');
+        if (player) player.classList.remove('compact', 'auto-hidden');
+        const revealButton = document.getElementById('musicPlayerReveal');
+        if (revealButton) revealButton.setAttribute('aria-expanded', 'true');
     }
 
     function collapseMusicPlayer() {
         clearTimeout(collapseTimer);
         collapseTimer = setTimeout(() => {
             const player = document.getElementById('musicPlayer');
-            if (player) player.classList.add('compact');
+            if (!player) return;
+            player.classList.add('compact');
+            if (isPlaying && !musicPointerAtRevealEdge && !player.matches(':hover') && !player.matches(':focus-within')) {
+                player.classList.add('auto-hidden');
+            } else if (!isPlaying) {
+                player.classList.remove('auto-hidden');
+            }
+            const revealButton = document.getElementById('musicPlayerReveal');
+            if (revealButton) revealButton.setAttribute('aria-expanded', String(!player.classList.contains('auto-hidden')));
         }, 3000);
     }
+
+    function toggleMusicPlayerVisibility() {
+        expandMusicPlayer();
+        collapseMusicPlayer();
+    }
+
+    document.addEventListener('pointermove', event => {
+        if (event.pointerType !== 'mouse') return;
+        const atRevealEdge = event.clientY >= window.innerHeight - 24;
+        if (atRevealEdge) {
+            const player = document.getElementById('musicPlayer');
+            if (isPlaying && player?.classList.contains('auto-hidden')) expandMusicPlayer();
+        } else if (musicPointerAtRevealEdge && isPlaying) {
+            collapseMusicPlayer();
+        }
+        musicPointerAtRevealEdge = atRevealEdge;
+    });
 
     function collapseAfterAction() {
         collapseMusicPlayer();
@@ -3978,6 +5055,10 @@ function openWelcomeAuth(mode) {
 
   function hideGameFallback(){ if(fallback) fallback.hidden=true; }
   function showGameFallback(){ if(fallback) fallback.hidden=false; }
+  function setGameFallbackMessage(message){
+    const text=document.getElementById('zoltro-game-fallback-message');
+    if(text) text.textContent=message;
+  }
 
   window.reloadCurrentGame=function(){
     if(!currentUrl) return;
@@ -3993,17 +5074,20 @@ function openWelcomeAuth(mode) {
     currentUrl=url;
     title.textContent=name || 'Jeu';
     hideGameFallback();
+    setGameFallbackMessage('Certains sites refusent l’affichage intégré. Clique sur « Ouvrir le jeu » pour jouer directement sur le site d’origine.');
+    document.getElementById('musicPlayer')?.classList.add('game-hidden');
     clearTimeout(gameLoadTimer);
     overlay.classList.add('active');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
-        const host=new URL(url,window.location.href).hostname;
-        if(host==='wasmarcade.com' || host.endsWith('.wasmarcade.com')){
-            frame.src='about:blank';
-            showGameFallback();
-            return;
-        }
-        frame.src=url;
+    const host=new URL(url,window.location.href).hostname;
+    if(host==='wasmarcade.com'||host.endsWith('.wasmarcade.com')){
+      frame.src='about:blank';
+      setGameFallbackMessage('WASM Arcade interdit à Zoltrogame d’afficher GTA III dans une fenêtre intégrée. Clique sur « Ouvrir le jeu » pour le lancer sur son site.');
+      showGameFallback();
+      return;
+    }
+    frame.src=url;
     gameLoadTimer=setTimeout(()=>{
       if(overlay.classList.contains('active')) showGameFallback();
     },7000);
@@ -4023,6 +5107,10 @@ function openWelcomeAuth(mode) {
   window.closeZoltroGame=function(){
     overlay.classList.remove('active');
     overlay.setAttribute('aria-hidden','true');
+    const musicPlayer=document.getElementById('musicPlayer');
+    if(musicPlayer) musicPlayer.classList.remove('game-hidden');
+    if(typeof window.expandMusicPlayer==='function') window.expandMusicPlayer();
+    if(typeof window.collapseMusicPlayer==='function') window.collapseMusicPlayer();
     clearTimeout(gameLoadTimer);
     hideGameFallback();
     frame.src='about:blank';
@@ -4057,6 +5145,7 @@ function openWelcomeAuth(mode) {
   document.querySelectorAll('.game-card').forEach(card=>{
     card.addEventListener('click',function(e){
       if(e.target.closest('.like-btn')) return;
+      if(this.target==='_blank') return;
             if(this.dataset.name==='GTA 5') return;
       e.preventDefault();
       const url=this.href;
@@ -4068,7 +5157,7 @@ function openWelcomeAuth(mode) {
   const oldRandom=window.playRandomGame;
   window.playRandomGame=function(){
     const visibleGames=document.querySelectorAll('.game-card:not(.hidden)');
-    if(!visibleGames.length){ alert("Aucun jeu n'est actuellement visible !"); return; }
+    if(!visibleGames.length){ alert(window.translateZoltroUiText("Aucun jeu n'est actuellement visible !")); return; }
     const card=visibleGames[Math.floor(Math.random()*visibleGames.length)];
     launchGame(card.href,card.dataset.name || 'Jeu aléatoire');
   };
