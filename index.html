@@ -1023,6 +1023,15 @@
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
         }
 
+        .account-pill-avatar {
+            width: 28px;
+            height: 28px;
+            flex: 0 0 28px;
+            border: 1px solid rgba(94, 231, 255, 0.38);
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         .auth-overlay {
             position: fixed;
             inset: 0;
@@ -2355,7 +2364,12 @@ function openWelcomeAuth(mode) {
         const user = getCurrentUser();
         const label = document.createElement('span');
         if (user && user.name) {
-            button.innerHTML = getIconSvg('account');
+            const avatar = PROFILE_AVATARS.find(item => item.id === user.avatar) || PROFILE_AVATARS[0];
+            const image = document.createElement('img');
+            image.className = 'account-pill-avatar';
+            image.src = avatar.image;
+            image.alt = '';
+            button.replaceChildren(image);
             label.textContent = user.name;
             button.title = 'Mon compte';
             button.setAttribute('aria-label', `Ouvrir le compte de ${user.name}`);
@@ -3249,9 +3263,10 @@ function openWelcomeAuth(mode) {
                     <img class="game-poster" src="https://drift.io/571ab7e39e787232ba46.png" alt="Drift.io" loading="eager" decoding="async">
                     <div class="game-info"><span>Drift.io</span></div>
                 </a>
-                <a href="https://nfsu2.xyz/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="Need for Speed Underground 2" data-cat="course">
-                    <div class="nfsu2-art" aria-hidden="true"><span>NEED FOR SPEED</span><strong>UNDERGROUND 2</strong></div>
-                    <div class="game-info"><span>Need for Speed Underground 2</span></div>
+                <a href="https://nfsu2.xyz/" class="game-card" data-name="Need for Speed Underground 2" data-cat="course">
+                    <img class="static-img" src="https://media.licdn.com/dms/image/v2/D5610AQF6QV2kDqi3Ig/image-shrink_800/image-shrink_800/0/1712193880199?e=2147483647&v=beta&t=xS5W72u-4mBeSOvNMjttfQOimxLU8cqKFVuMMPvNMPQ" alt="Underground 2" loading="eager" decoding="async">
+                    <img src="https://media1.tenor.com/m/eebhK5-xRawAAAAd/drift-nfsu2.gif" alt="Animation MakeGif" width="400" loading="eager" decoding="async">
+                    <div class="game-info"><span>Underground 2</span></div>
                 </a>
                 <a href="https://slowroads.io/" target="_blank" class="game-card" data-name="Slowroads.io" data-cat="course">
                     <img class="static-img" src="https://i.ytimg.com/vi/lCkZbdVmLHA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLASqZfOBsoeO_HDxfxbHhgzv6O51g" alt="slowroads.io" loading="eager" decoding="async">
@@ -5727,6 +5742,12 @@ function openWelcomeAuth(mode) {
     if(host==='wasmarcade.com'||host.endsWith('.wasmarcade.com')){
       frame.src='about:blank';
       setGameFallbackMessage('WASM Arcade interdit à Zoltrogame d’afficher GTA III dans une fenêtre intégrée. Clique sur « Ouvrir le jeu » pour le lancer sur son site.');
+      showGameFallback();
+      return;
+    }
+    if(host==='nfsu2.xyz'||host.endsWith('.nfsu2.xyz')){
+      frame.src='about:blank';
+      setGameFallbackMessage('Le site d’Underground 2 interdit son affichage dans une fenêtre intégrée. Clique sur « Ouvrir le jeu » pour jouer sur le site d’origine.');
       showGameFallback();
       return;
     }
