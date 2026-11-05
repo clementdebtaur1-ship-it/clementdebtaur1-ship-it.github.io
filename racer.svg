@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#ff9a4a"/><stop offset="1" stop-color="#c62d68"/></linearGradient>
+    <linearGradient id="helmet" x2=".8" y2="1"><stop stop-color="#f8fbff"/><stop offset="1" stop-color="#98b9d1"/></linearGradient>
+    <linearGradient id="visor" x2="1" y2="1"><stop stop-color="#7af6ff"/><stop offset="1" stop-color="#4867d8"/></linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="64" fill="url(#bg)"/>
+  <path d="M12 106 40 77h48l28 29v22H12z" fill="#17283c"/>
+  <path d="M31 69c0-26 13-45 33-45s33 19 33 45v13H31z" fill="url(#helmet)" stroke="#fff" stroke-width="4"/>
+  <path d="M28 58c8-19 21-28 37-28s29 9 37 28v12H28z" fill="url(#visor)" stroke="#d9ffff" stroke-width="3"/>
+  <path d="M44 48q20-13 40 0" fill="none" stroke="#fff" stroke-opacity=".72" stroke-width="4" stroke-linecap="round"/>
+  <path d="M42 83h44l9 12H33z" fill="#f3f5fa" stroke="#283b54" stroke-width="3"/>
+  <path d="M50 86h28l-5 8H55z" fill="#f16a4d"/>
+  <circle cx="31" cy="64" r="7" fill="#e9f4ff" stroke="#344d67" stroke-width="3"/>
+  <circle cx="97" cy="64" r="7" fill="#e9f4ff" stroke="#344d67" stroke-width="3"/>
+</svg>
