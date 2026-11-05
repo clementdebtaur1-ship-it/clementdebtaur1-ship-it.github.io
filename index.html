@@ -1091,6 +1091,11 @@
         }
 
         .account-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .account-avatar-fallback {
+            color: var(--text-strong);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
 
         .account-hero h2 {
             margin: 5px 0;
@@ -2256,6 +2261,39 @@ body.cloak-open{overflow:hidden!important}
     ];
     let selectedAccountAvatar = PROFILE_AVATARS[0].id;
 
+    function setProfileAvatarImage(image, avatar) {
+        const fileName = avatar.id;
+        const paths = [
+            avatar.image,
+            `avatars/${fileName}.svg`,
+            `${fileName}.svg`,
+            `assets/avatars/${fileName}.png`,
+            `avatars/${fileName}.png`,
+            `${fileName}.png`
+        ];
+        const sources = [...new Set(paths.map(path => new URL(path, document.baseURI).href))];
+        let sourceIndex = 0;
+        const onError = () => {
+            if (sourceIndex < sources.length) {
+                image.src = sources[sourceIndex++];
+                return;
+            }
+            image.removeEventListener('error', onError);
+            console.error(`Avatar "${fileName}" introuvable. Vérifie le dossier assets/avatars sur GitHub.`, sources);
+            image.hidden = true;
+            const parent = image.parentElement;
+            if (parent?.matches('.account-avatar, .account-avatar-choice')) {
+                const fallback = document.createElement('span');
+                fallback.className = 'account-avatar-fallback';
+                fallback.textContent = avatar.label.charAt(0).toUpperCase();
+                fallback.setAttribute('aria-hidden', 'true');
+                parent.replaceChildren(fallback);
+            }
+        };
+        image.addEventListener('error', onError);
+        image.src = sources[sourceIndex++];
+    }
+
     function safeParse(value, fallback) {
         try {
             const parsed = value === null || value === undefined ? null : JSON.parse(value);
@@ -2367,7 +2405,7 @@ function openWelcomeAuth(mode) {
             const avatar = PROFILE_AVATARS.find(item => item.id === user.avatar) || PROFILE_AVATARS[0];
             const image = document.createElement('img');
             image.className = 'account-pill-avatar';
-            image.src = avatar.image;
+            setProfileAvatarImage(image, avatar);
             image.alt = '';
             button.replaceChildren(image);
             label.textContent = user.name;
@@ -2391,7 +2429,7 @@ function openWelcomeAuth(mode) {
             choice.type = 'button';
             choice.className = 'account-avatar-choice';
             const image = document.createElement('img');
-            image.src = avatar.image;
+            setProfileAvatarImage(image, avatar);
             image.alt = '';
             image.loading = 'lazy';
             choice.appendChild(image);
@@ -2412,7 +2450,7 @@ function openWelcomeAuth(mode) {
     function renderCurrentAccountAvatar(avatar) {
         const container = document.getElementById('accountAvatar');
         const image = document.createElement('img');
-        image.src = avatar.image;
+        setProfileAvatarImage(image, avatar);
         image.alt = window.translateZoltroUiText(avatar.label);
         container.replaceChildren(image);
     }
@@ -3126,7 +3164,7 @@ function openWelcomeAuth(mode) {
                     <img class="game-poster" src="https://i.ytimg.com/vi/-xaEt4HSCFM/maxresdefault.jpg" alt="GTA Advance" loading="eager" decoding="async">
                     <div class="game-info"><span>GTA Advance (2004)</span></div>
                 </a>
-				<a href="https://staticquasar931.github.io/GTA-San-Andreas/" class="game-card" data-name="GTA San Andreas" data-cat="action">
+				<a href="https://staticquasar931.github.io/GTA-San-Andreas/" target="_blank" rel="noopener noreferrer" class="game-card" data-name="GTA San Andreas" data-cat="action">
                     <img class="static-img" src="https://gaming-cdn.com/images/products/353/616x353/grand-theft-auto-san-andreas-pc-mac-jeu-steam-cover.jpg?v=1742305151" alt="GTA San Andreas" loading="eager" decoding="async">
                     <img class="gif-img" data-src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmNicG9iMmtoaGVsNHFoZzRjaWlmNTJwc2NybjVnNHlweWEwemF3diZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Jk6v9PwmL2QLK/giphy.gif" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Animation MakeAGif" width="400" loading="eager" decoding="async">
                     <div class="game-info"><span>GTA San Andreas (2004)</span></div>
@@ -3259,6 +3297,14 @@ function openWelcomeAuth(mode) {
                 <span class="category-count" id="count-course">0 jeux</span>
             </div>
             <div class="cards-grid">
+                <a href="https://marsrallychampionship.com/play" class="game-card" data-name="Mars Rally Championship" data-cat="course">
+                    <img class="game-poster" src="https://marsrallychampionship.com/share-image.png" alt="Mars Rally Championship" loading="eager" decoding="async">
+                    <div class="game-info"><span>Mars Rally Championship</span></div>
+                </a>
+                <a href="https://www.kodub.com/apps/polytrack" class="game-card" data-name="PolyTrack" data-cat="course">
+                    <img class="game-poster" src="https://www.kodub.com/apps/polytrack/image" alt="PolyTrack" loading="eager" decoding="async">
+                    <div class="game-info"><span>PolyTrack</span></div>
+                </a>
                 <a href="https://drift.io/?room=S3Xe3q" target="_blank" class="game-card" data-name="Drift.io" data-cat="course">
                     <img class="game-poster" src="https://drift.io/571ab7e39e787232ba46.png" alt="Drift.io" loading="eager" decoding="async">
                     <div class="game-info"><span>Drift.io</span></div>
@@ -5799,7 +5845,7 @@ function openWelcomeAuth(mode) {
   };
 
     function launchGame(url,name){
-        if(name==='GTA 5'){
+        if(name==='GTA 5' || name==='GTA San Andreas'){
             window.open(url,'_blank','noopener,noreferrer');
             return;
         }
@@ -5809,12 +5855,10 @@ function openWelcomeAuth(mode) {
   document.querySelectorAll('.game-card').forEach(card=>{
     card.addEventListener('click',function(e){
       if(e.target.closest('.like-btn')) return;
-      if(this.target==='_blank') return;
-            if(this.dataset.name==='GTA 5') return;
       e.preventDefault();
       const url=this.href;
       const name=this.dataset.name || this.querySelector('.game-info span')?.textContent || 'Jeu';
-    launchGame(url,name);
+      launchGame(url,name);
     });
     });
 
