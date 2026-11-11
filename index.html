@@ -2808,14 +2808,24 @@ function openWelcomeAuth(mode) {
     const GAME_LIKES_TABLE = 'game_likes';
     const LIKE_VISITOR_ID_KEY = 'zoltro-like-visitor-id-v1';
     const gameLikeCounts = new Map();
+    const visitorLikedGameIds = new Set();
     let sharedLikesReady = false;
     let sharedLikesFailed = false;
 
     function getLikeVisitorId() {
         let visitorId = localStorage.getItem(LIKE_VISITOR_ID_KEY);
         if (!visitorId) {
-            if (!crypto.randomUUID) throw new Error('Ce navigateur ne permet pas de créer un identifiant de vote.');
-            visitorId = crypto.randomUUID();
+            if (crypto.randomUUID) {
+                visitorId = crypto.randomUUID();
+            } else {
+                const bytes = crypto.getRandomValues(new Uint8Array(16));
+                bytes[6] = (bytes[6] & 0x0f) | 0x40;
+                bytes[8] = (bytes[8] & 0x3f) | 0x80;
+                visitorId = [...bytes].map((byte, index) => {
+                    const hex = byte.toString(16).padStart(2, '0');
+                    return [4, 6, 8, 10].includes(index) ? `-${hex}` : hex;
+                }).join('');
+            }
             localStorage.setItem(LIKE_VISITOR_ID_KEY, visitorId);
         }
         return visitorId;
@@ -2842,6 +2852,7 @@ function openWelcomeAuth(mode) {
             status.hidden = false;
         }
 
+        const visitorId = getLikeVisitorId();
         const counts = new Map();
         let offset = 0;
         let rows;
@@ -2852,8 +2863,16 @@ function openWelcomeAuth(mode) {
             offset += rows.length;
         } while (rows.length === 1000);
 
+        const visitorQuery = new URLSearchParams({
+            select: 'game_id',
+            visitor_id: `eq.${visitorId}`
+        });
+        const visitorRows = await fetchLikeRows(visitorQuery);
+
         gameLikeCounts.clear();
         counts.forEach((count, gameId) => gameLikeCounts.set(gameId, count));
+        visitorLikedGameIds.clear();
+        visitorRows.forEach(row => visitorLikedGameIds.add(row.game_id));
         sharedLikesReady = true;
         sharedLikesFailed = false;
         injectLikes();
@@ -2873,11 +2892,13 @@ function openWelcomeAuth(mode) {
         });
     }
 
-    async function toggleSharedLike(card, button, shouldLike) {
+    async function toggleSharedLike(card, button) {
         const gameId = slugify(card.dataset.name || card.id);
         button.disabled = true;
         try {
             const visitorId = getLikeVisitorId();
+            const favoriteKey = getFavoriteKey(card.dataset.name || card.id);
+            const shouldLike = localStorage.getItem(favoriteKey) !== '1';
             const query = new URLSearchParams({
                 game_id: `eq.${gameId}`,
                 visitor_id: `eq.${visitorId}`
@@ -2895,6 +2916,8 @@ function openWelcomeAuth(mode) {
             });
             if (!response.ok) throw new Error(`Supabase a répondu avec le statut ${response.status}.`);
 
+            if (shouldLike) localStorage.setItem(favoriteKey, '1');
+            else localStorage.removeItem(favoriteKey);
             await loadSharedLikes();
             if (activeCat === 'favoris') applyFilter(searchInput.value);
         } catch (error) {
@@ -5650,14 +5673,7 @@ function openWelcomeAuth(mode) {
                 btn.addEventListener('click', event => {
                     event.preventDefault();
                     event.stopPropagation();
-                    if (!requireAuth()) return;
-                    const targetKey = getFavoriteKey(card.dataset.name || card.id);
-                    const nowLiked = localStorage.getItem(targetKey) !== '1';
-                    if (nowLiked) localStorage.setItem(targetKey, '1');
-                    else localStorage.removeItem(targetKey);
-                    updateLikeButtons(gameId);
-                    if (activeCat === 'favoris') applyFilter(searchInput.value);
-                    if (sharedLikesReady) toggleSharedLike(card, btn, nowLiked);
+                    toggleSharedLike(card, btn);
                 });
                 card.appendChild(btn);
             }
