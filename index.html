@@ -910,7 +910,11 @@
         .like-btn { position:absolute; bottom:10px; right:10px; z-index:8; border:1px solid rgba(255,255,255,.16); background:rgba(7,10,16,.82); color:#aeb8c8; border-radius:999px; padding:6px 9px; cursor:pointer; font-size:.72rem; display:flex; align-items:center; gap:5px; transition:.2s; backdrop-filter:blur(8px); }
         .like-btn:hover { transform:scale(1.08); border-color:var(--accent2); color:#fff; }
         .like-btn.liked { color:#ff3c6e; border-color:#ff3c6e; box-shadow:0 0 12px rgba(255,60,110,.3); }
+        .like-btn:disabled { cursor:wait; opacity:.65; }
         .music-card .like-btn { bottom:14px; right:14px; }
+        #likesStatus { width:min(100% - 32px, 1100px); margin:10px auto; color:var(--text-muted); font-size:.85rem; text-align:center; }
+        .best-games-empty { padding:18px; color:var(--text-muted); text-align:center; }
+        .best-games-empty[hidden] { display:none; }
 
         .music-player { position:fixed; left:50%; right:auto; bottom:12px; z-index:9998; width:min(960px,calc(100vw - 28px)); min-height:76px; border:1px solid rgba(191,211,239,.16); border-radius:22px; background:linear-gradient(115deg,rgba(18,24,34,.97),rgba(10,14,23,.94)); backdrop-filter:blur(24px) saturate(145%); -webkit-backdrop-filter:blur(24px) saturate(145%); box-shadow:0 18px 55px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.07); display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,1.2fr) minmax(0,1fr); align-items:center; gap:18px; padding:10px 18px; transform:translateX(-50%); transition:height .28s ease, min-height .28s ease, opacity .28s ease, box-shadow .28s ease, transform .38s cubic-bezier(.2,.8,.2,1); }
         .music-player::before { content:""; position:absolute; top:-1px; left:12%; right:12%; height:1px; background:linear-gradient(90deg,transparent,rgba(142,204,255,.65),rgba(188,188,255,.5),transparent); pointer-events:none; }
@@ -1885,6 +1889,9 @@ body.cloak-open{overflow:hidden!important}
 
     const uiPhraseRows = {
         'Proposer un jeu / Bug / Réclamation':['Suggest a game / Bug / Feedback','Sugerir un juego / Error / Comentario','Spiel vorschlagen / Fehler / Feedback','Proponi un gioco / Bug / Segnalazione'],
+        'Chargement des likes...':['Loading likes...','Cargando los Me gusta...','Likes werden geladen...','Caricamento dei Mi piace...'],
+        'Likes partagés indisponibles pour le moment. Réessaie plus tard.':['Shared likes are temporarily unavailable. Please try again later.','Los Me gusta compartidos no están disponibles temporalmente. Inténtalo más tarde.','Geteilte Likes sind momentan nicht verfügbar. Bitte versuche es später erneut.','I Mi piace condivisi non sono disponibili al momento. Riprova più tardi.'],
+        'Le like partagé n’a pas pu être enregistré. Réessaie.':['The shared like could not be saved. Please try again.','No se pudo guardar el Me gusta compartido. Inténtalo de nuevo.','Der geteilte Like konnte nicht gespeichert werden. Bitte versuche es erneut.','Non è stato possibile salvare il Mi piace condiviso. Riprova.'],
         'Soutenir Zoltrogame':['Support Zoltrogame','Apoya a Zoltrogame','Zoltrogame unterstützen','Sostieni Zoltrogame'],
         'Fermer':['Close','Cerrar','Schließen','Chiudi'],
         'Se connecter':['Log in','Iniciar sesión','Anmelden','Accedi'],
@@ -1901,6 +1908,11 @@ body.cloak-open{overflow:hidden!important}
         'Bio':['Bio','Biografía','Bio','Bio'],
         'Mon avatar':['My avatar','Mi avatar','Mein Avatar','Il mio avatar'],
         'Choisir un avatar':['Choose an avatar','Elegir un avatar','Avatar auswählen','Scegli un avatar'],
+        'Meilleurs jeux':['Best games','Mejores juegos','Beliebteste Spiele','Giochi migliori'],
+        'Rechercher dans les meilleurs jeux...':['Search best games...','Buscar entre los mejores juegos...','Beliebteste Spiele durchsuchen...','Cerca tra i giochi migliori...'],
+        'Chargement des meilleurs jeux...':['Loading best games...','Cargando los mejores juegos...','Beliebteste Spiele werden geladen...','Caricamento dei giochi migliori...'],
+        'Pas encore de jeux avec au moins 2 likes.':['No games have at least 2 likes yet.','Aún no hay juegos con al menos 2 Me gusta.','Noch keine Spiele mit mindestens 2 Likes.','Nessun gioco ha ancora almeno 2 Mi piace.'],
+        'Les meilleurs jeux ne peuvent pas être chargés pour le moment.':['Best games cannot be loaded right now.','No se pueden cargar los mejores juegos en este momento.','Die besten Spiele können gerade nicht geladen werden.','Impossibile caricare i giochi migliori al momento.'],
         'Pilote':['Racer','Piloto','Rennfahrer','Pilota'],
         'Robot':['Robot','Robot','Roboter','Robot'],
         'Alien':['Alien','Alienígena','Alien','Alieno'],
@@ -2791,6 +2803,112 @@ function openWelcomeAuth(mode) {
         return `zoltro-favorite-${slug}`;
     }
 
+    const SUPABASE_URL = 'https://hmzfuujliomphqxwexgq.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_oU-dcnstVMhz2DqMDlyh3w_V8s3qsFz';
+    const GAME_LIKES_TABLE = 'game_likes';
+    const LIKE_VISITOR_ID_KEY = 'zoltro-like-visitor-id-v1';
+    const gameLikeCounts = new Map();
+    let sharedLikesReady = false;
+    let sharedLikesFailed = false;
+
+    function getLikeVisitorId() {
+        let visitorId = localStorage.getItem(LIKE_VISITOR_ID_KEY);
+        if (!visitorId) {
+            if (!crypto.randomUUID) throw new Error('Ce navigateur ne permet pas de créer un identifiant de vote.');
+            visitorId = crypto.randomUUID();
+            localStorage.setItem(LIKE_VISITOR_ID_KEY, visitorId);
+        }
+        return visitorId;
+    }
+
+    async function fetchLikeRows(query, start = 0) {
+        const headers = {
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+            Range: `${start}-${start + 999}`,
+            'Range-Unit': 'items'
+        };
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/${GAME_LIKES_TABLE}?${query}`, { headers });
+        if (!response.ok) {
+            throw new Error(`Supabase a répondu avec le statut ${response.status}.`);
+        }
+        return response.json();
+    }
+
+    async function loadSharedLikes() {
+        const status = document.getElementById('likesStatus');
+        if (status) {
+            status.textContent = window.translateZoltroUiText('Chargement des likes...');
+            status.hidden = false;
+        }
+
+        const counts = new Map();
+        let offset = 0;
+        let rows;
+        do {
+            const query = new URLSearchParams({ select: 'game_id', order: 'game_id.asc' });
+            rows = await fetchLikeRows(query, offset);
+            rows.forEach(row => counts.set(row.game_id, (counts.get(row.game_id) || 0) + 1));
+            offset += rows.length;
+        } while (rows.length === 1000);
+
+        gameLikeCounts.clear();
+        counts.forEach((count, gameId) => gameLikeCounts.set(gameId, count));
+        sharedLikesReady = true;
+        sharedLikesFailed = false;
+        injectLikes();
+        if (activeCat === 'meilleurs' || activeCat === 'all') applyFilter(searchInput.value);
+        if (status) status.hidden = true;
+    }
+
+    function updateLikeButtons(gameId) {
+        document.querySelectorAll('.like-btn').forEach(button => {
+            if (button.dataset.likeGameId !== gameId) return;
+            const card = button.closest('.game-card, .music-card');
+            const liked = card ? isFavorite(card) : false;
+            button.classList.toggle('liked', liked);
+            button.textContent = liked ? '♥' : '♡';
+            button.title = liked ? 'Retirer des favoris' : 'Ajouter aux favoris';
+            button.setAttribute('aria-label', button.title);
+        });
+    }
+
+    async function toggleSharedLike(card, button, shouldLike) {
+        const gameId = slugify(card.dataset.name || card.id);
+        button.disabled = true;
+        try {
+            const visitorId = getLikeVisitorId();
+            const query = new URLSearchParams({
+                game_id: `eq.${gameId}`,
+                visitor_id: `eq.${visitorId}`
+            });
+            const endpoint = `${SUPABASE_URL}/rest/v1/${GAME_LIKES_TABLE}`;
+            const response = await fetch(shouldLike ? endpoint : `${endpoint}?${query}`, {
+                method: shouldLike ? 'POST' : 'DELETE',
+                headers: {
+                    apikey: SUPABASE_PUBLISHABLE_KEY,
+                    Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+                    'Content-Type': 'application/json',
+                    Prefer: shouldLike ? 'resolution=ignore-duplicates,return=minimal' : 'return=minimal'
+                },
+                ...(shouldLike ? { body: JSON.stringify({ game_id: gameId, visitor_id: visitorId }) } : {})
+            });
+            if (!response.ok) throw new Error(`Supabase a répondu avec le statut ${response.status}.`);
+
+            await loadSharedLikes();
+            if (activeCat === 'favoris') applyFilter(searchInput.value);
+        } catch (error) {
+            console.error('Impossible de mettre à jour le like partagé :', error);
+            const status = document.getElementById('likesStatus');
+            if (status) {
+                status.textContent = window.translateZoltroUiText('Le like partagé n’a pas pu être enregistré. Réessaie.');
+                status.hidden = false;
+            }
+        } finally {
+            button.disabled = false;
+        }
+    }
+
     function showLoginGateMessage() {
         const toast = document.getElementById('loginGateMessage');
         if (!toast) return;
@@ -3116,6 +3234,7 @@ function openWelcomeAuth(mode) {
 
     <div class="category-tabs" id="categoryTabs">
         <button class="tab-btn active" data-cat="all"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="4" rx="1.5"/><rect x="14" y="11" width="7" height="10" rx="1.5"/><rect x="3" y="12" width="7" height="9" rx="1.5"/></svg><span>Tous</span></button>
+        <button class="tab-btn" data-cat="meilleurs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4"/></svg><span>Meilleurs jeux</span></button>
         <button class="tab-btn" data-cat="action"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"/></svg><span>Action / FPS</span></button>
         <button class="tab-btn" data-cat="course"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l3-3 4 4 7-8"/><circle cx="18" cy="6" r="2"/><path d="M6 18h12"/></svg><span>Course / Conduite</span></button>
         <button class="tab-btn" data-cat="simulation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16h20"/><path d="M6 16V8l6-4 6 4v8"/><path d="M10 16v-4h4v4"/></svg><span>Simulation</span></button>
@@ -3132,8 +3251,19 @@ function openWelcomeAuth(mode) {
         <button class="tab-btn" data-cat="favoris"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.8-9-9.2C1.9 9 4.3 4 8.7 4c2.2 0 3.2 1.1 3.3 1.3.1-.2 1.1-1.3 3.3-1.3 4.4 0 6.8 5 6.7 7.8-2 4.4-9 9.2-9 9.2z"/></svg><span>Mes favoris</span></button>
         <button class="tab-btn" data-cat="musique"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg><span>Musique</span></button>
     </div>
+    <p id="likesStatus" role="status" aria-live="polite" hidden></p>
 
     <main id="mainContent">
+        <section class="category-section best-games-section" id="bestGamesSection" data-category="meilleurs">
+            <div class="category-header">
+                <span class="category-icon" aria-hidden="true">🏆</span>
+                <span class="category-title">Meilleurs jeux</span>
+                <div class="category-line"></div>
+                <span class="category-count" id="count-meilleurs">0 jeux</span>
+            </div>
+            <div class="cards-grid" id="bestGamesGrid"></div>
+            <p class="best-games-empty" id="bestGamesEmpty"></p>
+        </section>
         <div class="category-section" data-category="action">
             <div class="category-header">
                 <span class="category-icon" data-icon="action"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"/></svg></span>
@@ -5003,7 +5133,7 @@ function openWelcomeAuth(mode) {
     };
 
     function updateCounts() {
-        const categories = ['action', 'course', 'simulation', 'sandbox', 'imagination', 'exploration', 'emulateur', 'io', 'strategie', 'combat', 'io-survie', 'party', 'puzzle', 'rpg', 'gestion', 'musique'];
+        const categories = ['action', 'course', 'simulation', 'sandbox', 'imagination', 'exploration', 'emulateur', 'io', 'strategie', 'combat', 'io-survie', 'party', 'puzzle', 'rpg', 'gestion', 'musique', 'meilleurs'];
         
         categories.forEach(cat => {
             const section = document.querySelector(`.category-section[data-category="${cat}"]`);
@@ -5194,12 +5324,67 @@ function openWelcomeAuth(mode) {
         });
     }
 
+    function renderBestGames(query) {
+        restoreBestGameCards();
+        const bestGamesGrid = document.getElementById('bestGamesGrid');
+        const bestGamesEmpty = document.getElementById('bestGamesEmpty');
+        const normalizedQuery = query.toLowerCase().trim();
+        const bestGames = Array.from(bestGameCardPositions.keys())
+            .filter(card => {
+                const gameId = slugify(card.dataset.name || card.id);
+                const name = (card.dataset.name || '').toLowerCase();
+                const categoryLabel = (catLabels[card.dataset.cat] || '').toLowerCase();
+                return (gameLikeCounts.get(gameId) || 0) >= 2
+                    && (!normalizedQuery || name.includes(normalizedQuery) || categoryLabel.includes(normalizedQuery));
+            })
+            .sort((first, second) => {
+                const firstLikes = gameLikeCounts.get(slugify(first.dataset.name || first.id)) || 0;
+                const secondLikes = gameLikeCounts.get(slugify(second.dataset.name || second.id)) || 0;
+                return secondLikes - firstLikes
+                    || (first.dataset.name || '').localeCompare(second.dataset.name || '');
+            });
+
+        bestGames.forEach(card => {
+            card.classList.remove('hidden');
+            bestGamesGrid.appendChild(card);
+        });
+        bestGamesEmpty.hidden = bestGames.length > 0;
+        bestGamesEmpty.textContent = sharedLikesReady
+            ? window.translateZoltroUiText('Pas encore de jeux avec au moins 2 likes.')
+            : window.translateZoltroUiText(sharedLikesFailed
+                ? 'Les meilleurs jeux ne peuvent pas être chargés pour le moment.'
+                : 'Chargement des meilleurs jeux...');
+        return bestGames.length;
+    }
+
     function applyFilter(q) {
         q = q.toLowerCase().trim();
         const sections = document.querySelectorAll('.category-section');
         let totalVisible = 0;
+        const bestSection = document.getElementById('bestGamesSection');
+
+        if (activeCat === 'meilleurs') {
+            restoreBestGameCards();
+            sections.forEach(section => {
+                if (section !== bestSection) section.classList.add('hidden');
+            });
+            bestSection.classList.remove('hidden');
+            renderBestGames(q);
+            document.getElementById('noResults').style.display = 'none';
+            updateCounts();
+            return;
+        }
+
+        if (activeCat === 'all') {
+            bestSection.classList.remove('hidden');
+            totalVisible += renderBestGames(q);
+        } else {
+            restoreBestGameCards();
+            bestSection.classList.add('hidden');
+        }
 
         sections.forEach(section => {
+            if (section === bestSection) return;
             const sectionCat = section.dataset.category.toLowerCase();
             const isMusicSection = (sectionCat === 'musique');
             
@@ -5243,6 +5428,18 @@ function openWelcomeAuth(mode) {
     }
 
     const searchInput = document.getElementById('searchInput');
+    const bestGameCardPositions = new Map();
+    document.querySelectorAll('#mainContent .category-section:not(#bestGamesSection) .game-card').forEach(card => {
+        const marker = document.createComment('best-games-position');
+        card.parentNode.insertBefore(marker, card);
+        bestGameCardPositions.set(card, marker);
+    });
+
+    function restoreBestGameCards() {
+        bestGameCardPositions.forEach((marker, card) => {
+            if (marker.parentNode) marker.parentNode.insertBefore(card, marker.nextSibling);
+        });
+    }
 
     searchInput.addEventListener('input', () => {
         const query = searchInput.value;
@@ -5261,6 +5458,8 @@ function openWelcomeAuth(mode) {
                 searchInput.placeholder = "Filtrer les musiques...";
             } else if (activeCat === 'favoris') {
                 searchInput.placeholder = "Rechercher dans mes favoris...";
+            } else if (activeCat === 'meilleurs') {
+                searchInput.placeholder = window.translateZoltroUiText('Rechercher dans les meilleurs jeux...');
             } else {
                 searchInput.placeholder = "Rechercher un jeu...";
             }
@@ -5268,7 +5467,9 @@ function openWelcomeAuth(mode) {
             applyFilter(searchInput.value);
 
             // Quand une catégorie est choisie, on amène l'utilisateur directement à son contenu.
-            if (activeCat !== 'all' && activeCat !== 'favoris') {
+            if (activeCat === 'meilleurs') {
+                window.scrollTo({ top: document.getElementById('bestGamesSection').offsetTop, behavior: 'smooth' });
+            } else if (activeCat !== 'all' && activeCat !== 'favoris') {
                 const targetSection = document.querySelector(`.category-section[data-category="${activeCat}"]`);
                 if (targetSection) {
                     requestAnimationFrame(() => {
@@ -5286,6 +5487,16 @@ function openWelcomeAuth(mode) {
     setupYouTubeMusicSearch();
     renderUserPlaylists();
     applyFilter('');
+    loadSharedLikes().catch(error => {
+        console.error('Impossible de charger les likes partagés :', error);
+        sharedLikesFailed = true;
+        applyFilter(searchInput.value);
+        const status = document.getElementById('likesStatus');
+        if (status) {
+            status.textContent = window.translateZoltroUiText('Likes partagés indisponibles pour le moment. Réessaie plus tard.');
+            status.hidden = false;
+        }
+    });
 
     function toggleFullScreen() {
         if (!document.fullscreenElement) {
@@ -5427,27 +5638,31 @@ function openWelcomeAuth(mode) {
 
     function injectLikes() {
         document.querySelectorAll('.game-card, .music-card').forEach(card => {
-            if (card.querySelector('.like-btn')) return;
-            const key = getFavoriteKey(card.dataset.name || card.id);
-            const liked = localStorage.getItem(key) === '1';
-            const btn = document.createElement('button');
-            btn.type='button'; btn.className='like-btn' + (liked ? ' liked':'');
-            btn.innerHTML = liked ? '♥' : '♡';
-            btn.title = liked ? 'Retirer des favoris' : 'Ajouter aux favoris';
-            btn.setAttribute('aria-label', btn.title);
-            btn.addEventListener('click', e => {
-                e.preventDefault(); e.stopPropagation();
-                if (!requireAuth()) return;
-                const targetKey = getFavoriteKey(card.dataset.name || card.id);
-                const nowLiked = localStorage.getItem(targetKey) !== '1';
-                if (nowLiked) localStorage.setItem(targetKey, '1'); else localStorage.removeItem(targetKey);
-                btn.classList.toggle('liked', nowLiked);
-                btn.textContent = nowLiked ? '♥' : '♡';
-                btn.title = nowLiked ? 'Retirer des favoris' : 'Ajouter aux favoris';
+            const gameId = slugify(card.dataset.name || card.id);
+            let btn = card.querySelector('.like-btn');
+            if (!btn) {
+                btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'like-btn' + (isFavorite(card) ? ' liked' : '');
+                btn.textContent = isFavorite(card) ? '♥' : '♡';
+                btn.title = isFavorite(card) ? 'Retirer des favoris' : 'Ajouter aux favoris';
                 btn.setAttribute('aria-label', btn.title);
-                if (activeCat === 'favoris') applyFilter(searchInput.value);
-            });
-            card.appendChild(btn);
+                btn.addEventListener('click', event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (!requireAuth()) return;
+                    const targetKey = getFavoriteKey(card.dataset.name || card.id);
+                    const nowLiked = localStorage.getItem(targetKey) !== '1';
+                    if (nowLiked) localStorage.setItem(targetKey, '1');
+                    else localStorage.removeItem(targetKey);
+                    updateLikeButtons(gameId);
+                    if (activeCat === 'favoris') applyFilter(searchInput.value);
+                    if (sharedLikesReady) toggleSharedLike(card, btn, nowLiked);
+                });
+                card.appendChild(btn);
+            }
+            btn.dataset.likeGameId = gameId;
+            updateLikeButtons(gameId);
         });
     }
 
